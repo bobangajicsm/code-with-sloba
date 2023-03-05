@@ -1,0 +1,45 @@
+.wrapper {
+  max-width: 728px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 80px;
+}
+
+.subtitle {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.list {
+  margin-bottom: 64px;
+}
+
+.listItem {
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.link {
+  color: rgb(1, 15, 52);
+  background-color: rgb(4, 225, 251);
+  border-radius: 4px;
+  text-decoration: none;
+  display: block;
+  width: fit-content;
+  margin: 32px auto 0 auto;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.hr {
+    margin-bottom: 64px;
+}

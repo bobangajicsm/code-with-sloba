@@ -1,0 +1,304 @@
+.nav {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+
+  &List {
+    list-style: none;
+  }
+
+  &ListItem {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  &ListLink {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition-duration: 0.3s;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: "Gilroy";
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+}
+
+.jumbotronWrapper {
+  background-image: url("/images/jumbotron.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0 88px;
+}
+
+.header {
+  height: calc(100vh - 88px);
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  padding: 24px;
+}
+
+.jumbotron {
+  display: flex;
+  align-items: center;
+
+  &TitleWrapper {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 30%);
+  }
+
+  &ImageWrapper {
+    display: flex;
+    align-self: end;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &Title {
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 800;
+    text-shadow: 3px 1px 4px black;
+
+    span {
+      color: var(--secondary);
+    }
+  }
+
+  &Description {
+    font-size: 18px;
+    margin: 12px 0 24px 0;
+    line-height: 27px;
+    color: var(--info);
+    background: rgba(25, 29, 34, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 30%);
+    font-weight: 400;
+  }
+
+  &ImageTitle {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 24px;
+    text-shadow: 3px 1px 4px black;
+  }
+
+  &ImageSubTitle {
+    color: var(--info);
+    font-weight: 400;
+    text-align: center;
+    font-size: 16px;
+    text-shadow: 3px 1px 4px black;
+  }
+
+  &ImageDot {
+    padding: 8px;
+    color: var(--secondary);
+  }
+}
+
+.technologies {
+  &Wrapper {
+    height: 260px;
+    width: 100%;
+    background-color: white;
+  }
+
+  &Content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 24px;
+  }
+}
+
+.latestOnYoutube {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  &Title {
+    margin-bottom: 64px;
+    font-size: 48px;
+    font-weight: 700;
+  }
+
+  iframe {
+    max-width: 100%;
+  }
+}
+
+.socials {
+  &Wrapper {
+    width: 100%;
+    background-color: white;
+    padding: 80px 0;
+    text-align: center;
+    color: var(--primary);
+  }
+
+  &Content {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  &Description {
+    margin-bottom: 32px;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    max-width: 672px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &Captions {
+    margin-top: 32px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  &Links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &Item {
+    margin: 0 20px;
+  }
+
+  &ItemLast {
+    margin-right: 0;
+  }
+
+  &Title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 64px;
+  }
+}
+
+.footer {
+  &Newsletter {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 736px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  &Text {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  &Copyright {
+    background-color: #0d131f;
+  }
+
+  &Content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &Links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &Item {
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .jumbotron {
+    &Wrapper {
+      background-position: center 88px;
+    }
+
+    &Title {
+      font-size: 40px;
+      line-height: 40px;
+    }
+
+    &ImageWrapper {
+      display: none;
+    }
+
+    &Description {
+      max-width: 470px;
+      font-size: 16px;
+    }
+  }
+
+  .navListLink {
+    font-size: 16px;
+  }
+
+  .technologiesWrapper img {
+    width: 50px;
+    height: auto;
+  }
+
+  .latestOnYoutubeTitle {
+    font-size: 33px;
+  }
+
+  .socials {
+    &Title {
+      font-size: 40px;
+    }
+
+    &Description,
+    &Captions {
+      font-size: 16px;
+    }
+
+    &Content {
+      margin: 0 24px;
+    }
+
+    &Item img {
+      width: 50px;
+      height: auto;
+    }
+  }
+
+  .footerText {
+    font-size: 18px;
+  }
+}

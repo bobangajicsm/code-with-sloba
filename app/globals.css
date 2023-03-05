@@ -1,0 +1,36 @@
+@import url("/fonts/gilroy/stylesheet.css");
+
+:root {
+  --primary: #010f34;
+  --secondary: #04e1fb;
+  --info: #d1d5db;
+}
+
+html * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--primary);
+  font-family: "Gilroy";
+  color: white;
+}
+
+.formkit-powered-by-convertkit {
+  display: none;
+  opacity: 0;
+}
+
+.formkit-form.clare .formkit-button,
+.formkit-form.clare .formkit-submit {
+  max-width: 125px;
+  margin-left: 12px !important;
+  font-weight: 700 !important;
+  font-family: "Gilroy";
+}
+
+.formkit-form.clare .formkit-field {
+  flex: 1 !important;
+}
