@@ -1,4 +1,5 @@
 "use client";
+import ConvertKitForm from 'convertkit-react/bin/convertkit-react.esm'
 
 const config = {
   formId: 4916513,
@@ -12,7 +13,7 @@ const config = {
 function Newsletter() {
   return (
     <div>
-      <script async data-uid="a432eca0f5" src="https://code-with-sloba.ck.page/a432eca0f5/index.js"></script>
+      <ConvertKitForm {...config} />
     </div>
   );
 }
