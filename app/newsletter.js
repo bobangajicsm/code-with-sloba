@@ -1,5 +1,5 @@
 "use client";
-// import ConvertKitForm from "convertkit-react";
+import ConvertKitForm from "convertkit-react";
 
 const config = {
   formId: 4916513,
@@ -13,7 +13,7 @@ const config = {
 function Newsletter() {
   return (
     <div>
-      {/* <ConvertKitForm {...config} /> */}
+      <ConvertKitForm {...config} />
     </div>
   );
 }
