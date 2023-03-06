@@ -247,8 +247,9 @@
 @media screen and (max-width: 992px) {
   .jumbotron {
     &Wrapper {
-      background-position: center 69px;
+      background-position: center 0px;
       background-size: auto 100%;
+      background-attachment: unset;
     }
 
     &Title {
@@ -308,5 +309,9 @@
 
   .footerText {
     font-size: 18px;
+  }
+
+  .header {
+    height: calc(100vh - 70px);
   }
 }
