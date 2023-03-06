@@ -40,6 +40,17 @@ function Socials() {
             </Link>
           </div>
           <div className={styles.socialsItem}>
+            <Link target="_blank" href="https://bobangajicsm.github.io/portfolio/" className={styles.socialsLink}>
+              <Image
+                className={styles.socialsImage}
+                src="/images/portfolio.png"
+                alt="Slobodan Gajic Portfolio"
+                width={80}
+                height={80}
+              />
+            </Link>
+          </div>
+          <div className={styles.socialsItem}>
             <Link
               target="_blank"
               href="https://www.youtube.com/@CodewithSloba?sub_confirmation=1"
