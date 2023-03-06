@@ -301,9 +301,13 @@
       margin: 0 24px;
     }
 
-    &Item img {
-      width: 50px;
-      height: auto;
+    &Item {
+      margin: 0 10px;
+
+      img {
+        width: 50px;
+        height: auto;
+      }
     }
   }
 
