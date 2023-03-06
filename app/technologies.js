@@ -10,8 +10,17 @@ function Technologies() {
         <div className={styles.technologiesItem}>
           <Image
             className={styles.technologiesImg}
-            width={100}
-            height={100}
+            width={88}
+            height={88}
+            src="/images/typescript.png"
+            alt="TypeScript"
+          />
+        </div>
+        <div className={styles.technologiesItem}>
+          <Image
+            className={styles.technologiesImg}
+            width={88}
+            height={88}
             src="/images/react.png"
             alt="React"
           />
@@ -19,17 +28,17 @@ function Technologies() {
         <div className={styles.technologiesItem}>
           <Image
             className={styles.technologiesImg}
-            width={100}
-            height={100}
-            src="/images/angular.png"
-            alt="Angular"
+            width={88}
+            height={88}
+            src="/images/css.png"
+            alt="CSS"
           />
         </div>
         <div className={styles.technologiesItem}>
           <Image
             className={styles.technologiesImg}
-            width={71}
-            height={100}
+            width={78}
+            height={88}
             src="/images/javascript.png"
             alt="JavaScript"
           />
@@ -38,27 +47,19 @@ function Technologies() {
           <Image
             className={styles.technologiesImg}
             width={88}
-            height={100}
+            height={88}
             src="/images/html.png"
             alt="Html"
           />
         </div>
+
         <div className={styles.technologiesItem}>
           <Image
             className={styles.technologiesImg}
-            width={100}
-            height={100}
-            src="/images/css.png"
-            alt="CSS"
-          />
-        </div>
-        <div className={styles.technologiesItem}>
-          <Image
-            className={styles.technologiesImg}
-            width={140}
-            height={100}
-            src="/images/typescript.png"
-            alt="TypeScript"
+            width={88}
+            height={88}
+            src="/images/angular.png"
+            alt="Angular"
           />
         </div>
       </div>

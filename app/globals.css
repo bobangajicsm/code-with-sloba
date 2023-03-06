@@ -19,7 +19,7 @@ body {
 }
 
 .formkit-powered-by-convertkit {
-  display: none;
+  display: none !important;
   opacity: 0;
 }
 
