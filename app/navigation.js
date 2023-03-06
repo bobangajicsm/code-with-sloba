@@ -15,7 +15,6 @@ function Navigation() {
   useEffect(() => {
     const scrollTimeout = setTimeout(() => {
       if (window.location.hash === "#socials") {
-        console.log("yeah");
         scrollToSocials();
       }
     }, 300);
@@ -47,6 +46,7 @@ function Navigation() {
     <nav className={styles.nav}>
       <Link href="/">
         <Image
+          className={styles.navImage}
           src="/images/logo.png"
           height={52}
           width={150}

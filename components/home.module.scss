@@ -247,7 +247,8 @@
 @media screen and (max-width: 992px) {
   .jumbotron {
     &Wrapper {
-      background-position: center 88px;
+      background-position: center 69px;
+      background-size: auto 100%;
     }
 
     &Title {
@@ -265,8 +266,15 @@
     }
   }
 
-  .navListLink {
-    font-size: 16px;
+  .nav {
+    &Image {
+      width: 100px;
+      height: auto;
+    }
+
+    &ListLink {
+      font-size: 16px;
+    }
   }
 
   .technologiesWrapper img {
