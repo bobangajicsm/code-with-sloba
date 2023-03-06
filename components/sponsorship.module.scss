@@ -2,6 +2,7 @@
   max-width: 728px;
   margin: 0 auto;
   padding: 0 24px;
+  line-height: 24px;
 }
 
 .title {
@@ -9,6 +10,7 @@
   font-size: 36px;
   font-weight: 500;
   margin-bottom: 80px;
+  line-height: 40px;
 }
 
 .subtitle {
@@ -41,5 +43,33 @@
 }
 
 .hr {
-    margin-bottom: 64px;
+  margin-bottom: 64px;
+}
+
+.subtitleSection {
+  margin: 32px 0;
+}
+
+.highilight {
+  color: var(--secondary);
+}
+
+.postLink {
+  color: white;
+  padding-left: 8px;
+  font-weight: 700;
+}
+
+.marginBottom {
+  margin-bottom: 64px;
+}
+
+.analyticsImage {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  .analyticsImage {
+    height: auto;
+  }
 }
