@@ -4,24 +4,37 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "components/home.module.scss";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 function Navigation() {
   const router = useRouter();
 
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const scrollTimeout = setTimeout(() => {
+      if (window.location.hash === "#socials") {
+        console.log("yeah");
+        scrollToSocials();
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(scrollTimeout);
+    };
+  }, [pathname, searchParams]);
+
   const handleScroll = (e) => {
-    if (window.location.hash === "#socials") {
+    if (
+      window.location.hash === "#socials" ||
+      window.location.pathname === "/"
+    ) {
       scrollToSocials();
     } else {
       router.push("/#socials");
     }
   };
-
-  useEffect(() => {
-    if (window.location.hash === "#socials") {
-      scrollToSocials();
-    }
-  }, []);
 
   const scrollToSocials = () => {
     const elem = document.getElementById("socials");

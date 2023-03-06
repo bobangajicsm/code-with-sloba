@@ -28,11 +28,6 @@ function Footer() {
                 Sponsorship
               </Link>
             </li>
-            <li className={styles.navListItem}>
-              <a className={styles.navListLink} href="/#socials">
-                Socials
-              </a>
-            </li>
           </ul>
         </div>
         <div className={styles.footerContent}>
