@@ -41,7 +41,7 @@ function Page() {
       <p>
         You get advertized on my <b className={styles.highilight}>daily</b> post
         with one sentence featuring your company/product. <br />
-        It's placed under the post title. <br />
+        It&apos;s placed under the post title. <br />
         Bellow, you can see <b className={styles.highilight}>analytics</b> of
         one the of <b className={styles.highilight}>best-performing</b> posts in
         the last year. <br /> Check it =&gt;
