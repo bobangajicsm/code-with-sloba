@@ -8,12 +8,11 @@ function Header() {
       <div className={styled.jumbotron}>
         <div className={styled.jumbotronTitleWrapper}>
           <h1 className={styled.jumbotronTitle}>
-            Become a <span>Web</span> <br /> master with
-            <br /> <span>daily</span> and <span>weekly</span> tips
+            Level up your <span>Frontend</span><span> skills</span> with my expert <br /> <span>tips</span> and <span>tutorials</span>
           </h1>
           <p className={styled.jumbotronDescription}>
             Stay updated with the latest tips, tricks, and tutorials on{" "}
-            <b>Web Development</b>. Join our community of <b>200k</b> followers
+            <b>Web Development</b>. Join our community of <b>200k+</b> developers
             and never miss a week of valuable insights!
           </p>
           <Newsletter />
