@@ -1,6 +1,6 @@
 "use client";
 import styled from "/components/home.module.scss";
-import Newsletter from './newsletter';
+import Newsletter from "./newsletter";
 
 function Header() {
   return (
@@ -8,12 +8,14 @@ function Header() {
       <div className={styled.jumbotron}>
         <div className={styled.jumbotronTitleWrapper}>
           <h1 className={styled.jumbotronTitle}>
-            Level up your <span>Frontend</span><span> skills</span> with my expert <br /> <span>tips</span> and <span>tutorials</span>
+            Level up your <span>Frontend</span>
+            <span> skills</span> with my expert <br /> <span>tips</span> and{" "}
+            <span>tutorials</span>
           </h1>
           <p className={styled.jumbotronDescription}>
-            Stay updated with the latest tips, tricks, and tutorials on{" "}
-            <b>Web Development</b>. Join our community of <b>200k+</b> developers
-            and never miss a week of valuable insights!
+            Become one of the <b>200k+</b> developers in my community. <br />
+            Weekly receive one practical tip on <b>Frontend</b> every Wednesday that
+            you can effortlessly put into practice.
           </p>
           <Newsletter />
         </div>
