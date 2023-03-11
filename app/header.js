@@ -14,7 +14,7 @@ function Header() {
           </h1>
           <p className={styled.jumbotronDescription}>
             Become one of the <b>200k+</b> developers in my community. <br />
-            Weekly receive one practical tip on <b>Frontend</b> every Wednesday that
+            Every Wednesday receive one practical tip on <b>Frontend</b> that
             you can effortlessly put into practice.
           </p>
           <Newsletter />
