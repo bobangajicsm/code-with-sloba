@@ -4,13 +4,14 @@ import Technologies from "./technologies";
 import LatestOnYoutube from "./latest-on-youtube";
 import Socials from "./socials";
 import { Analytics } from "@vercel/analytics/react";
+import { NextSeo } from "next-seo";
 
 export const metadata = {
   title: "Code with Sloba | Helping You Become a Better JavaScript Engineer",
   description:
     "Learn JavaScript by doing through theory and practical projects",
-  creator: 'Slobodan Gajic',
-  keywords: ['Slobodan Gajic', 'code with sloba', 'JavaScript'],
+  creator: "Slobodan Gajic",
+  keywords: ["Slobodan Gajic", "code with sloba", "JavaScript"],
   openGraph: {
     title: "Code with Sloba",
     description:
@@ -65,6 +66,27 @@ export const metadata = {
 function Home() {
   return (
     <main>
+      <NextSeo
+        title={metadata.title}
+        description={metadata.description}
+        openGraph={{
+          url: metadata.openGraph.url,
+          title: metadata.openGraph.title,
+          description: metadata.openGraph.description,
+          images: metadata.openGraph.images,
+          site_name: metadata.openGraph.siteName,
+          locale: metadata.openGraph.locale,
+          type: metadata.openGraph.type,
+        }}
+        twitter={{
+          cardType: metadata.twitter.card,
+          handle: metadata.twitter.creator,
+          site: metadata.twitter.creator,
+          title: metadata.twitter.title,
+          description: metadata.twitter.description,
+          images: metadata.twitter.images,
+        }}
+      />
       <div className={styles.jumbotronWrapper}>
         <Header />
       </div>
