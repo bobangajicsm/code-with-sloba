@@ -1,5 +1,4 @@
 import Navigation from "./navigation";
-import Head from "next/head";
 import Footer from "./footer";
 import "./globals.css";
 
@@ -10,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <title>
           Code with Sloba | Helping You Become a Better JavaScript Engineer
         </title>
@@ -62,7 +61,7 @@ export default function RootLayout({
           sizes="60x61.66"
           href="/favicon.ico"
         />
-      </Head>
+      </head>
       <body>
         <div>
           <Navigation />
