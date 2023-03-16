@@ -17,7 +17,7 @@ export const metadata = {
     siteName: "Next.js",
     images: [
       {
-        url: "https://www.codewithsloba.com/og_image.png",
+        url: "og_image.png",
         width: 1200,
         height: 630,
       },
