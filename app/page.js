@@ -9,6 +9,8 @@ export const metadata = {
   title: "Code with Sloba | Helping You Become a Better JavaScript Engineer",
   description:
     "Learn JavaScript by doing through theory and practical projects",
+  creator: 'Slobodan Gajic',
+  keywords: ['Slobodan Gajic', 'code with sloba', 'JavaScript'],
   openGraph: {
     title: "Code with Sloba",
     description:
@@ -17,7 +19,7 @@ export const metadata = {
     siteName: "Next.js",
     images: [
       {
-        url: "og_image.png",
+        url: "https://www.codewithsloba.com/og_image.png",
         width: 1200,
         height: 630,
       },
@@ -48,11 +50,6 @@ export const metadata = {
       "Learn JavaScript by doing through theory and practical projects",
     creator: "@_SlobodanGajic_",
     images: ["https://www.codewithsloba.com/og_image.png"],
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
   },
   verification: {
     google: "google",
