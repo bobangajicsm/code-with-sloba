@@ -17,7 +17,7 @@ export const metadata = {
     siteName: "Next.js",
     images: [
       {
-        url: "/og_image.png",
+        url: "https://www.codewithsloba.com/og_image.png",
         width: 1200,
         height: 630,
       },
@@ -47,7 +47,7 @@ export const metadata = {
     description:
       "Learn JavaScript by doing through theory and practical projects",
     creator: "@_SlobodanGajic_",
-    images: ["/og_image.png"],
+    images: ["https://www.codewithsloba.com/og_image.png"],
   },
   viewport: {
     width: "device-width",
