@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "Next.js",
     images: [
       {
-        url: "https://www.codewithsloba.com/og_image.png",
+        url: "/og_image.png",
         width: 1200,
         height: 630,
       },
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description:
       "Learn JavaScript by doing through theory and practical projects",
     creator: "@_SlobodanGajic_",
-    images: ["https://www.codewithsloba.com/og_image.png"],
+    images: ["/og_image.png"],
   },
   viewport: {
     width: "device-width",
@@ -77,7 +77,7 @@ export default function RootLayout({
         <meta property="og:url" content="" />
         <meta
           property="og:image"
-          content="https://www.codewithsloba.com/og_image.png"
+          content="/og_image.png"
         />
         <meta property="og:title" content="Code with Sloba" />
         <meta
@@ -91,7 +91,7 @@ export default function RootLayout({
         <meta name="twitter:image" content="" />
         <meta
           name="twitter:image:src"
-          content="https://www.codewithsloba.com/og_image.png"
+          content="/og_image.png"
         />
         <meta charSet="utf-8" />
         <meta
