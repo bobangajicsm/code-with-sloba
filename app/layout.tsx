@@ -2,12 +2,6 @@ import Navigation from "./navigation";
 import Footer from "./footer";
 import "./globals.css";
 
-export const metadata = {
-  title: "Code with Sloba",
-  description:
-    "Learn JavaScript by doing through theory and practical projects",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -26,6 +20,16 @@ export default function RootLayout({
           property="og:image"
           content="https://www.codewithsloba.com/og_image.png"
         />
+        <meta property="og:title" content="Code with Sloba" />
+        <meta
+          property="og:description"
+          content="Learn JavaScript by doing through theory and practical projects"
+        />
+        <meta
+          name="description"
+          content="Learn JavaScript by doing through theory and practical projects"
+          key="desc"
+        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@_SlobodanGajic_" />
         <meta name="twitter:creator" content="@_SlobodanGajic_" />
@@ -43,15 +47,7 @@ export default function RootLayout({
           content="code with sloba, javascript tutorials, frontend tips, software development"
         ></meta>
         <meta name="robots" content="index, follow" />
-        <meta
-          name="description"
-          content="Learn JavaScript by doing through theory and practical projects"
-        />
-        <meta property="og:title" content="Code with Sloba" />
-        <meta
-          property="og:description"
-          content="Learn JavaScript by doing through theory and practical projects"
-        />
+
         <meta content="Code with Sloba" />
         <meta
           name="twitter:description"
