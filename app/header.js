@@ -8,14 +8,12 @@ function Header() {
       <div className={styled.jumbotron}>
         <div className={styled.jumbotronTitleWrapper}>
           <h1 className={styled.jumbotronTitle}>
-            Level up your <span>Frontend</span>
-            <span> skills</span> with my expert <br /> <span>tips</span> and{" "}
-            <span>tutorials</span>
+            <span>Master</span> coding with just <span>2</span> minutes a{" "}
+            <span>day</span>!
           </h1>
           <p className={styled.jumbotronDescription}>
-            Become one of the <b>200k+</b> developers in my community. <br />
-            Every Wednesday receive one practical tip, that
-            you can effortlessly put into practice.
+            Get a <b>weekly</b> digest of my <b>tips</b> and <b>tutorials</b> by
+            subscribing now
           </p>
           <Newsletter />
         </div>

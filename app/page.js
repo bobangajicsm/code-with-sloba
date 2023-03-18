@@ -66,27 +66,6 @@ export const metadata = {
 function Home() {
   return (
     <main>
-      <NextSeo
-        title={metadata.title}
-        description={metadata.description}
-        openGraph={{
-          url: metadata.openGraph.url,
-          title: metadata.openGraph.title,
-          description: metadata.openGraph.description,
-          images: metadata.openGraph.images,
-          site_name: metadata.openGraph.siteName,
-          locale: metadata.openGraph.locale,
-          type: metadata.openGraph.type,
-        }}
-        twitter={{
-          cardType: metadata.twitter.card,
-          handle: metadata.twitter.creator,
-          site: metadata.twitter.creator,
-          title: metadata.twitter.title,
-          description: metadata.twitter.description,
-          images: metadata.twitter.images,
-        }}
-      />
       <div className={styles.jumbotronWrapper}>
         <Header />
       </div>
