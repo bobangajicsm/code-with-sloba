@@ -8,6 +8,7 @@ function LatestOnYoutube() {
       <h3 className={styles.latestOnYoutubeTitle}>Trending On YouTube</h3>
       <div>
         <iframe
+          loading="lazy"
           width="560"
           height="315"
           src="https://www.youtube.com/embed/ZFGX29ZI52U"
