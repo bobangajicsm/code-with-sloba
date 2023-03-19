@@ -6,7 +6,7 @@ import Socials from "./socials";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
-  title: "Code with Sloba | Helping You Become a Better JavaScript Engineer",
+  title: "Code with Sloba | Master JavaScript with 2 mins a day",
   description:
     "Learn JavaScript by doing through theory and practical projects",
   creator: "Slobodan Gajic",
@@ -14,7 +14,7 @@ export const metadata = {
   openGraph: {
     title: "Code with Sloba",
     description:
-      "Learn JavaScript by doing through theory and practical projects",
+      "Master coding with just 2 minutes a day!",
     url: "https://www.codewithsloba.com",
     siteName: "Next.js",
     images: [
@@ -47,7 +47,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Code with Sloba",
     description:
-      "Learn JavaScript by doing through theory and practical projects",
+      "Master coding with just 2 minutes a day!",
     creator: "@_SlobodanGajic_",
     images: ["https://www.codewithsloba.com/og_image.png"],
   },
