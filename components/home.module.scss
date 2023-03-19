@@ -131,6 +131,39 @@
     height: 100%;
     padding: 0 24px;
   }
+
+  &Img {
+    transition-duration: 0.3s;
+
+    &Typescript:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(1, 122, 204, 0.8));
+    }
+
+    &React:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(1, 203, 255, 0.8));
+    }
+
+    &Css:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(4, 117, 191, 0.8));
+    }
+
+    &Javascript:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(214, 187, 50, 0.8));
+    }
+
+    &Html:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(228, 77, 37, 0.8));
+    }
+    
+    &Angular:hover {
+      -webkit-filter: drop-shadow(0px 0px 8px rgba(222, 77, 50, 0.8));
+    }
+
+    &:hover {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  }
 }
 
 .latestOnYoutube {
