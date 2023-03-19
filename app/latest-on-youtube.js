@@ -6,7 +6,7 @@ import styles from "components/home.module.scss";
 function LatestOnYoutube() {
   return (
     <div className={styles.latestOnYoutube}>
-      <h3 className={styles.latestOnYoutubeTitle}>Trending On YouTube</h3>
+      <h2 className={styles.latestOnYoutubeTitle}>Trending On YouTube</h2>
       <Link
         href="https://youtu.be/fHOu86QxMvk"
         className={styles.latestOnYoutubeLink}
