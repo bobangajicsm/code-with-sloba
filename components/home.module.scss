@@ -148,8 +148,23 @@
     font-weight: 700;
   }
 
-  iframe {
-    max-width: 100%;
+  &PlayButton {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 1.5em;
+    text-align: center;
+    font: 48px/1.5 sans-serif;
+    color: white;
+    text-shadow: 0 0 0.5em black;
+    left: 0;
+    top: 0;
+  }
+
+  &Link {
+    position: relative;
   }
 }
 
@@ -286,6 +301,11 @@
 
   .latestOnYoutubeTitle {
     font-size: 33px;
+  }
+
+  .latestOnYoutubeImage {
+    max-width: 100%;
+    height: auto;
   }
 
   .socials {

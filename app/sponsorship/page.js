@@ -10,9 +10,8 @@ function Page() {
       <h2 className={styles.subtitle}>Audience</h2>
       <ul className={styles.list}>
         <li className={styles.listItem}>
-          My subscriber&apos;s base is primarily composed of
-          professionals from the software industry, including software engineers
-          and architects.
+          My subscriber&apos;s base is primarily composed of professionals from
+          the software industry, including software engineers and architects.
         </li>
         <li className={styles.listItem}>
           Additionally, a significant portion of subscribers include engineering
@@ -46,7 +45,7 @@ function Page() {
         one of the <b className={styles.highilight}>best-performing</b> posts in
         the last year. <br /> Check it =&gt;
         <Link
-        className={styles.postLink}
+          className={styles.postLink}
           href="https://www.instagram.com/p/ChjQnmbM01E/?utm_source=ig_web_copy_link"
           target="_blank"
         >
