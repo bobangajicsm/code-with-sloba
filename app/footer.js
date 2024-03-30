@@ -31,7 +31,7 @@ function Footer() {
           </ul>
         </div>
         <div className={styles.footerContent}>
-          <p>Copyright © 2023</p>
+          <p>Copyright © {new Date().getDate()}</p>
           <div className={styles.footerLinks}>
             <div className={styles.footerItem}>
               <Link

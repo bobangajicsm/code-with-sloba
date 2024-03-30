@@ -8,7 +8,7 @@ function LatestOnYoutube() {
     <div className={styles.latestOnYoutube}>
       <h2 className={styles.latestOnYoutubeTitle}>Trending On YouTube</h2>
       <Link
-        href="https://youtu.be/-ihkRNWStls"
+        href="https://youtu.be/6DzbKCGGGbo?si=IWoPOxBBfdylLV1c"
         className={styles.latestOnYoutubeLink}
         target="_blank"
       >
@@ -16,7 +16,7 @@ function LatestOnYoutube() {
           className={styles.latestOnYoutubeImage}
           width={480}
           height={360}
-          src="https://img.youtube.com/vi/-ihkRNWStls/hqdefault.jpg"
+          src="https://youtu.be/6DzbKCGGGbo?si=IWoPOxBBfdylLV1c/hqdefault.jpg"
           alt="Code with Sloba YouTube"
         />
         <span className={styles.latestOnYoutubePlayButton}>▶</span>
