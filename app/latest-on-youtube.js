@@ -16,7 +16,7 @@ function LatestOnYoutube() {
           className={styles.latestOnYoutubeImage}
           width={480}
           height={360}
-          src="https://youtu.be/6DzbKCGGGbo?si=IWoPOxBBfdylLV1c/hqdefault.jpg"
+          src="https://img.youtube.com/vi/6DzbKCGGGbo/hqdefault.jpg"
           alt="Code with Sloba YouTube"
         />
         <span className={styles.latestOnYoutubePlayButton}>▶</span>
