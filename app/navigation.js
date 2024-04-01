@@ -55,6 +55,14 @@ function Navigation() {
       </Link>
       <ul className={styles.navList}>
         <li className={styles.navListItem}>
+          <Link
+            className={styles.navListLink}
+            href="https://blog.codewithsloba.com/"
+          >
+            Blog
+          </Link>
+        </li>
+        <li className={styles.navListItem}>
           <Link className={styles.navListLink} href="/sponsorship">
             Sponsorship
           </Link>
