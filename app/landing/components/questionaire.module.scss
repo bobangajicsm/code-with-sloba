@@ -1,0 +1,126 @@
+.container {
+  margin-top: 100px;
+  margin-bottom: 300px;
+  align-items: center;
+  background: #1b1e22;
+  border: 1px solid #282c32;
+  border-radius: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 90px;
+  width: 100%;
+  position: relative;
+}
+
+.position {
+  align-items: center;
+  background: #444950;
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 32px;
+  justify-content: center;
+  min-width: 32px;
+  padding: 0;
+  position: relative;
+  width: 32px;
+}
+
+.modules {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 329.97px;
+  margin-top: 60px;
+  max-width: 496px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.module {
+  align-items: center;
+  background: #282c32;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: space-between;
+  left: 0;
+  padding: 20px 32px;
+  position: absolute;
+  top: 0;
+  transition: all 1s ease-out;
+  width: 100%;
+  z-index: 0;
+
+  &Active {
+    background: #36393f;
+    border: 1.06px solid var(--secondary);
+    border-radius: 8.48px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:nth-child(2) {
+    top: 82px;
+  }
+  &:nth-child(3) {
+    top: 164px;
+  }
+  &:nth-child(4) {
+    top: 246px;
+  }
+}
+
+.arrowRight {
+  position: absolute;
+  right: -30px;
+}
+
+.image1 {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+.image2 {
+  position: absolute;
+  top: 117px;
+  right: 121px;
+}
+.image3 {
+  position: absolute;
+  top: 155px;
+  right: 40px;
+}
+
+.textContainer {
+  position: absolute;
+  left: 91px;
+  bottom: 179px;
+  transform: rotate(-42deg);
+}
+
+.text {
+  font-family: "desyrelregular";
+  max-width: 200px;
+  text-align: center;
+  font-size: 33px;
+
+  span {
+    color: var(--secondary);
+  }
+}
+
+.arrow {
+  position: absolute;
+  bottom: 10px;
+  left: 177px;
+  right: 0;
+  transform: rotateY(180deg) rotateZ(-156deg) translateX(0) translateY(0);
+}

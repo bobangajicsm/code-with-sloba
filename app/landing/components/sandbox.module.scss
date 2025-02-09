@@ -1,0 +1,27 @@
+.container {
+  margin-bottom: 400px;
+}
+
+.image {
+  transform: skew(19deg, 21deg) rotate3d(1, 1, -1, 79deg)
+    translate3d(0, 54px, 10px);
+  animation: 15s perspectiveAnimation ease-in-out infinite;
+  animation-direction: alternate;
+  box-shadow: -27px 33px 67px black;
+  margin: auto;
+  display: block;
+
+  transform: skew(12deg, 21deg) rotate3d(1, 1, -1, 18deg)
+    translate3d(0, 54px, 10px);
+}
+
+@keyframes perspectiveAnimation {
+  0% {
+    transform: skew(19deg, 21deg) rotate3d(1, 1, -1, 79deg)
+      translate3d(0, 54px, 10px);
+  }
+  100% {
+    transform: skew(-5deg, 8deg) rotate3d(-1, 0, -1, 9deg)
+      translate3d(0, 54px, 10px);
+  }
+}

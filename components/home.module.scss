@@ -6,6 +6,8 @@
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 
   &List {
     list-style: none;
@@ -154,7 +156,7 @@
     &Html:hover {
       -webkit-filter: drop-shadow(0px 0px 8px rgba(228, 77, 37, 0.8));
     }
-    
+
     &Angular:hover {
       -webkit-filter: drop-shadow(0px 0px 8px rgba(222, 77, 50, 0.8));
     }
@@ -253,14 +255,9 @@
 }
 
 .footer {
-  &Newsletter {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 736px;
-    margin: 0 auto;
-    padding: 80px 24px;
+  &Wrapper {
+    position: relative;
+    z-index: 1;
   }
 
   &Text {
@@ -271,6 +268,7 @@
 
   &Copyright {
     background-color: #0d131f;
+    padding-top: 40px;
   }
 
   &Content {

@@ -7,13 +7,6 @@ import Link from "next/link";
 function Footer() {
   return (
     <div className={styles.footerWrapper}>
-      <div className={styles.footerNewsletter}>
-        <p className={styles.footerText}>
-          This is a weekly digest covering tips, tricks and tutorials. Join and
-          don&apos;t miss another week!
-        </p>
-        <Newsletter />
-      </div>
       <div className={styles.footerCopyright}>
         <div className={styles.footerContent}>
           <Image

@@ -1,0 +1,47 @@
+.container {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+  position: relative;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.slideLeft {
+  animation: 25s slideLeft infinite linear;
+  display: flex;
+}
+
+.slideRight {
+  animation: 25s slideRight infinite linear;
+  display: flex;
+}
+
+.logoWrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #252728;
+  border-radius: 4px;
+  display: flex;
+  margin: 0 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

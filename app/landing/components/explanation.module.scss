@@ -1,0 +1,59 @@
+.container {
+  margin-top: 300px;
+  margin-bottom: 300px;
+  align-items: center;
+  background: #1b1e22;
+  border: 1px solid #282c32;
+  border-radius: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 90px;
+  width: 100%;
+  position: relative;
+}
+
+.image {
+  margin-top: 40px;
+  box-shadow: -43px 38px 20px rgba(0, 0, 0, 0.7);
+  transform: skew(18deg, 8deg) rotateY(2deg);
+}
+
+.svg {
+  opacity: 0;
+  width: 76px;
+  height: 119px;
+  display: block;
+  position: absolute;
+  top: 188px;
+  right: 171px;
+  transform: rotate(25deg);
+}
+
+.animatedPath {
+  fill: none;
+  stroke: white;
+  stroke-width: 10;
+  stroke-dasharray: 2464;
+  stroke-dashoffset: 2464;
+  animation: draw 2s linear forwards;
+  animation-delay: 1s;
+}
+
+.show {
+  opacity: 1;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 2464;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkmarkG {
+  transform: translate(-554px, 32px);
+  scale: 0.5;
+}

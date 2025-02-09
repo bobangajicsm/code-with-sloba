@@ -1,0 +1,127 @@
+.container {
+  position: relative;
+  margin-bottom: 400px;
+}
+
+.textContainer {
+  background: #0d0e10;
+  border: 2px solid #282c32;
+  border-radius: 16px;
+  box-sizing: border-box;
+  max-width: 771px;
+  padding: 40px;
+  text-align: center;
+  margin: 0 auto 100px;
+}
+
+.title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+  margin: 0;
+  text-align: left;
+}
+
+.text {
+  color: #cacbcb;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  margin: 20px 0 0;
+  text-align: left;
+
+  span {
+    color: var(--secondary);
+  }
+}
+
+.svg1Container {
+  position: absolute;
+  right: 90px;
+  top: 59px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+.svg1 {
+  position: absolute;
+  opacity: 0;
+  width: 150px;
+  height: 150px;
+}
+
+.show {
+  opacity: 1;
+}
+
+.g1 {
+  scale: 2;
+  transform: translate(5px, -174px);
+}
+
+.g2 {
+  transform: translate(-186px, -201px);
+}
+
+.svg2 {
+  position: absolute;
+  bottom: -114px;
+  left: 245px;
+}
+
+.svgText1 {
+  fill: white;
+  font-size: 45px;
+  font-family: "desyrelregular";
+}
+
+.svg2Text {
+  fill: white;
+  font-size: 19px;
+  font-family: "desyrelregular";
+  transform: translate(218px, 298px);
+}
+
+.animatedPathLong {
+  animation: drawArrow 3s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+
+.animatedPathLong2 {
+  animation: drawArrow2 3s ease-in-out forwards;
+  animation-delay: 1.5s;
+}
+
+.animatedFade {
+  opacity: 0;
+  animation: fade 0.3s ease-in-out forwards;
+  animation-delay: 2s;
+}
+
+@keyframes drawArrow {
+  from {
+    stroke-dashoffset: 596;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawArrow2 {
+  from {
+    stroke-dashoffset: 965;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

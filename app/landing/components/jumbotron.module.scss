@@ -1,0 +1,148 @@
+.wrapper {
+  animation: slideDownAndFadeIn 0.833s ease-out;
+  position: relative;
+}
+
+.title {
+  color: #fff;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 93px;
+  margin-bottom: 32px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 960px;
+  text-align: center;
+
+  span {
+    color: var(--secondary);
+  }
+}
+
+.subtitle {
+  color: #cacbcb;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+  margin-bottom: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 485px;
+  text-align: center;
+}
+
+.button {
+  font-size: 20px;
+  line-height: 28px;
+  padding: 16px 32px;
+  margin-bottom: 16px;
+  align-items: center;
+  background: var(--secondary);
+  border-radius: 4px;
+  border-top: 1px solid #f9dd89;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  gap: 12px;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  max-width: 226px;
+  margin-left: auto;
+  margin-right: auto;
+  transition-duration: 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.caption {
+  color: #cacbcb;
+  font-size: 12px;
+  font-weight: 500;
+  height: 36px;
+  line-height: 18px;
+  text-align: center;
+  width: 282px;
+  margin: 0 auto 106px auto;
+}
+
+.demo {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
+  display: block;
+  animation: slideUpAndFadeIn 1.25s ease-out forwards;
+  opacity: 0;
+  transform: perspective(750px) translate3d(0px, 0px, -250px) rotateX(27deg)
+    scale(0.9, 0.9);
+  border-radius: 20px;
+  border: 5px solid #e6e6e6;
+  box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
+  transition: 0.4s ease-in-out transform;
+  animation-delay: 1s;
+
+  &:hover {
+    transform: translate3d(0px, 0px, -250px);
+  }
+}
+
+.imgContainer {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  bottom: -124px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotate(119deg) translateX(84px) translateY(135px);
+}
+
+.animatedPath {
+  stroke-dasharray: 2329;
+  animation: drawArrow 1.3s ease-in-out forwards;
+  animation-delay: 0.5s;
+  stroke-dashoffset: -1797;
+}
+
+@keyframes slideDownAndFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+    visibility: visible;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpAndFadeIn {
+  0%,
+  33.33% {
+    opacity: 0;
+    margin-top: 0px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: -144px;
+  }
+}
+
+@keyframes drawArrow {
+  from {
+    stroke-dashoffset: -1797;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

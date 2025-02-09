@@ -1,0 +1,55 @@
+.wrapper {
+  max-width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  z-index: 1;
+  position: relative;
+}
+
+.backgroundGrid {
+  top: 0;
+  height: auto;
+  left: calc(50vw - 1234px);
+  position: absolute;
+  width: 2468px;
+  z-index: 0;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(50vw - 100px);
+  overflow: hidden;
+  position: relative;
+  margin: -40px auto 0;
+  z-index: 0;
+}
+
+.carouselOverlay {
+  background: radial-gradient(
+    50% 44.23% at 50% 50%,
+    rgba(13, 14, 16, 0) 0,
+    #0d0e10 100%
+  );
+  bottom: 0;
+  left: 0;
+  max-width: 1280px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.bottomGrid {
+  height: auto;
+  left: calc(50vw - 1234px);
+  position: absolute;
+  width: 2468px;
+  z-index: 0;
+  bottom: -392px;
+}

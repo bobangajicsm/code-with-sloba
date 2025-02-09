@@ -1,7 +1,12 @@
-@import url("/fonts/gilroy/stylesheet.css");
+@font-face {
+  font-family: "desyrelregular";
+  src: url("/fonts/desyrel-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 :root {
-  --primary: #010f34;
+  --primary: #0d0e10;
   --secondary: #04e1fb;
   --info: #d1d5db;
 }
@@ -14,7 +19,7 @@ html * {
 
 body {
   background-color: var(--primary);
-  font-family: "Gilroy";
+  font-family: var(--font-inter), sans-serif;
   color: white;
 }
 
@@ -28,7 +33,7 @@ body {
   max-width: 125px;
   margin-left: 12px !important;
   font-weight: 700 !important;
-  font-family: "Gilroy";
+  font-family: var(--font-inter), sans-serif;
 }
 
 .formkit-form.clare .formkit-field {
