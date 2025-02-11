@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import styles from "components/home.module.scss";
+import styles from "./components/home.module.scss";
 import { useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
@@ -24,7 +24,7 @@ function Navigation() {
     };
   }, [pathname, searchParams]);
 
-  const handleScroll = (e) => {
+  const handleScroll = () => {
     if (
       window.location.hash === "#socials" ||
       window.location.pathname === "/"

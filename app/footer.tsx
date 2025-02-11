@@ -1,7 +1,6 @@
 "use client";
-import Newsletter from "./newsletter";
 import Image from "next/image";
-import styles from "/components/home.module.scss";
+import styles from "./components/home.module.scss";
 import Link from "next/link";
 
 function Footer() {
