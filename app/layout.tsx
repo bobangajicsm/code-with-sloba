@@ -3,6 +3,7 @@ import Footer from "./footer";
 import "./globals.css";
 import { Suspense } from "react";
 import { Inter } from "next/font/google";
+import { Providers } from "@/app/providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -18,13 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <div>
-          <Suspense fallback={<SearchBarFallback />}>
-            <Navigation />
-          </Suspense>
-          {children}
-          <Footer />
-        </div>
+        <Providers>
+          <div>
+            <Suspense fallback={<SearchBarFallback />}>
+              <Navigation />
+            </Suspense>
+            {children}
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );

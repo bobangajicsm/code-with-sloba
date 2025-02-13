@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id           String         @id @default(uuid())
+  name         String         @unique
+  posts        Post[]
+  UserProgress UserProgress[]
+}
+
+model Post {
+  id            String          @id @default(cuid())
+  title         String
+  slug          String          @unique
+  content       String
+  images        String[]
+  code          Json
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  published     Boolean         @default(false)
+  categoryId    String
+  userId        String?
+  quizId        String?
+  CompletedPost CompletedPost[]
+  category      Category        @relation(fields: [categoryId], references: [id])
+  quiz          Quiz?           @relation(fields: [quizId], references: [id])
+  User          User?           @relation(fields: [userId], references: [id])
+  comments      Comment[]
+}
+
+model Quiz {
+  id            String @id @default(uuid())
+  question      String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctAnswer String
+  Post          Post[]
+}
+
+model UserProgress {
+  id             String   @id @default(uuid())
+  userId         String
+  categoryId     String
+  completedPosts Int      @default(0)
+  totalPosts     Int
+  progress       Float    @default(0.0)
+  category       Category @relation(fields: [categoryId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model CompletedPost {
+  id          String   @id @default(uuid())
+  userId      String
+  postId      String
+  completedAt DateTime @default(now())
+  post        Post     @relation(fields: [postId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id                 String    @id @default(uuid())
+  name               String
+  email              String    @unique
+  avatarUrl          String?
+  provider           String
+  stripeCustomerId   String?
+  subscriptionStatus String    @default("free")
+  points             Int       @default(0)
+  createdAt          DateTime  @default(now())
+  emailVerified      DateTime?
+
+  accounts Account[]
+  sessions Session[]
+
+  completedPosts CompletedPost[]
+  Post           Post[]
+  progress       UserProgress[]
+  Comment        Comment[]
+}

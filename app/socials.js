@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "components/home.module.scss";
+import styles from "./components/home.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -18,7 +18,11 @@ function Socials() {
         </p>
         <div className={styles.socialsLinks}>
           <div className={styles.socialsItem}>
-            <Link target="_blank" href="https://www.linkedin.com/in/slobodan-gajic/" className={styles.socialsLink}>
+            <Link
+              target="_blank"
+              href="https://www.linkedin.com/in/slobodan-gajic/"
+              className={styles.socialsLink}
+            >
               <Image
                 className={styles.socialsImage}
                 src="/images/linkedin.png"
@@ -29,7 +33,11 @@ function Socials() {
             </Link>
           </div>
           <div className={styles.socialsItem}>
-            <Link target="_blank" href="https://www.instagram.com/codewithsloba/" className={styles.socialsLink}>
+            <Link
+              target="_blank"
+              href="https://www.instagram.com/codewithsloba/"
+              className={styles.socialsLink}
+            >
               <Image
                 className={styles.socialsImage}
                 src="/images/instagram.png"
@@ -40,7 +48,11 @@ function Socials() {
             </Link>
           </div>
           <div className={styles.socialsItem}>
-            <Link target="_blank" href="https://bobangajicsm.github.io/portfolio/" className={styles.socialsLink}>
+            <Link
+              target="_blank"
+              href="https://bobangajicsm.github.io/portfolio/"
+              className={styles.socialsLink}
+            >
               <Image
                 className={styles.socialsImage}
                 src="/images/portfolio.png"
@@ -66,7 +78,11 @@ function Socials() {
             </Link>
           </div>
           <div className={styles.socialsItem}>
-            <Link target="_blank" href="https://www.patreon.com/CodewithSloba" className={styles.socialsLink}>
+            <Link
+              target="_blank"
+              href="https://www.patreon.com/CodewithSloba"
+              className={styles.socialsLink}
+            >
               <Image
                 className={styles.socialsImage}
                 src="/images/patreon.png"

@@ -30,7 +30,8 @@
     "app/page.js",
     ".next/types/**/*.ts",
     "app/layout.js",
-    "app/navigation.tsx"
+    "app/navigation.tsx",
+    "app/learn/page.js"
   ],
   "exclude": ["node_modules"]
 }

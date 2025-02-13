@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "/components/home.module.scss";
+import styles from "./components/home.module.scss";
 
 function Technologies() {
   return (

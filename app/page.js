@@ -1,4 +1,4 @@
-import styles from "components/home.module.scss";
+import styles from "./components/home.module.scss";
 import Header from "./header";
 import Technologies from "./technologies";
 import LatestOnYoutube from "./latest-on-youtube";
@@ -13,8 +13,7 @@ export const metadata = {
   keywords: ["Slobodan Gajic", "code with sloba", "JavaScript"],
   openGraph: {
     title: "Code with Sloba",
-    description:
-      "Master coding with just 2 minutes a day!",
+    description: "Master coding with just 2 minutes a day!",
     url: "https://www.codewithsloba.com",
     siteName: "Next.js",
     images: [
@@ -46,8 +45,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Code with Sloba",
-    description:
-      "Master coding with just 2 minutes a day!",
+    description: "Master coding with just 2 minutes a day!",
     creator: "@_SlobodanGajic_",
     images: ["https://www.codewithsloba.com/og_image.png"],
   },

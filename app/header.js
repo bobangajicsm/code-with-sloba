@@ -1,5 +1,5 @@
 "use client";
-import styled from "/components/home.module.scss";
+import styled from "./components/home.module.scss";
 import Newsletter from "./newsletter";
 
 function Header() {
