@@ -12,6 +12,7 @@ declare module "next-auth" {
       provider: string;
       subscriptionStatus: string;
       points: number;
+      avatarUrl?: string;
     };
   }
 

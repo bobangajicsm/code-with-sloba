@@ -6,11 +6,13 @@ import Image from "next/image";
 
 interface Comment {
   id: string;
-  text: string;
   createdAt: Date;
+  userId: string;
+  postId: string;
+  text: string;
   user: {
     name: string;
-    avatarUrl?: string;
+    avatarUrl: string | null;
   };
 }
 
@@ -39,7 +41,16 @@ export default function CommentsSection({
 
     if (res.ok) {
       const data = await res.json();
-      setCommentList([data, ...commentList]);
+      setCommentList([
+        {
+          ...data,
+          user: {
+            name: session?.user.name,
+            avatarUrl: session?.user.avatarUrl,
+          },
+        },
+        ...commentList,
+      ]);
       setNewComment("");
     }
   };
@@ -63,7 +74,7 @@ export default function CommentsSection({
         </form>
       ) : (
         <p className={styles.loginMessage}>
-          Please <a href="/login">login</a> to leave a comment.
+          Please <a href="/auth/login">login</a> to leave a comment.
         </p>
       )}
 

@@ -42,6 +42,7 @@ model CompletedPost {
   userId      String
   postId      String
   completedAt DateTime @default(now())
+  isSuccess   Boolean  @default(false)
   post        Post     @relation(fields: [postId], references: [id])
   user        User     @relation(fields: [userId], references: [id])
 }

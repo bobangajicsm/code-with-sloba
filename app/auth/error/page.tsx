@@ -30,7 +30,7 @@ export default function ErrorPage() {
 
       {error === "AccessDenied" && (
         <p className="text-red-500">
-          Access denied. You don't have permission to sign in.
+          Access denied. You don&apos;t have permission to sign in.
         </p>
       )}
 

@@ -13,7 +13,15 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, token, user }) {
+    async jwt({ token, user, account, profile }) {
+      if (user) {
+        token.avatarUrl = (profile as any)?.picture; // Make sure avatarUrl is added to token
+      }
+      return token;
+    },
+    async session(a) {
+      const { session, token, user } = a;
+
       // Add token parameter
       if (session?.user) {
         session.user = {
@@ -22,6 +30,7 @@ export const authOptions: AuthOptions = {
           subscriptionStatus: "free", // Set default or fetch from DB
           points: 0, // Set default or fetch from DB
           provider: "google", // Set default or fetch from DB
+          avatarUrl: token.avatarUrl as string | undefined,
         };
       }
       return session;
