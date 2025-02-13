@@ -1,4 +1,4 @@
-import styles from "/components/sponsorship.module.scss";
+import styles from "./sponsorship.module.scss";
 
 import Link from "next/link";
 import Image from "next/image";
