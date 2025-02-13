@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma) as any, // Type assertion to avoid conflicts
+  adapter: PrismaAdapter(prisma) as any,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -13,25 +13,97 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
+    async session({ session, token, user }) {
+      // Add token parameter
       if (session?.user) {
-        session.user.id = user.id;
-        session.user.subscriptionStatus = (user as any).subscriptionStatus;
-        session.user.points = (user as any).points;
-        session.user.provider = (user as any).provider;
+        session.user = {
+          ...session.user,
+          id: token.sub as string, // Use token.sub instead of user.id
+          subscriptionStatus: "free", // Set default or fetch from DB
+          points: 0, // Set default or fetch from DB
+          provider: "google", // Set default or fetch from DB
+        };
       }
       return session;
     },
-    async signIn({ user, account }) {
-      if (account?.provider) {
-        // Update user with provider info
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { provider: account.provider },
+    async signIn({ user, account, profile }) {
+      if (!account || !profile) return false;
+
+      try {
+        // Check if user exists
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email! },
+          include: { accounts: true },
         });
+
+        if (existingUser) {
+          // If user exists but has no account, link the account
+          if (existingUser.accounts.length === 0) {
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                type: account.type,
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                access_token: account.access_token,
+                token_type: account.token_type,
+                scope: account.scope,
+                id_token: account.id_token,
+              },
+            });
+            return true;
+          }
+
+          // Check if this OAuth account is already linked
+          const linkedAccount = existingUser.accounts.find(
+            (acc) => acc.provider === account.provider
+          );
+
+          if (linkedAccount) {
+            return true; // Account is already linked, proceed with sign in
+          }
+
+          // If user exists with different provider, deny access
+          return false; // This will redirect to error page
+        }
+
+        // Create new user if they don't exist
+        const newUser = await prisma.user.create({
+          data: {
+            email: user.email!,
+            name: user.name!,
+            avatarUrl: user.image,
+            provider: account.provider,
+            subscriptionStatus: "free",
+            points: 0,
+          },
+        });
+
+        // Create the account link
+
+        await prisma.account.create({
+          data: {
+            userId: newUser.id,
+            type: account.type,
+            provider: account.provider,
+            providerAccountId: account.providerAccountId,
+            access_token: account.access_token,
+            token_type: account.token_type,
+            scope: account.scope,
+            id_token: account.id_token,
+          },
+        });
+
+        return true;
+      } catch (error) {
+        console.error("Error in signIn callback:", error);
+        return false;
       }
-      return true;
     },
+  },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
   },
   session: {
     strategy: "jwt",

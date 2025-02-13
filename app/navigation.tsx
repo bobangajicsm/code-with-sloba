@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./components/home.module.scss";
 import { useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import LoginButton from "@/app/login-button";
+import AuthButtons from "@/app/auth-button";
 
 function Navigation() {
   const router = useRouter();
@@ -74,9 +74,7 @@ function Navigation() {
           </button>
         </li>
         <li className={styles.navListItem}>
-          <Link className={styles.navListLink} href="/login">
-            Login
-          </Link>
+          <AuthButtons />
         </li>
       </ul>
     </nav>
