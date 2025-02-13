@@ -3,12 +3,26 @@ import { useState } from "react";
 import styles from "./comments-section.module.scss";
 import { useSession } from "next-auth/react";
 
-export default function CommentsSection({ postId, comments }) {
+interface Comment {
+  id: string;
+  text: string;
+  createdAt: Date;
+}
+
+interface CommentsSectionProps {
+  postId: string;
+  comments: Comment[];
+}
+
+export default function CommentsSection({
+  postId,
+  comments,
+}: CommentsSectionProps) {
   const [newComment, setNewComment] = useState("");
   const [commentList, setCommentList] = useState(comments);
   const { data: session } = useSession();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 

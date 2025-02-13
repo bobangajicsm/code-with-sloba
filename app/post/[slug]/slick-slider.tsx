@@ -7,7 +7,11 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function SlickSlider({ post }) {
+interface Post {
+  images: string[];
+}
+
+export default function SlickSlider({ post }: { post: Post }) {
   const [showSlider, setShowSlider] = useState(false);
 
   useEffect(() => {

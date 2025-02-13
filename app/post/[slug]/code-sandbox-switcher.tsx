@@ -3,7 +3,16 @@ import { useState } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import styles from "./code-sandbox-switcher.module.scss";
 
-export default function CodeSandboxSwitcher({ snippets }) {
+interface Snippets {
+  language: string;
+  code: string;
+}
+
+export default function CodeSandboxSwitcher({
+  snippets,
+}: {
+  snippets: Snippets;
+}) {
   return (
     <div className={styles.sandboxContainer}>
       <Sandpack

@@ -2,8 +2,17 @@
 import { useState } from "react";
 import styles from "./quiz.module.scss";
 
-export default function Quiz({ questionData }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+interface QuestionData {
+  question: string;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+  correctAnswer: string;
+}
+
+export default function Quiz({ questionData }: { questionData: QuestionData }) {
+  const [selectedAnswer, setSelectedAnswer] = useState<string>("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const isCorrect = selectedAnswer === questionData.correctAnswer;
 

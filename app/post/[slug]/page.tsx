@@ -27,7 +27,7 @@ export default async function PostPage({
 
   if (!post) return notFound();
 
-  const codeSnippets = post.code as { language: string; code: string }[];
+  const codeSnippets = post.code as { language: string; code: string };
 
   return (
     <div className={styles.container}>
