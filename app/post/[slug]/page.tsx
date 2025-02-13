@@ -21,6 +21,14 @@ export default async function PostPage({
         orderBy: {
           createdAt: "desc",
         },
+        include: {
+          user: {
+            select: {
+              name: true,
+              avatarUrl: true,
+            },
+          },
+        },
       },
     },
   });
