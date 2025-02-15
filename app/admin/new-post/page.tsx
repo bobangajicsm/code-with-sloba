@@ -1,4 +1,3 @@
-// app/admin/new-post/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,7 +6,7 @@ import styles from "./page.module.scss";
 import { CodeEditor } from "@/app/admin/components/code-editor";
 import QuillEditor from "@/app/admin/components/quill-editor";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface PostFormData {
   title: string;
