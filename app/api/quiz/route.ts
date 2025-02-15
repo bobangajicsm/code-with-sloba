@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
 
-    // Get the post to find its category
     const post = await prisma.post.findUnique({
       where: { id: postId },
       select: { categoryId: true },
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
     }
 
     if (isCorrect) {
-      // Create completed post record with success
       await prisma.completedPost.create({
         data: {
           userId,
@@ -29,7 +27,6 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      // Update user points
       await prisma.user.update({
         where: { id: userId },
         data: {
@@ -37,49 +34,11 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      // Update or create user progress for the category
-      await prisma.$transaction(async (tx) => {
-        const categoryProgress = await tx.userProgress.findFirst({
-          where: {
-            userId,
-            categoryId: post.categoryId,
-          },
-        });
-
-        if (categoryProgress) {
-          await tx.userProgress.update({
-            where: { id: categoryProgress.id },
-            data: {
-              completedPosts: { increment: 1 },
-              progress:
-                ((categoryProgress.completedPosts + 1) /
-                  categoryProgress.totalPosts) *
-                100,
-            },
-          });
-        } else {
-          const totalPosts = await tx.post.count({
-            where: { categoryId: post.categoryId },
-          });
-
-          await tx.userProgress.create({
-            data: {
-              userId,
-              categoryId: post.categoryId,
-              completedPosts: 1,
-              totalPosts,
-              progress: (1 / totalPosts) * 100,
-            },
-          });
-        }
-      });
-
       return NextResponse.json({
         success: true,
         message: "Quiz completed successfully!",
       });
     } else {
-      // For incorrect answers, store the attempt with isSuccess = false
       const currentTime = new Date();
 
       await prisma.completedPost.create({

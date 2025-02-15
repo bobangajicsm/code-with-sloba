@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.ctfassets.net",
+        hostname: "upload.wikimedia.org",
       },
       {
         protocol: "https",

@@ -9,10 +9,11 @@ datasource db {
 }
 
 model Category {
-  id           String         @id @default(uuid())
-  name         String         @unique
-  posts        Post[]
-  UserProgress UserProgress[]
+  id    String  @id @default(uuid())
+  name  String  @unique
+  slug  String  @unique
+  image String?
+  posts Post[]
 }
 
 model Quiz {
@@ -24,17 +25,6 @@ model Quiz {
   optionD       String
   correctAnswer String
   Post          Post[]
-}
-
-model UserProgress {
-  id             String   @id @default(uuid())
-  userId         String
-  categoryId     String
-  completedPosts Int      @default(0)
-  totalPosts     Int
-  progress       Float    @default(0.0)
-  category       Category @relation(fields: [categoryId], references: [id])
-  user           User     @relation(fields: [userId], references: [id])
 }
 
 model CompletedPost {
@@ -52,29 +42,30 @@ model Post {
   title         String
   slug          String          @unique
   content       String
-  images        String[]
-  code          Json
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  published     Boolean         @default(false)
   categoryId    String
+  createdAt     DateTime        @default(now())
+  images        String[]
+  published     Boolean         @default(false)
+  updatedAt     DateTime        @updatedAt
   userId        String?
+  code          Json
   quizId        String?
+  difficulty    difficulty?
+  comments      Comment[]
   CompletedPost CompletedPost[]
   category      Category        @relation(fields: [categoryId], references: [id])
   quiz          Quiz?           @relation(fields: [quizId], references: [id])
   User          User?           @relation(fields: [userId], references: [id])
-  comments      Comment[]
 }
 
 model Comment {
   id        String   @id @default(uuid())
   text      String
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -83,15 +74,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -113,22 +103,26 @@ model VerificationToken {
 }
 
 model User {
-  id                 String    @id @default(uuid())
+  id                 String          @id @default(uuid())
   name               String
-  email              String    @unique
+  email              String          @unique
   avatarUrl          String?
   provider           String
   stripeCustomerId   String?
-  subscriptionStatus String    @default("free")
-  points             Int       @default(0)
-  createdAt          DateTime  @default(now())
+  subscriptionStatus String          @default("free")
+  points             Int             @default(0)
+  createdAt          DateTime        @default(now())
   emailVerified      DateTime?
+  profileUrl         String?
+  accounts           Account[]
+  Comment            Comment[]
+  completedPosts     CompletedPost[]
+  Post               Post[]
+  sessions           Session[]
+}
 
-  accounts Account[]
-  sessions Session[]
-
-  completedPosts CompletedPost[]
-  Post           Post[]
-  progress       UserProgress[]
-  Comment        Comment[]
+enum difficulty {
+  easy
+  medium
+  hard
 }

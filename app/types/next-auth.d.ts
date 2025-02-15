@@ -13,6 +13,7 @@ declare module "next-auth" {
       subscriptionStatus: string;
       points: number;
       avatarUrl?: string;
+      createdAt: Date;
     };
   }
 
@@ -24,6 +25,7 @@ declare module "next-auth" {
     provider: string;
     subscriptionStatus: string;
     points: number;
+    createdAt: Date;
   }
 }
 

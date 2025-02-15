@@ -1,0 +1,154 @@
+.profileContainer {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #555;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.userEmail {
+  color: #555;
+  font-size: 14px;
+}
+
+.createdAt {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.points {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.progressSection {
+  margin-top: 20px;
+}
+
+.progressCategory {
+  margin-bottom: 15px;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.progressBar {
+  height: 10px;
+  border-radius: 5px;
+  background: #ddd;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progressFill {
+  height: 100%;
+  background: #007bff;
+  transition: width 0.4s ease-in-out;
+}
+
+.profileContainer {
+  padding: 20px;
+  background-color: #f4f7fc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName,
+.userEmail,
+.createdAt,
+.points {
+  margin-bottom: 10px;
+}
+
+.profileLink a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.editButton,
+.saveButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.editButton:hover,
+.saveButton:hover {
+  background-color: #0056b3;
+}
