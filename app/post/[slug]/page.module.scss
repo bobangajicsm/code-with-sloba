@@ -4,4 +4,8 @@
   display: flex;
   flex-direction: column;
   gap: 100px;
+
+  img {
+    max-width: 100%;
+  }
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import FilterBar from "./filter-bar";
 import styles from "./page.module.scss";
 import { Prisma } from "@prisma/client";
+import Image from "next/image";
 
 interface CategoryPageProps {
   params: {
@@ -84,7 +85,21 @@ export default async function CategoryPage({
           posts.map((post) => (
             <article key={post.id} className={styles.postCard}>
               <Link href={`/post/${post.slug}`}>
-                <h2>{post.title}</h2>
+                <div className={styles.postImage}>
+                  {post.images[0] ? (
+                    <Image
+                      src={post.images[0]}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className={styles.image}
+                    />
+                  ) : (
+                    <div className={styles.placeholderImage}>
+                      {post.title[0].toUpperCase()}
+                    </div>
+                  )}
+                </div>
                 <div className={styles.postMeta}>
                   <time>{new Date(post.createdAt).toLocaleDateString()}</time>
                   {post.difficulty && (

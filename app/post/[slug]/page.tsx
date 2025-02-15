@@ -1,14 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
-import ReactMarkdown from "react-markdown";
 
 import styles from "./page.module.scss";
-import CodeSandboxSwitcher from "@/app/post/[slug]/code-sandbox-switcher";
 import Quiz from "@/app/post/[slug]/quiz";
 import SlickSlider from "./slick-slider";
 import CommentsSection from "@/app/post/[slug]/comment-section";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { Snippet } from "@/app/types/snippet";
+import QuillContent from "@/app/post/[slug]/quill-content";
+import CodeSandbox from "@/app/post/[slug]/code-sandbox";
 
 export default async function PostPage({
   params,
@@ -75,13 +76,13 @@ export default async function PostPage({
     <div className={styles.container}>
       <SlickSlider post={post} />
 
-      <ReactMarkdown className={styles.content}>{post.content}</ReactMarkdown>
-
-      <h3>Try the Code:</h3>
-      <CodeSandboxSwitcher
-        snippets={post.code as { language: string; code: string }}
-      />
-
+      <QuillContent content={post.content} />
+      {post.code && (
+        <>
+          <h3>Try the Code:</h3>
+          <CodeSandbox snippets={post.code as unknown as Snippet[]} />
+        </>
+      )}
       {post.quiz && (
         <>
           {userId ? (
