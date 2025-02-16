@@ -19,22 +19,10 @@ export async function POST(req: Request) {
       images,
       sandboxUrl,
       sandboxTemplate,
-      quiz,
+      quizzes,
     } = await req.json();
 
-    // Create the quiz first
-    const createdQuiz = await prisma.quiz.create({
-      data: {
-        question: quiz.question,
-        optionA: quiz.optionA,
-        optionB: quiz.optionB,
-        optionC: quiz.optionC,
-        optionD: quiz.optionD,
-        correctAnswer: quiz.correctAnswer,
-      },
-    });
-
-    // Create the post
+    // Create the post first
     const post = await prisma.post.create({
       data: {
         title,
@@ -46,8 +34,30 @@ export async function POST(req: Request) {
         images,
         sandboxUrl,
         sandboxTemplate,
-        quizId: createdQuiz.id,
         userId: session.user.id,
+        // Create quizzes and their relationships in one transaction
+        quizzes: {
+          create: quizzes.map((quiz: any, index: number) => ({
+            order: index,
+            quiz: {
+              create: {
+                question: quiz.question,
+                optionA: quiz.optionA,
+                optionB: quiz.optionB,
+                optionC: quiz.optionC,
+                optionD: quiz.optionD,
+                correctAnswer: quiz.correctAnswer,
+              },
+            },
+          })),
+        },
+      },
+      include: {
+        quizzes: {
+          include: {
+            quiz: true,
+          },
+        },
       },
     });
 
@@ -72,6 +82,14 @@ export async function GET(req: Request) {
           select: {
             name: true,
             email: true,
+          },
+        },
+        quizzes: {
+          include: {
+            quiz: true,
+          },
+          orderBy: {
+            order: "asc",
           },
         },
       },
@@ -101,9 +119,17 @@ export async function DELETE(req: Request) {
       return new Response("Post ID is required", { status: 400 });
     }
 
-    await prisma.post.delete({
-      where: { id },
-    });
+    // Delete the post and all related quizzes in one transaction
+    await prisma.$transaction([
+      // Delete all PostQuiz entries for this post
+      prisma.postQuiz.deleteMany({
+        where: { postId: id },
+      }),
+      // Delete the post
+      prisma.post.delete({
+        where: { id },
+      }),
+    ]);
 
     return new Response("Post deleted successfully", { status: 200 });
   } catch (error) {

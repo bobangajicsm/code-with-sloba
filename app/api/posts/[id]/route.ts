@@ -20,29 +20,17 @@ export async function PUT(
       difficulty,
       published,
       images,
-      quiz,
+      quizzes,
       sandboxUrl,
       sandboxTemplate,
     } = await req.json();
 
-    // Update the quiz
-    if (quiz) {
-      await prisma.quiz.update({
-        where: {
-          id: quiz.id,
-        },
-        data: {
-          question: quiz.question,
-          optionA: quiz.optionA,
-          optionB: quiz.optionB,
-          optionC: quiz.optionC,
-          optionD: quiz.optionD,
-          correctAnswer: quiz.correctAnswer,
-        },
-      });
-    }
+    // First, delete all existing PostQuiz entries for this post
+    await prisma.postQuiz.deleteMany({
+      where: { postId: params.id },
+    });
 
-    // Update the post
+    // Update the post and create new quizzes
     const post = await prisma.post.update({
       where: {
         id: params.id,
@@ -57,6 +45,33 @@ export async function PUT(
         images,
         sandboxUrl,
         sandboxTemplate,
+        // Create new quizzes and their relationships
+        quizzes: {
+          create: quizzes.map((quiz: any, index: number) => ({
+            order: index,
+            quiz: {
+              create: {
+                question: quiz.question,
+                optionA: quiz.optionA,
+                optionB: quiz.optionB,
+                optionC: quiz.optionC,
+                optionD: quiz.optionD,
+                correctAnswer: quiz.correctAnswer,
+              },
+            },
+          })),
+        },
+      },
+      include: {
+        category: true,
+        quizzes: {
+          include: {
+            quiz: true,
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
       },
     });
 
@@ -77,12 +92,17 @@ export async function DELETE(
   }
 
   try {
-    // Delete the post (this will cascade delete the quiz due to the schema relation)
-    await prisma.post.delete({
-      where: {
-        id: params.id,
-      },
-    });
+    // Delete in a transaction to ensure all related data is removed
+    await prisma.$transaction([
+      // First delete PostQuiz entries
+      prisma.postQuiz.deleteMany({
+        where: { postId: params.id },
+      }),
+      // Then delete the post
+      prisma.post.delete({
+        where: { id: params.id },
+      }),
+    ]);
 
     return new Response(null, { status: 204 });
   } catch (error) {
@@ -105,7 +125,14 @@ export async function GET(
       where: { id: params.id },
       include: {
         category: true,
-        quiz: true,
+        quizzes: {
+          include: {
+            quiz: true,
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
       },
     });
 
@@ -130,73 +157,62 @@ export async function PATCH(
   }
 
   try {
-    const updateData = await req.json();
+    const { quizzes, categoryId, ...updateData } = await req.json();
     const postId = params.id;
 
-    // Find the existing post to get the quiz ID if it exists
-    const existingPost = await prisma.post.findUnique({
-      where: { id: postId },
-      include: { quiz: true },
-    });
+    // Start a transaction to handle all updates
+    const updatedPost = await prisma.$transaction(async (prisma) => {
+      // If quizzes are included in the update
+      if (quizzes) {
+        // Delete existing quiz relationships
+        await prisma.postQuiz.deleteMany({
+          where: { postId },
+        });
 
-    if (!existingPost) {
-      return new Response("Post not found", { status: 404 });
-    }
+        // Create new quizzes and their relationships
+        await Promise.all(
+          quizzes.map(async (quiz: any, index: number) => {
+            const createdQuiz = await prisma.quiz.create({
+              data: {
+                question: quiz.question,
+                optionA: quiz.optionA,
+                optionB: quiz.optionB,
+                optionC: quiz.optionC,
+                optionD: quiz.optionD,
+                correctAnswer: quiz.correctAnswer,
+              },
+            });
 
-    // Prepare the quiz update/create operation
-    let quizOperation = {};
-    if (updateData.quiz) {
-      if (existingPost.quiz) {
-        // Update existing quiz
-        quizOperation = {
-          quiz: {
-            update: {
-              question: updateData.quiz.question,
-              optionA: updateData.quiz.optionA,
-              optionB: updateData.quiz.optionB,
-              optionC: updateData.quiz.optionC,
-              optionD: updateData.quiz.optionD,
-              correctAnswer: updateData.quiz.correctAnswer,
-            },
-          },
-        };
-      } else {
-        // Create new quiz
-        quizOperation = {
-          quiz: {
-            create: {
-              question: updateData.quiz.question,
-              optionA: updateData.quiz.optionA,
-              optionB: updateData.quiz.optionB,
-              optionC: updateData.quiz.optionC,
-              optionD: updateData.quiz.optionD,
-              correctAnswer: updateData.quiz.correctAnswer,
-            },
-          },
-        };
+            await prisma.postQuiz.create({
+              data: {
+                postId,
+                quizId: createdQuiz.id,
+                order: index,
+              },
+            });
+          })
+        );
       }
-    }
 
-    // Remove quiz and categoryId from updateData as they're handled separately
-    const { quiz, categoryId, ...postUpdateData } = updateData;
-
-    // Update the post with proper nested relations
-    const updatedPost = await prisma.post.update({
-      where: { id: postId },
-      data: {
-        ...postUpdateData,
-        ...quizOperation,
-        // Handle category relation properly
-        category: {
-          connect: {
-            id: categoryId,
+      // Update the post
+      return prisma.post.update({
+        where: { id: postId },
+        data: {
+          ...updateData,
+          categoryId: categoryId ? categoryId : undefined,
+        },
+        include: {
+          category: true,
+          quizzes: {
+            include: {
+              quiz: true,
+            },
+            orderBy: {
+              order: "asc",
+            },
           },
         },
-      },
-      include: {
-        category: true,
-        quiz: true,
-      },
+      });
     });
 
     return Response.json(updatedPost);

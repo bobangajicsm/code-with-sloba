@@ -158,3 +158,58 @@
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+
+.quizHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h3,
+  h4 {
+    margin: 0;
+  }
+}
+
+.quizContainer {
+  color: #555;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.quizInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addQuizButton {
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+
+  &:hover {
+    background-color: #059669;
+  }
+}
+
+.removeQuizButton {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+
+  &:hover {
+    background-color: #dc2626;
+  }
+}

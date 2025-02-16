@@ -1,69 +1,69 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("user");
+
+  if (!userId) {
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
 
-  const userId = session.user.id;
-
-  // Fetch user details
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      name: true,
-      email: true,
-      createdAt: true,
-      points: true,
-      avatarUrl: true,
-      profileUrl: true,
-      completedPosts: {
-        select: {
-          post: {
-            select: {
-              categoryId: true,
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        completedPosts: {
+          include: {
+            post: {
+              include: {
+                category: true,
+              },
             },
           },
         },
       },
-    },
-  });
+    });
 
-  if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
-  }
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-  // Get all categories user has progress in
-  const categoryIds = [
-    ...new Set(user.completedPosts.map((cp) => cp.post.categoryId)),
-  ];
+    const categoryProgress: { [key: string]: number } = {};
 
-  const categoryProgress = await Promise.all(
-    categoryIds.map(async (categoryId) => {
-      const totalPosts = await prisma.post.count({ where: { categoryId } });
-      const completedPosts = user.completedPosts.filter(
-        (cp) => cp.post.categoryId === categoryId
-      ).length;
+    user.completedPosts.forEach((completedPost) => {
+      const categoryName = completedPost.post.category.name;
+      if (completedPost.isSuccess) {
+        if (!categoryProgress[categoryName]) {
+          categoryProgress[categoryName] = 0;
+        }
+        categoryProgress[categoryName] += 1;
+      }
+    });
 
-      if (totalPosts === 0) return null;
+    const totalPostsPerCategory = await prisma.category.findMany({
+      include: {
+        posts: true,
+      },
+    });
 
-      const category = await prisma.category.findUnique({
-        where: { id: categoryId },
-        select: { name: true },
-      });
+    const progress = totalPostsPerCategory.map((category) => {
+      const completedCount = categoryProgress[category.name] || 0;
+      const totalCount = category.posts.length;
+      const progressPercentage = (completedCount / totalCount) * 100;
+
       return {
-        category: category?.name || "Unknown",
-        progress: Math.round((completedPosts / totalPosts) * 100),
+        category: category.name,
+        progress: Math.round(progressPercentage),
       };
-    })
-  );
+    });
 
-  return NextResponse.json({
-    user,
-    progress: categoryProgress.filter(Boolean),
-  });
+    return NextResponse.json({
+      user,
+      progress,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }

@@ -16,17 +16,6 @@ model Category {
   posts Post[]
 }
 
-model Quiz {
-  id            String @id @default(uuid())
-  question      String
-  optionA       String
-  optionB       String
-  optionC       String
-  optionD       String
-  correctAnswer String
-  Post          Post[]
-}
-
 model CompletedPost {
   id          String   @id @default(uuid())
   userId      String
@@ -50,13 +39,35 @@ model Post {
   userId          String?
   sandboxUrl      String?
   sandboxTemplate sandboxTemplate?
-  quizId          String?
   difficulty      difficulty?
   comments        Comment[]
-  CompletedPost   CompletedPost[]
   category        Category         @relation(fields: [categoryId], references: [id])
-  quiz            Quiz?            @relation(fields: [quizId], references: [id])
   User            User?            @relation(fields: [userId], references: [id])
+  quizzes         PostQuiz[] // Relation to connect posts with multiple quizzes
+  completedPosts  CompletedPost[] // Track completed posts
+}
+
+model Quiz {
+  id            String     @id @default(uuid())
+  question      String
+  optionA       String
+  optionB       String
+  optionC       String?
+  optionD       String?
+  correctAnswer String
+  posts         PostQuiz[] // Relation to connect quizzes with posts
+}
+
+// Junction table for Post-Quiz many-to-many relationship
+model PostQuiz {
+  id     String @id @default(uuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId String
+  order  Int // To maintain quiz order within a post
+
+  @@unique([postId, quizId])
 }
 
 model Comment {

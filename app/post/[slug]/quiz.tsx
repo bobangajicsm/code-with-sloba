@@ -2,38 +2,54 @@
 import { useState } from "react";
 import styles from "./quiz.module.scss";
 
-interface QuestionData {
-  id: string;
-  question: string;
-  optionA: string;
-  optionB: string;
-  optionC: string;
-  optionD: string;
-  correctAnswer: string;
-}
-
 interface QuizProps {
-  questionData: QuestionData;
+  questions: {
+    quiz: {
+      id: string;
+      question: string;
+      optionA: string;
+      optionB: string;
+      optionC: string | null;
+      optionD: string | null;
+      correctAnswer: string;
+    };
+  }[];
   postId: string;
   userId: string;
 }
 
-export default function Quiz({ questionData, postId, userId }: QuizProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>("");
+export default function Quiz({ questions, postId, userId }: QuizProps) {
+  const [selectedAnswers, setSelectedAnswers] = useState<{
+    [key: string]: string;
+  }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const isCorrect = selectedAnswer === questionData.correctAnswer;
+  const [isCorrect, setIsCorrect] = useState(false);
+
+  const handleAnswerChange = (questionId: string, answer: string) => {
+    setSelectedAnswers((prev) => ({ ...prev, [questionId]: answer }));
+  };
 
   const handleSubmit = async () => {
     if (isSubmitted || isDisabled) return;
 
     setIsSubmitted(true);
 
+    const allCorrect = questions.every((questionWrapper) => {
+      const question = questionWrapper.quiz;
+      const selectedAnswer = selectedAnswers[question.id];
+      const correctAnswer =
+        question[question.correctAnswer as keyof typeof question];
+      return selectedAnswer === correctAnswer;
+    });
+
+    setIsCorrect(allCorrect);
+
     try {
       const res = await fetch("/api/quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, postId, isCorrect }),
+        body: JSON.stringify({ userId, postId, isCorrect: allCorrect }),
       });
 
       if (!res.ok) throw new Error("Failed to submit answer");
@@ -49,42 +65,57 @@ export default function Quiz({ questionData, postId, userId }: QuizProps) {
 
   return (
     <div className={styles.quizContainer}>
-      <h3>Question</h3>
-      <div className={styles.question}>
-        <p>{questionData.question}</p>
-        <div className={styles.options}>
-          {["A", "B", "C", "D"].map((key, i) => {
-            const option = questionData[`option${key}` as keyof QuestionData];
-            return (
-              <label
-                key={i}
-                className={`${styles.option} ${
-                  isSubmitted && option === questionData.correctAnswer
-                    ? styles.correct
-                    : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="quiz-question"
-                  value={option}
-                  checked={selectedAnswer === option}
-                  onChange={() => setSelectedAnswer(option)}
-                  disabled={isSubmitted || isDisabled}
-                />
-                {option}
-              </label>
-            );
-          })}
-        </div>
-      </div>
+      <h3>Quiz</h3>
+      {questions.map((questionWrapper, index) => {
+        const question = questionWrapper.quiz;
+        return (
+          <div key={question.id} className={styles.question}>
+            <p>{`${index + 1}. ${question.question}`}</p>
+            <div className={styles.options}>
+              {["A", "B", "C", "D"].map((key) => {
+                const option =
+                  question[`option${key}` as keyof typeof question];
+                return (
+                  option && (
+                    <label
+                      key={key}
+                      className={`${styles.option} ${
+                        isSubmitted &&
+                        option ===
+                          question[
+                            question.correctAnswer as keyof typeof question
+                          ]
+                          ? styles.correct
+                          : ""
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name={`quiz-question-${question.id}`}
+                        value={option}
+                        checked={selectedAnswers[question.id] === option}
+                        onChange={() => handleAnswerChange(question.id, option)}
+                        disabled={isSubmitted || isDisabled}
+                      />
+                      {option}
+                    </label>
+                  )
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
       {!isSubmitted ? (
         <button
           className={styles.button}
           onClick={handleSubmit}
-          disabled={!selectedAnswer || isDisabled}
+          disabled={
+            Object.keys(selectedAnswers).length !== questions.length ||
+            isDisabled
+          }
         >
-          Submit Answer
+          Submit Answers
         </button>
       ) : (
         <p className={isCorrect ? styles.correct : styles.incorrect}>

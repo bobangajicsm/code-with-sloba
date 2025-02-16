@@ -108,7 +108,6 @@ export default function UserProfile() {
               ) : (
                 <>
                   <div className={styles.userName}>{user?.name}</div>
-
                   <div className={styles.userEmail}>{user?.email}</div>
                   <div className={styles.createdAt}>
                     Joined:{" "}

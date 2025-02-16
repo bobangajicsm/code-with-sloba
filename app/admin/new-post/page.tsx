@@ -1,13 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import styles from "./page.module.scss";
-import { CodeEditor } from "@/app/admin/components/code-editor"; // to remove
-import QuillEditor from "@/app/admin/components/quill-editor";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
+import QuillEditor from "@/app/admin/components/quill-editor";
+
+interface Quiz {
+  question: string;
+  optionA: string;
+  optionB: string;
+  optionC?: string; // Made optional
+  optionD?: string; // Made optional
+  correctAnswer: string;
+}
 
 interface PostFormData {
   title: string;
@@ -19,14 +27,7 @@ interface PostFormData {
   images: string[];
   sandboxUrl?: string;
   sandboxTemplate?: SandboxTemplate;
-  quiz: {
-    question: string;
-    optionA: string;
-    optionB: string;
-    optionC: string;
-    optionD: string;
-    correctAnswer: string;
-  };
+  quizzes: Quiz[];
 }
 
 interface Category {
@@ -35,24 +36,38 @@ interface Category {
   slug: string;
 }
 
-const languages = [
-  { lang: "javascript" },
-  { lang: "typescript" },
-  { lang: "html" },
-  { lang: "scss" },
-  { lang: "css" },
-  { lang: "less" },
-  { lang: "markdown" },
-  { lang: "mdx" },
-  { lang: "powershell" },
-  { lang: "xml" },
-];
 export default function NewPost() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm<PostFormData>({
+    defaultValues: {
+      quizzes: [
+        {
+          question: "",
+          optionA: "",
+          optionB: "",
+          optionC: "",
+          optionD: "",
+          correctAnswer: "",
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "quizzes",
+  });
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -71,18 +86,10 @@ export default function NewPost() {
     fetchCategories();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<PostFormData>();
-
   const onSubmit = async (data: PostFormData) => {
     try {
       setIsSubmitting(true);
 
-      // Upload carousel images
       const uploadedImages = await Promise.all(
         carouselImages.map(async (image) => {
           const formData = new FormData();
@@ -113,7 +120,6 @@ export default function NewPost() {
       router.push("/admin");
     } catch (error) {
       console.error("Error creating post:", error);
-      // You could add a toast notification here
     } finally {
       setIsSubmitting(false);
     }
@@ -252,51 +258,122 @@ export default function NewPost() {
         </div>
 
         <div className={styles.formGroup}>
-          <h3>Quiz</h3>
-          <input
-            {...register("quiz.question", { required: "Question is required" })}
-            placeholder="Question"
-            className={styles.input}
-          />
-          {errors.quiz?.question && (
-            <span className={styles.error}>{errors.quiz.question.message}</span>
-          )}
+          <div className={styles.quizHeader}>
+            <h3>Quizzes</h3>
+            <button
+              type="button"
+              onClick={() =>
+                append({
+                  question: "",
+                  optionA: "",
+                  optionB: "",
+                  optionC: "",
+                  optionD: "",
+                  correctAnswer: "",
+                })
+              }
+              className={styles.addQuizButton}
+            >
+              Add New Quiz
+            </button>
+          </div>
 
-          <input
-            {...register("quiz.optionA", { required: "Option A is required" })}
-            placeholder="Option A"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionB", { required: "Option B is required" })}
-            placeholder="Option B"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionC", { required: "Option C is required" })}
-            placeholder="Option C"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionD", { required: "Option D is required" })}
-            placeholder="Option D"
-            className={styles.input}
-          />
+          {fields.map((field, index) => {
+            const questionPrefix = `quizzes.${index}` as const;
+            // Watch the values of optionC and optionD to determine if they should be included in correctAnswer options
+            const optionC = watch(`${questionPrefix}.optionC`);
+            const optionD = watch(`${questionPrefix}.optionD`);
 
-          <select
-            {...register("quiz.correctAnswer", {
-              required: "Correct answer is required",
-            })}
-            className={styles.select}
-          >
-            <option value="">Select correct answer</option>
-            <option value="optionA">Option A</option>
-            <option value="optionB">Option B</option>
-            <option value="optionC">Option C</option>
-            <option value="optionD">Option D</option>
-          </select>
+            return (
+              <div key={field.id} className={styles.quizContainer}>
+                <div className={styles.quizHeader}>
+                  <h4>Quiz {index + 1}</h4>
+                  {fields.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className={styles.removeQuizButton}
+                    >
+                      Remove Quiz
+                    </button>
+                  )}
+                </div>
+                <div className={styles.quizInputs}>
+                  <input
+                    {...register(`${questionPrefix}.question`, {
+                      required: "Question is required",
+                    })}
+                    placeholder="Question"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.question && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.question?.message}
+                    </span>
+                  )}
+
+                  <input
+                    {...register(`${questionPrefix}.optionA`, {
+                      required: "Option A is required",
+                    })}
+                    placeholder="Option A (required)"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.optionA && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.optionA?.message}
+                    </span>
+                  )}
+
+                  <input
+                    {...register(`${questionPrefix}.optionB`, {
+                      required: "Option B is required",
+                    })}
+                    placeholder="Option B (required)"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.optionB && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.optionB?.message}
+                    </span>
+                  )}
+
+                  <input
+                    {...register(`${questionPrefix}.optionC`)}
+                    placeholder="Option C (optional)"
+                    className={styles.input}
+                  />
+
+                  <input
+                    {...register(`${questionPrefix}.optionD`)}
+                    placeholder="Option D (optional)"
+                    className={styles.input}
+                  />
+
+                  <select
+                    {...register(`${questionPrefix}.correctAnswer`, {
+                      required: "Correct answer is required",
+                    })}
+                    className={styles.select}
+                  >
+                    <option value="">Select correct answer</option>
+                    <option value="optionA">Option A</option>
+                    <option value="optionB">Option B</option>
+                    {optionC && <option value="optionC">Option C</option>}
+                    {optionD && <option value="optionD">Option D</option>}
+                  </select>
+                  {errors.quizzes?.[index]?.correctAnswer && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.correctAnswer?.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
+        {/* Keep the published checkbox and submit button */}
         <div className={styles.formGroup}>
           <label className={styles.checkboxLabel}>
             <input

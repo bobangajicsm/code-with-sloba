@@ -21,7 +21,14 @@ export default async function PostPage({
   const post = await prisma.post.findUnique({
     where: { slug: params.slug },
     include: {
-      quiz: true,
+      quizzes: {
+        include: {
+          quiz: true,
+        },
+        orderBy: {
+          order: "asc",
+        },
+      },
       comments: {
         orderBy: { createdAt: "desc" },
         include: {
@@ -78,11 +85,11 @@ export default async function PostPage({
 
       <QuillContent content={post.content} />
 
-      {post.quiz && (
+      {post.quizzes.length > 0 && (
         <>
           {userId ? (
             canTakeQuiz ? (
-              <Quiz questionData={post.quiz} postId={post.id} userId={userId} />
+              <Quiz questions={post.quizzes} postId={post.id} userId={userId} />
             ) : hasCompletedQuiz ? (
               <p>
                 🎉 Congratulations! You have successfully completed this quiz.
