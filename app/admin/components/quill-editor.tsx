@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+import styles from "./quill-editor.module.scss";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -50,6 +51,13 @@ const formats = [
   "image",
 ];
 
+const transformContent = (content: string) => {
+  return content.replace(
+    /(https:\/\/codesandbox.io\/embed\/[a-zA-Z0-9-]+)/g,
+    `<iframe src="$1" width="100%" height="500" style="border:0; border-radius:4px; overflow:hidden;"></iframe>`
+  );
+};
+
 const QuillEditor = forwardRef<QuillEditorRef, QuillEditorProps>(
   ({ value, onChange }, ref) => {
     const quillRef = useRef<any>(null);
@@ -78,8 +86,10 @@ const QuillEditor = forwardRef<QuillEditorRef, QuillEditorProps>(
       return () => observer.disconnect();
     }, []);
 
+    onChange(transformContent(value));
+
     return (
-      <div className="quill-editor-container">
+      <div className={styles.quillEditorContainer}>
         <ForwardedQuill
           ref={quillRef}
           theme="snow"

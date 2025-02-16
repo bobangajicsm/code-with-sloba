@@ -10,6 +10,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { Snippet } from "@/app/types/snippet";
 import QuillContent from "@/app/post/[slug]/quill-content";
 import CodeSandbox from "@/app/post/[slug]/code-sandbox";
+import Sandbox from "@/app/post/[slug]/sandbox";
 
 export default async function PostPage({
   params,
@@ -75,6 +76,8 @@ export default async function PostPage({
   return (
     <div className={styles.container}>
       <SlickSlider post={post} />
+
+      <Sandbox sandboxId="fxr5s3" />
 
       <QuillContent content={post.content} />
       {post.code && (
