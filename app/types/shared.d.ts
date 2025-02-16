@@ -39,11 +39,8 @@ export interface Post {
   published: boolean;
   updatedAt: Date;
   userId?: string | null;
-  code: {
-    title: string;
-    language: string;
-    code: string;
-  }[];
+  sandboxUrl?: string;
+  sandboxTemplate?: SandboxTemplate;
   quizId?: string | null;
   difficulty?: Difficulty | null;
   comments?: Comment[];

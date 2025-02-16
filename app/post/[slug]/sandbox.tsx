@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import type { SandpackFiles } from "@codesandbox/sandpack-react";
+import SandboxTemplate from "@/app/utils/sandbox-template-enum";
 
 interface SandboxModule {
   code: string;
@@ -25,19 +26,24 @@ interface SandboxResponse {
 }
 
 interface ExistingSandboxProps {
-  sandboxId: string;
+  sanboxUrl: string;
+  sandboxTemplate: string | null;
 }
 
-const Sandbox = ({ sandboxId }: ExistingSandboxProps) => {
+const Sandbox = ({ sanboxUrl, sandboxTemplate }: ExistingSandboxProps) => {
   const [files, setFiles] = useState<SandpackFiles | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchSandboxFiles = async () => {
       try {
+        const sandboxUrlPaths = sanboxUrl.split("/");
         const response = await fetch(
-          `https://codesandbox.io/api/v1/sandboxes/${sandboxId}`
+          `https://codesandbox.io/api/v1/sandboxes/${
+            sandboxUrlPaths[sandboxUrlPaths.length - 1]
+          }`
         );
+
         const data: SandboxResponse = await response.json();
 
         const transformedFiles: SandpackFiles = {};
@@ -62,10 +68,10 @@ const Sandbox = ({ sandboxId }: ExistingSandboxProps) => {
       }
     };
 
-    if (sandboxId) {
+    if (sanboxUrl) {
       fetchSandboxFiles();
     }
-  }, [sandboxId]);
+  }, [sanboxUrl]);
 
   if (isLoading) {
     return <div>Loading sandbox...</div>;
@@ -77,7 +83,7 @@ const Sandbox = ({ sandboxId }: ExistingSandboxProps) => {
 
   return (
     <Sandpack
-      template="static"
+      template={(sandboxTemplate as SandboxTemplate) || "static"}
       files={files}
       options={{
         showLineNumbers: true,

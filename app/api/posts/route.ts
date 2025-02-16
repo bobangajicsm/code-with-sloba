@@ -17,7 +17,8 @@ export async function POST(req: Request) {
       difficulty,
       published,
       images,
-      code,
+      sandboxUrl,
+      sandboxTemplate,
       quiz,
     } = await req.json();
 
@@ -43,7 +44,8 @@ export async function POST(req: Request) {
         difficulty,
         published,
         images,
-        code,
+        sandboxUrl,
+        sandboxTemplate,
         quizId: createdQuiz.id,
         userId: session.user.id,
       },

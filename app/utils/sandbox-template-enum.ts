@@ -1,0 +1,27 @@
+enum SandboxTemplate {
+  Static = "static",
+  React = "react",
+  ReactTs = "react-ts",
+  Nextjs = "nextjs",
+  Vanilla = "vanilla",
+  Angular = "angular",
+  ViteReactTs = "vite-react-ts",
+  ViteReact = "vite-react",
+  Node = "node",
+  Vite = "vite",
+  Astro = "astro",
+  VitePreact = "vite-preact",
+  ViteSvelteTs = "vite-svelte-ts",
+  ViteSvelte = "vite-svelte",
+  ViteVueTs = "vite-vue-ts",
+  ViteVue = "vite-vue",
+  VitePreactTs = "vite-preact-ts",
+  VueTs = "vue-ts",
+  Vue = "vue",
+  VanillaTs = "vanilla-ts",
+  TestTs = "test-ts",
+  Svelte = "svelte",
+  Solid = "solid",
+}
+
+export default SandboxTemplate;

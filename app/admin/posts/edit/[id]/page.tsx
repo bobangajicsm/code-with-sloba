@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
 import styles from "../../../new-post/page.module.scss";
 import { CodeEditor } from "@/app/admin/components/code-editor";
 import QuillEditor from "@/app/admin/components/quill-editor";
@@ -10,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Difficulty, Post } from "@/app/types/shared";
+import SandboxTemplate from "@/app/utils/sandbox-template-enum";
 
 interface PostFormData {
   title: string;
@@ -18,6 +18,8 @@ interface PostFormData {
   categoryId: string;
   difficulty: "easy" | "medium" | "hard";
   published: boolean;
+  sandboxUrl?: string;
+  sandboxTemplate?: SandboxTemplate;
   images: string[];
   code: Array<{
     title: string;
@@ -56,14 +58,73 @@ const languages = [
 export default function EditPost({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [codeSnippets, setCodeSnippets] = useState([
-    { title: "", language: "javascript", code: "" },
-  ]);
+
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [post, setPost] = useState<Post | null>(null);
+
+  const onSubmit = async (data: PostFormData) => {
+    try {
+      setIsSubmitting(true);
+
+      // Upload new carousel images
+      const uploadedImages = await Promise.all(
+        carouselImages.map(async (image) => {
+          const formData = new FormData();
+          formData.append("file", image);
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+          if (!response.ok) throw new Error("Failed to upload image");
+          const { url } = await response.json();
+          return url;
+        })
+      );
+
+      // Combine existing and new images
+      const allImages = [...existingImages, ...uploadedImages];
+
+      // Update the post
+      const response = await fetch(`/api/posts/${params.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          images: allImages,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update post");
+
+      toast.success("Post updated successfully");
+      router.push("/admin");
+    } catch (error) {
+      console.error("Error updating post:", error);
+      toast.error("Failed to update post");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+    setCarouselImages((prev) => [...prev, ...Array.from(files)]);
+  };
+
+  const removeImage = (index: number) => {
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeNewImage = (index: number) => {
+    setCarouselImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -116,6 +177,8 @@ export default function EditPost({ params }: { params: { id: string } }) {
         categoryId: post.categoryId,
         difficulty: post.difficulty?.toLowerCase() as Difficulty,
         published: post.published,
+        sandboxUrl: post.sandboxUrl || "",
+        sandboxTemplate: post.sandboxTemplate,
         quiz: post.quiz || {
           question: "",
           optionA: "",
@@ -125,82 +188,11 @@ export default function EditPost({ params }: { params: { id: string } }) {
           correctAnswer: "",
         },
       });
-      setCodeSnippets(post.code || []);
       setExistingImages(post.images || []);
     }
   }, [post, reset]);
 
-  const onSubmit = async (data: PostFormData) => {
-    try {
-      setIsSubmitting(true);
-
-      // Upload new carousel images
-      const uploadedImages = await Promise.all(
-        carouselImages.map(async (image) => {
-          const formData = new FormData();
-          formData.append("file", image);
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-          });
-          if (!response.ok) throw new Error("Failed to upload image");
-          const { url } = await response.json();
-          return url;
-        })
-      );
-
-      // Combine existing and new images
-      const allImages = [...existingImages, ...uploadedImages];
-
-      // Update the post
-      const response = await fetch(`/api/posts/${params.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          images: allImages,
-          code: codeSnippets,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to update post");
-
-      toast.success("Post updated successfully");
-      router.push("/admin");
-    } catch (error) {
-      console.error("Error updating post:", error);
-      toast.error("Failed to update post");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-    setCarouselImages((prev) => [...prev, ...Array.from(files)]);
-  };
-
-  const addCodeSnippet = () => {
-    setCodeSnippets((prev) => [
-      ...prev,
-      { title: "", language: "javascript", code: "" },
-    ]);
-  };
-
-  const removeCodeSnippet = (index: number) => {
-    setCodeSnippets((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const removeImage = (index: number) => {
-    setExistingImages((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const removeNewImage = (index: number) => {
-    setCarouselImages((prev) => prev.filter((_, i) => i !== index));
-  };
+  // ... (keeping all the existing handlers)
 
   if (isLoading) {
     return (
@@ -215,7 +207,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
       <h1 className={styles.title}>Edit Blog Post</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        {/* Title field */}
+        {/* Existing fields (title, slug, category, difficulty) remain the same */}
         <div className={styles.formGroup}>
           <label>Title</label>
           <input
@@ -228,7 +220,6 @@ export default function EditPost({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        {/* Slug field */}
         <div className={styles.formGroup}>
           <label>Slug</label>
           <input
@@ -241,7 +232,6 @@ export default function EditPost({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        {/* Category selection */}
         <div className={styles.formGroup}>
           <label>Category</label>
           <select
@@ -260,13 +250,33 @@ export default function EditPost({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        {/* Difficulty selection */}
         <div className={styles.formGroup}>
           <label>Difficulty</label>
           <select {...register("difficulty")} className={styles.select}>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        {/* New fields for sandbox */}
+        <div className={styles.formGroup}>
+          <label>Sandbox URL (optional)</label>
+          <input
+            {...register("sandboxUrl")}
+            className={styles.input}
+            placeholder="CodeSandbox URL"
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Sandbox Template (optional)</label>
+          <select {...register("sandboxTemplate")} className={styles.select}>
+            {Object.values(SandboxTemplate).map((template) => (
+              <option key={template} value={template}>
+                {template.replace(/-/g, " ")}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -339,63 +349,6 @@ export default function EditPost({ params }: { params: { id: string } }) {
           {errors.content && (
             <span className={styles.error}>{errors.content.message}</span>
           )}
-        </div>
-
-        {/* Code Snippets */}
-        <div className={styles.formGroup}>
-          <label>Code Snippets</label>
-          {codeSnippets.map((snippet, index) => (
-            <div key={index} className={styles.codeSnippet}>
-              <input
-                placeholder="Snippet title"
-                value={snippet.title}
-                onChange={(e) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].title = e.target.value;
-                  setCodeSnippets(newSnippets);
-                }}
-                className={styles.input}
-              />
-              <select
-                value={snippet.language}
-                onChange={(e) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].language = e.target.value;
-                  setCodeSnippets(newSnippets);
-                }}
-                className={styles.select}
-              >
-                {languages.map((language) => (
-                  <option key={language.lang} value={language.lang}>
-                    {language.lang}
-                  </option>
-                ))}
-              </select>
-              <CodeEditor
-                value={snippet.code}
-                onChange={(value) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].code = value || "";
-                  setCodeSnippets(newSnippets);
-                }}
-                language={snippet.language}
-              />
-              <button
-                type="button"
-                onClick={() => removeCodeSnippet(index)}
-                className={styles.removeButton}
-              >
-                Remove Snippet
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addCodeSnippet}
-            className={styles.addButton}
-          >
-            Add Code Snippet
-          </button>
         </div>
 
         {/* Quiz Section */}

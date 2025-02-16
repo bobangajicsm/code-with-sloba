@@ -38,24 +38,25 @@ model CompletedPost {
 }
 
 model Post {
-  id            String          @id @default(cuid())
-  title         String
-  slug          String          @unique
-  content       String
-  categoryId    String
-  createdAt     DateTime        @default(now())
-  images        String[]
-  published     Boolean         @default(false)
-  updatedAt     DateTime        @updatedAt
-  userId        String?
-  code          Json
-  quizId        String?
-  difficulty    difficulty?
-  comments      Comment[]
-  CompletedPost CompletedPost[]
-  category      Category        @relation(fields: [categoryId], references: [id])
-  quiz          Quiz?           @relation(fields: [quizId], references: [id])
-  User          User?           @relation(fields: [userId], references: [id])
+  id              String           @id @default(cuid())
+  title           String
+  slug            String           @unique
+  content         String
+  categoryId      String
+  createdAt       DateTime         @default(now())
+  images          String[]
+  published       Boolean          @default(false)
+  updatedAt       DateTime?        @updatedAt
+  userId          String?
+  sandboxUrl      String?
+  sandboxTemplate sandboxTemplate?
+  quizId          String?
+  difficulty      difficulty?
+  comments        Comment[]
+  CompletedPost   CompletedPost[]
+  category        Category         @relation(fields: [categoryId], references: [id])
+  quiz            Quiz?            @relation(fields: [quizId], references: [id])
+  User            User?            @relation(fields: [userId], references: [id])
 }
 
 model Comment {
@@ -125,4 +126,30 @@ enum difficulty {
   easy
   medium
   hard
+}
+
+enum sandboxTemplate {
+  astro
+  viteSvelteTs
+  viteSvelte
+  viteVueTs
+  viteVue
+  vitePreactTs
+  vitePreact
+  viteReactTs
+  viteReact
+  vite
+  nextjs
+  node
+  vueTs
+  vue
+  vanilla
+  vanillaTs
+  testTs
+  svelte
+  solid
+  reactTs
+  react
+  angular
+  static
 }

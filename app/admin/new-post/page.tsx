@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styles from "./page.module.scss";
-import { CodeEditor } from "@/app/admin/components/code-editor";
+import { CodeEditor } from "@/app/admin/components/code-editor"; // to remove
 import QuillEditor from "@/app/admin/components/quill-editor";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import SandboxTemplate from "@/app/utils/sandbox-template-enum";
 
 interface PostFormData {
   title: string;
@@ -16,11 +17,8 @@ interface PostFormData {
   difficulty: "easy" | "medium" | "hard";
   published: boolean;
   images: string[];
-  code: Array<{
-    title: string;
-    language: string;
-    code: string;
-  }>;
+  sandboxUrl?: string;
+  sandboxTemplate?: SandboxTemplate;
   quiz: {
     question: string;
     optionA: string;
@@ -52,15 +50,7 @@ const languages = [
 export default function NewPost() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [codeSnippets, setCodeSnippets] = useState([
-    {
-      title: "",
-      language: "javascript",
-      code: "",
-    },
-  ]);
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
-
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
@@ -107,7 +97,6 @@ export default function NewPost() {
         })
       );
 
-      // Create the post with all data
       const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
@@ -116,7 +105,6 @@ export default function NewPost() {
         body: JSON.stringify({
           ...data,
           images: uploadedImages,
-          code: codeSnippets,
         }),
       });
 
@@ -134,19 +122,7 @@ export default function NewPost() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
-
     setCarouselImages((prev) => [...prev, ...Array.from(files)]);
-  };
-
-  const addCodeSnippet = () => {
-    setCodeSnippets((prev) => [
-      ...prev,
-      { title: "", language: "javascript", code: "" },
-    ]);
-  };
-
-  const removeCodeSnippet = (index: number) => {
-    setCodeSnippets((prev) => prev.filter((_, i) => i !== index));
   };
 
   const removeImage = (index: number) => {
@@ -187,6 +163,7 @@ export default function NewPost() {
           <select
             {...register("categoryId", { required: "Category is required" })}
             className={styles.select}
+            disabled={isLoadingCategories}
           >
             <option value="">Select a category</option>
             {categories.map((category) => (
@@ -206,6 +183,26 @@ export default function NewPost() {
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Sandbox URL (optional)</label>
+          <input
+            {...register("sandboxUrl")}
+            className={styles.input}
+            placeholder="CodeSandbox URL"
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Sandbox Template (optional)</label>
+          <select {...register("sandboxTemplate")} className={styles.select}>
+            {Object.values(SandboxTemplate).map((template) => (
+              <option key={template} value={template}>
+                {template.replace(/-/g, " ")}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -249,66 +246,9 @@ export default function NewPost() {
               <QuillEditor value={value} onChange={onChange} />
             )}
           />
-
           {errors.content && (
             <span className={styles.error}>{errors.content.message}</span>
           )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Code Snippets</label>
-          {codeSnippets.map((snippet, index) => (
-            <div key={index} className={styles.codeSnippet}>
-              <input
-                placeholder="Snippet title"
-                value={snippet.title}
-                onChange={(e) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].title = e.target.value;
-                  setCodeSnippets(newSnippets);
-                }}
-                className={styles.input}
-              />
-              <select
-                value={snippet.language}
-                onChange={(e) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].language = e.target.value;
-                  setCodeSnippets(newSnippets);
-                }}
-                className={styles.select}
-              >
-                {languages.map((language) => (
-                  <option key={language.lang} value={language.lang}>
-                    {language.lang}
-                  </option>
-                ))}
-              </select>
-              <CodeEditor
-                value={snippet.code}
-                onChange={(value) => {
-                  const newSnippets = [...codeSnippets];
-                  newSnippets[index].code = value || "";
-                  setCodeSnippets(newSnippets);
-                }}
-                language={snippet.language}
-              />
-              <button
-                type="button"
-                onClick={() => removeCodeSnippet(index)}
-                className={styles.removeButton}
-              >
-                Remove Snippet
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addCodeSnippet}
-            className={styles.addButton}
-          >
-            Add Code Snippet
-          </button>
         </div>
 
         <div className={styles.formGroup}>
