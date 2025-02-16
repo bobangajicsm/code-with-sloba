@@ -73,14 +73,8 @@ export default async function PostPage({
 
   return (
     <div className={styles.container}>
+      <h1>{post.title}</h1>
       <SlickSlider post={post} />
-
-      {post.sandboxUrl && (
-        <Sandbox
-          sanboxUrl={post.sandboxUrl}
-          sandboxTemplate={post.sandboxTemplate}
-        />
-      )}
 
       <QuillContent content={post.content} />
 
@@ -103,6 +97,13 @@ export default async function PostPage({
             <p>Please log in to access the quiz.</p>
           )}
         </>
+      )}
+
+      {post.sandboxUrl && (
+        <Sandbox
+          sanboxUrl={post.sandboxUrl}
+          sandboxTemplate={post.sandboxTemplate}
+        />
       )}
 
       <CommentsSection postId={post.id} comments={post.comments} />

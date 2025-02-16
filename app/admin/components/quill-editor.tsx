@@ -9,6 +9,8 @@ import React, {
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import styles from "./quill-editor.module.scss";
+import hljs from "highlight.js";
+import "highlight.js/styles/vs2015.css";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -33,9 +35,12 @@ const modules = {
     ["bold", "italic", "underline", "strike"],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ align: [] }],
-    ["link", "image"],
+    ["link", "image", "code-block"], // Add "code-block"
     ["clean"],
   ],
+  syntax: {
+    highlight: (text: string) => hljs.highlightAuto(text).value, // Enables syntax highlighting
+  },
 };
 
 const formats = [
@@ -49,14 +54,8 @@ const formats = [
   "align",
   "link",
   "image",
+  "code-block", // Add code-block
 ];
-
-const transformContent = (content: string) => {
-  return content.replace(
-    /(https:\/\/codesandbox.io\/embed\/[a-zA-Z0-9-]+)/g,
-    `<iframe src="$1" width="100%" height="500" style="border:0; border-radius:4px; overflow:hidden;"></iframe>`
-  );
-};
 
 const QuillEditor = forwardRef<QuillEditorRef, QuillEditorProps>(
   ({ value, onChange }, ref) => {
@@ -72,9 +71,8 @@ const QuillEditor = forwardRef<QuillEditorRef, QuillEditorProps>(
       const editor = quillRef.current.getEditor();
       const editorContainer = editor.root;
 
-      // Use MutationObserver to track content changes instead of deprecated DOM events
       const observer = new MutationObserver(() => {
-        editor.update(); // Ensures Quill properly registers the changes
+        editor.update();
       });
 
       observer.observe(editorContainer, {
@@ -85,8 +83,6 @@ const QuillEditor = forwardRef<QuillEditorRef, QuillEditorProps>(
 
       return () => observer.disconnect();
     }, []);
-
-    onChange(transformContent(value));
 
     return (
       <div className={styles.quillEditorContainer}>

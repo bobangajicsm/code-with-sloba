@@ -39,3 +39,11 @@ body {
 .formkit-form.clare .formkit-field {
   flex: 1 !important;
 }
+
+.hljs {
+  overflow: auto;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 100%;
+  overflow: auto;
+}

@@ -20,8 +20,9 @@ export async function PUT(
       difficulty,
       published,
       images,
-      code,
       quiz,
+      sandboxUrl,
+      sandboxTemplate,
     } = await req.json();
 
     // Update the quiz
@@ -54,7 +55,8 @@ export async function PUT(
         difficulty,
         published,
         images,
-        code,
+        sandboxUrl,
+        sandboxTemplate,
       },
     });
 
