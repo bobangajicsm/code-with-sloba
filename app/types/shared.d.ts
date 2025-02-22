@@ -37,7 +37,7 @@ export interface Post {
   createdAt: Date;
   images: string[];
   published: boolean;
-  updatedAt: Date;
+  updatedAt: Date | null;
   userId?: string | null;
   sandboxUrl?: string;
   sandboxTemplate?: SandboxTemplate;
@@ -46,7 +46,7 @@ export interface Post {
   comments?: Comment[];
   CompletedPost?: CompletedPost[];
   category?: Category;
-  quiz?: Quiz | null;
+  quizzes: Quiz[];
   User?: User | null;
   description?: string;
   tags?: string[];

@@ -1,13 +1,17 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+
 import Link from "next/link";
 import FilterBar from "./filter-bar";
 import styles from "./page.module.scss";
-import { Prisma } from "@prisma/client";
 import { POST_META } from "@/app/constants";
 import buttonStyles from "@/app/components/button.module.scss";
 import { ArrowLeft } from "lucide-react";
 import PostCard from "@/app/components/post-card/post-card";
 import { Post } from "@/app/types/shared";
+import { useEffect, useState } from "react";
+import { fetchPosts } from "./actions";
+
+const POSTS_PER_PAGE = 10;
 
 interface CategoryPageProps {
   params: {
@@ -20,49 +24,56 @@ interface CategoryPageProps {
   };
 }
 
-export default async function CategoryPage({
+export default function CategoryPage({
   params: { category },
   searchParams: { sort = "newest", difficulty, search = "" },
 }: CategoryPageProps) {
-  const categoryData = await prisma.category.findFirst({
-    where: { slug: category },
-  });
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [categoryData, setCategoryData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const loadInitialPosts = async () => {
+      setLoading(true);
+      const result = await fetchPosts(category, sort, difficulty, search);
+      if (result) {
+        setPosts(result.posts as Post[]);
+        setCategoryData(result.categoryData);
+        setHasMore(result.posts.length === POSTS_PER_PAGE);
+      }
+      setLoading(false);
+    };
+
+    loadInitialPosts();
+    setPage(0); // Reset page when filters change
+  }, [category, sort, difficulty, search]);
+
+  const loadMore = async () => {
+    const nextPage = page + POSTS_PER_PAGE;
+    setLoadingMore(true);
+
+    const result = await fetchPosts(
+      category,
+      sort,
+      difficulty,
+      search,
+      nextPage * POSTS_PER_PAGE
+    );
+
+    if (result) {
+      setPosts((prevPosts) => [...prevPosts, ...(result.posts as Post[])]);
+      setHasMore(result.posts.length === POSTS_PER_PAGE);
+      setPage(nextPage);
+    }
+    setLoadingMore(false);
+  };
 
   if (!categoryData) {
     return <div>Category not found</div>;
   }
-
-  const where = {
-    categoryId: categoryData.id,
-    published: true,
-    ...(difficulty ? { difficulty } : {}),
-    ...(search
-      ? {
-          OR: [
-            { title: { contains: search, mode: Prisma.QueryMode.insensitive } },
-            {
-              content: { contains: search, mode: Prisma.QueryMode.insensitive },
-            },
-          ],
-        }
-      : {}),
-  };
-
-  const posts: Post[] = await prisma.post.findMany({
-    where,
-    orderBy: {
-      createdAt: sort === "newest" ? "desc" : "asc",
-    },
-    include: {
-      category: true,
-      User: {
-        select: {
-          name: true,
-          avatarUrl: true,
-        },
-      },
-    },
-  });
 
   return (
     <div className={styles.container}>
@@ -87,10 +98,27 @@ export default async function CategoryPage({
       />
 
       <div className={styles.posts}>
-        {posts.length === 0 ? (
+        {loading ? (
+          <p>Loading...</p>
+        ) : posts.length === 0 ? (
           <p>No posts found.</p>
         ) : (
-          posts.map((post) => <PostCard key={post.id} post={post} />)
+          <>
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+            {hasMore && (
+              <div>
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className={`${buttonStyles.button} ${styles.loadMore}`}
+                >
+                  {loadingMore ? "Loading..." : "Load More"}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -156,15 +156,32 @@ export async function PATCH(
     return new Response("Unauthorized", { status: 401 });
   }
 
+  let body;
   try {
-    const { quizzes, categoryId, ...updateData } = await req.json();
+    // Read the body once and store it
+    body = await req.json();
+    console.log("Request body:", body);
+  } catch (error) {
+    console.error("Error parsing request body:", error);
+    return new Response("Invalid JSON body", { status: 400 });
+  }
+
+  try {
+    const {
+      quizzes,
+      categoryId,
+      description, // New field
+      tags, // New field
+      ...updateData
+    } = body;
+
     const postId = params.id;
 
     // Start a transaction to handle all updates
     const updatedPost = await prisma.$transaction(async (prisma) => {
       // If quizzes are included in the update
       if (quizzes) {
-        // Delete existing quiz relationships
+        // Delete existing quiz relationships and quizzes
         await prisma.postQuiz.deleteMany({
           where: { postId },
         });
@@ -174,12 +191,12 @@ export async function PATCH(
           quizzes.map(async (quiz: any, index: number) => {
             const createdQuiz = await prisma.quiz.create({
               data: {
-                question: quiz.question,
-                optionA: quiz.optionA,
-                optionB: quiz.optionB,
-                optionC: quiz.optionC,
-                optionD: quiz.optionD,
-                correctAnswer: quiz.correctAnswer,
+                question: quiz.quiz.question, // Adjusted to match structure
+                optionA: quiz.quiz.optionA,
+                optionB: quiz.quiz.optionB,
+                optionC: quiz.quiz.optionC || "", // Handle optional fields
+                optionD: quiz.quiz.optionD || "", // Handle optional fields
+                correctAnswer: quiz.quiz.correctAnswer,
               },
             });
 
@@ -194,11 +211,13 @@ export async function PATCH(
         );
       }
 
-      // Update the post
+      // Update the post with new fields
       return prisma.post.update({
         where: { id: postId },
         data: {
           ...updateData,
+          description: description || null, // Handle optional description
+          tags: tags || [], // Handle optional tags
           categoryId: categoryId ? categoryId : undefined,
         },
         include: {

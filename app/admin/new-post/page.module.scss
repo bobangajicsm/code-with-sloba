@@ -213,3 +213,53 @@
     background-color: #dc2626;
   }
 }
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: #0070f3;
+    box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.1);
+  }
+}
+
+.tagInput {
+  margin-bottom: 0.5rem;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e1e1e1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #555;
+
+  .removeTag {
+    background: none;
+    border: none;
+    margin-left: 0.25rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    font-size: 1rem;
+
+    &:hover {
+      color: #ff4444;
+    }
+  }
+}

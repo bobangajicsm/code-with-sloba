@@ -20,9 +20,10 @@ export async function POST(req: Request) {
       sandboxUrl,
       sandboxTemplate,
       quizzes,
+      description,
+      tags,
     } = await req.json();
 
-    // Create the post first
     const post = await prisma.post.create({
       data: {
         title,
@@ -35,7 +36,8 @@ export async function POST(req: Request) {
         sandboxUrl,
         sandboxTemplate,
         userId: session.user.id,
-        // Create quizzes and their relationships in one transaction
+        tags,
+        description,
         quizzes: {
           create: quizzes.map((quiz: any, index: number) => ({
             order: index,

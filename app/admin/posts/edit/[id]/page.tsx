@@ -1,39 +1,46 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import styles from "../../../new-post/page.module.scss";
 import { CodeEditor } from "@/app/admin/components/code-editor";
 import QuillEditor from "@/app/admin/components/quill-editor";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Difficulty, Post } from "@/app/types/shared";
+import { Difficulty, Post, Quiz as SharedQuiz } from "@/app/types/shared";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
+
+interface QuizQuestion {
+  id?: string; // Optional for new quizzes
+  question: string;
+  optionA: string;
+  optionB: string;
+  optionC?: string;
+  optionD?: string;
+  correctAnswer: string;
+}
+
+interface Quiz {
+  id?: string; // Optional for new quizzes
+  order: number;
+  postId?: string; // Optional for new quizzes
+  quiz: QuizQuestion;
+}
 
 interface PostFormData {
   title: string;
   slug: string;
   content: string;
+  description: string;
+  tags: string[];
   categoryId: string;
   difficulty: "easy" | "medium" | "hard";
   published: boolean;
   sandboxUrl?: string;
   sandboxTemplate?: SandboxTemplate;
   images: string[];
-  code: Array<{
-    title: string;
-    language: string;
-    code: string;
-  }>;
-  quiz: {
-    question: string;
-    optionA: string;
-    optionB: string;
-    optionC: string;
-    optionD: string;
-    correctAnswer: string;
-  };
+  quizzes: QuizQuestion[]; // Store only the question data in the form
 }
 
 interface Category {
@@ -42,97 +49,73 @@ interface Category {
   slug: string;
 }
 
-const languages = [
-  { lang: "javascript" },
-  { lang: "typescript" },
-  { lang: "html" },
-  { lang: "scss" },
-  { lang: "css" },
-  { lang: "less" },
-  { lang: "markdown" },
-  { lang: "mdx" },
-  { lang: "powershell" },
-  { lang: "xml" },
-];
-
 export default function EditPost({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
-
   const [categories, setCategories] = useState<Category[]>([]);
   const [post, setPost] = useState<Post | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [tagInput, setTagInput] = useState("");
 
-  const onSubmit = async (data: PostFormData) => {
-    try {
-      setIsSubmitting(true);
-
-      // Upload new carousel images
-      const uploadedImages = await Promise.all(
-        carouselImages.map(async (image) => {
-          const formData = new FormData();
-          formData.append("file", image);
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-          });
-          if (!response.ok) throw new Error("Failed to upload image");
-          const { url } = await response.json();
-          return url;
-        })
-      );
-
-      // Combine existing and new images
-      const allImages = [...existingImages, ...uploadedImages];
-
-      // Update the post
-      const response = await fetch(`/api/posts/${params.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    watch,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm<PostFormData>({
+    defaultValues: {
+      quizzes: [
+        {
+          question: "",
+          optionA: "",
+          optionB: "",
+          optionC: "",
+          optionD: "",
+          correctAnswer: "",
         },
-        body: JSON.stringify({
-          ...data,
-          images: allImages,
-        }),
-      });
+      ],
+      tags: [],
+    },
+  });
+  console.log(post);
 
-      if (!response.ok) throw new Error("Failed to update post");
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "quizzes",
+  });
 
-      toast.success("Post updated successfully");
-      router.push("/admin");
-    } catch (error) {
-      console.error("Error updating post:", error);
-      toast.error("Failed to update post");
-    } finally {
-      setIsSubmitting(false);
+  // Handle tag addition
+  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tagInput.trim()) {
+      e.preventDefault();
+      const currentTags = getValues("tags") || [];
+      const newTag = tagInput.trim().toLowerCase();
+      if (!currentTags.includes(newTag)) {
+        setValue("tags", [...currentTags, newTag]);
+      }
+      setTagInput("");
     }
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-    setCarouselImages((prev) => [...prev, ...Array.from(files)]);
+  // Handle tag removal
+  const handleRemoveTag = (tagToRemove: string) => {
+    const currentTags = getValues("tags");
+    setValue(
+      "tags",
+      currentTags.filter((tag) => tag !== tagToRemove)
+    );
   };
-
-  const removeImage = (index: number) => {
-    setExistingImages((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const removeNewImage = (index: number) => {
-    setCarouselImages((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-
-        // Fetch both resources in parallel
         const [categoriesResponse, postResponse] = await Promise.all([
           fetch("/api/categories"),
           fetch(`/api/posts/${params.id}`),
@@ -151,6 +134,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
         setPost(postData);
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error("Failed to fetch data");
       } finally {
         setIsLoading(false);
       }
@@ -159,27 +143,81 @@ export default function EditPost({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PostFormData>();
+  const onSubmit = async (data: PostFormData) => {
+    try {
+      setIsSubmitting(true);
 
+      const transformedQuizzes: Quiz[] = data.quizzes.map(
+        (quizQuestion, index) => ({
+          order: index,
+          postId: params.id,
+          quiz: {
+            id: quizQuestion.id,
+            ...quizQuestion,
+          },
+        })
+      );
+
+      const uploadedImages = await Promise.all(
+        carouselImages.map(async (image) => {
+          const formData = new FormData();
+          formData.append("file", image);
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+          if (!response.ok) throw new Error("Failed to upload image");
+          const { url } = await response.json();
+          return url;
+        })
+      );
+
+      const allImages = [...existingImages, ...uploadedImages];
+
+      // Cast the transformed quizzes to unknown first, then to SharedQuiz[]
+      const apiQuizzes = transformedQuizzes as unknown as SharedQuiz[];
+
+      const response = await fetch(`/api/posts/${params.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          images: allImages,
+          quizzes: apiQuizzes,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update post");
+
+      toast.success("Post updated successfully");
+      router.push("/admin");
+    } catch (error) {
+      console.error("Error updating post:", error);
+      toast.error("Failed to update post");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   // Set initial form data when post is fetched
   useEffect(() => {
     if (post) {
-      reset({
-        title: post.title,
-        slug: post.slug,
-        content: post.content,
-        categoryId: post.categoryId,
-        difficulty: post.difficulty?.toLowerCase() as Difficulty,
-        published: post.published,
-        sandboxUrl: post.sandboxUrl || "",
-        sandboxTemplate: post.sandboxTemplate,
-        quiz: post.quiz || {
+      // First cast to unknown, then to our local Quiz type
+      const postQuizzes = post.quizzes as unknown as Quiz[];
+
+      const transformedQuizzes: QuizQuestion[] = postQuizzes?.map(
+        (quizItem) => ({
+          id: quizItem.quiz.id,
+          question: quizItem.quiz.question,
+          optionA: quizItem.quiz.optionA,
+          optionB: quizItem.quiz.optionB,
+          optionC: quizItem.quiz.optionC,
+          optionD: quizItem.quiz.optionD,
+          correctAnswer: quizItem.quiz.correctAnswer,
+        })
+      ) || [
+        {
           question: "",
           optionA: "",
           optionB: "",
@@ -187,12 +225,38 @@ export default function EditPost({ params }: { params: { id: string } }) {
           optionD: "",
           correctAnswer: "",
         },
+      ];
+
+      reset({
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
+        description: post.description || "",
+        tags: post.tags || [],
+        categoryId: post.categoryId,
+        difficulty: post.difficulty?.toLowerCase() as Difficulty,
+        published: post.published,
+        sandboxUrl: post.sandboxUrl || "",
+        sandboxTemplate: post.sandboxTemplate,
+        quizzes: transformedQuizzes,
       });
       setExistingImages(post.images || []);
     }
   }, [post, reset]);
 
-  // ... (keeping all the existing handlers)
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+    setCarouselImages((prev) => [...prev, ...Array.from(files)]);
+  };
+
+  const removeImage = (index: number) => {
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeNewImage = (index: number) => {
+    setCarouselImages((prev) => prev.filter((_, i) => i !== index));
+  };
 
   if (isLoading) {
     return (
@@ -259,6 +323,53 @@ export default function EditPost({ params }: { params: { id: string } }) {
           </select>
         </div>
 
+        <div className={styles.formGroup}>
+          <label>Description</label>
+          <textarea
+            {...register("description", {
+              required: "Description is required",
+              maxLength: {
+                value: 500,
+                message: "Description cannot exceed 500 characters",
+              },
+            })}
+            className={styles.textarea}
+            placeholder="Enter a brief description of your post"
+            rows={3}
+          />
+          {errors.description && (
+            <span className={styles.error}>{errors.description.message}</span>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Tags</label>
+          <div className={styles.tagInput}>
+            <input
+              type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={handleAddTag}
+              className={styles.input}
+              placeholder="Enter tags and press Enter"
+            />
+          </div>
+          <div className={styles.tagList}>
+            {watch("tags")?.map((tag, index) => (
+              <span key={index} className={styles.tag}>
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(tag)}
+                  className={styles.removeTag}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* New fields for sandbox */}
         <div className={styles.formGroup}>
           <label>Sandbox URL (optional)</label>
@@ -304,98 +415,119 @@ export default function EditPost({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        {/* New Images Upload */}
         <div className={styles.formGroup}>
-          <label>Add New Images</label>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageUpload}
-            className={styles.fileInput}
-          />
-          <div className={styles.imagePreview}>
-            {carouselImages.map((image, index) => (
-              <div key={index} className={styles.previewItem}>
-                <Image
-                  width={400}
-                  height={400}
-                  src={URL.createObjectURL(image)}
-                  alt={`Preview ${index}`}
-                />
-                <button
-                  type="button"
-                  onClick={() => removeNewImage(index)}
-                  className={styles.removeButton}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
+          <div className={styles.quizHeader}>
+            <h3>Quizzes</h3>
+            <button
+              type="button"
+              onClick={() =>
+                append({
+                  question: "",
+                  optionA: "",
+                  optionB: "",
+                  optionC: "",
+                  optionD: "",
+                  correctAnswer: "",
+                })
+              }
+              className={styles.addQuizButton}
+            >
+              Add New Quiz
+            </button>
           </div>
-        </div>
 
-        {/* Content Editor */}
-        <div className={styles.formGroup}>
-          <label>Content</label>
-          <Controller
-            name="content"
-            control={control}
-            rules={{ required: "Content is required" }}
-            render={({ field: { onChange, value = "" } }) => (
-              <QuillEditor value={value} onChange={onChange} />
-            )}
-          />
-          {errors.content && (
-            <span className={styles.error}>{errors.content.message}</span>
-          )}
-        </div>
+          {fields.map((field, index) => {
+            const questionPrefix = `quizzes.${index}` as const;
+            const optionC = watch(`${questionPrefix}.optionC`);
+            const optionD = watch(`${questionPrefix}.optionD`);
 
-        {/* Quiz Section */}
-        <div className={styles.formGroup}>
-          <h3>Quiz</h3>
-          <input
-            {...register("quiz.question", { required: "Question is required" })}
-            placeholder="Question"
-            className={styles.input}
-          />
-          {errors.quiz?.question && (
-            <span className={styles.error}>{errors.quiz.question.message}</span>
-          )}
+            return (
+              <div key={field.id} className={styles.quizContainer}>
+                <div className={styles.quizHeader}>
+                  <h4>Quiz {index + 1}</h4>
+                  {fields.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className={styles.removeQuizButton}
+                    >
+                      Remove Quiz
+                    </button>
+                  )}
+                </div>
+                <div className={styles.quizInputs}>
+                  <input
+                    {...register(`${questionPrefix}.question`, {
+                      required: "Question is required",
+                    })}
+                    placeholder="Question"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.question && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.question?.message}
+                    </span>
+                  )}
 
-          <input
-            {...register("quiz.optionA", { required: "Option A is required" })}
-            placeholder="Option A"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionB", { required: "Option B is required" })}
-            placeholder="Option B"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionC", { required: "Option C is required" })}
-            placeholder="Option C"
-            className={styles.input}
-          />
-          <input
-            {...register("quiz.optionD", { required: "Option D is required" })}
-            placeholder="Option D"
-            className={styles.input}
-          />
+                  <input
+                    {...register(`${questionPrefix}.optionA`, {
+                      required: "Option A is required",
+                    })}
+                    placeholder="Option A (required)"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.optionA && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.optionA?.message}
+                    </span>
+                  )}
 
-          <select
-            {...register("quiz.correctAnswer", {
-              required: "Correct answer is required",
-            })}
-            className={styles.select}
-          >
-            <option value="">Select correct answer</option>
-            <option value="optionA">Option A</option>
-            <option value="optionB">Option B</option>
-            <option value="optionC">Option C</option>
-            <option value="optionD">Option D</option>
-          </select>
+                  <input
+                    {...register(`${questionPrefix}.optionB`, {
+                      required: "Option B is required",
+                    })}
+                    placeholder="Option B (required)"
+                    className={styles.input}
+                  />
+                  {errors.quizzes?.[index]?.optionB && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.optionB?.message}
+                    </span>
+                  )}
+
+                  <input
+                    {...register(`${questionPrefix}.optionC`)}
+                    placeholder="Option C (optional)"
+                    className={styles.input}
+                  />
+
+                  <input
+                    {...register(`${questionPrefix}.optionD`)}
+                    placeholder="Option D (optional)"
+                    className={styles.input}
+                  />
+
+                  <select
+                    {...register(`${questionPrefix}.correctAnswer`, {
+                      required: "Correct answer is required",
+                    })}
+                    className={styles.select}
+                  >
+                    <option value="">Select correct answer</option>
+                    <option value="optionA">Option A</option>
+                    <option value="optionB">Option B</option>
+                    {optionC && <option value="optionC">Option C</option>}
+                    {optionD && <option value="optionD">Option D</option>}
+                  </select>
+                  {errors.quizzes?.[index]?.correctAnswer && (
+                    <span className={styles.error}>
+                      {errors.quizzes[index]?.correctAnswer?.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Published Status */}

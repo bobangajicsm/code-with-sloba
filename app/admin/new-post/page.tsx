@@ -28,6 +28,8 @@ interface PostFormData {
   sandboxUrl?: string;
   sandboxTemplate?: SandboxTemplate;
   quizzes: Quiz[];
+  description: string; // New field
+  tags: string[]; // New field
 }
 
 interface Category {
@@ -42,12 +44,15 @@ export default function NewPost() {
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [tagInput, setTagInput] = useState(""); // New state for tag input
 
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<PostFormData>({
     defaultValues: {
@@ -61,6 +66,7 @@ export default function NewPost() {
           correctAnswer: "",
         },
       ],
+      tags: [],
     },
   });
 
@@ -68,6 +74,27 @@ export default function NewPost() {
     control,
     name: "quizzes",
   });
+
+  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && tagInput.trim()) {
+      e.preventDefault();
+      const currentTags = getValues("tags") || [];
+      const newTag = tagInput.trim().toLowerCase();
+      if (!currentTags.includes(newTag)) {
+        setValue("tags", [...currentTags, newTag]);
+      }
+      setTagInput("");
+    }
+  };
+
+  // Handle tag removal
+  const handleRemoveTag = (tagToRemove: string) => {
+    const currentTags = getValues("tags");
+    setValue(
+      "tags",
+      currentTags.filter((tag) => tag !== tagToRemove)
+    );
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -190,6 +217,52 @@ export default function NewPost() {
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
+        </div>
+        <div className={styles.formGroup}>
+          <label>Description</label>
+          <textarea
+            {...register("description", {
+              required: "Description is required",
+              maxLength: {
+                value: 500,
+                message: "Description cannot exceed 500 characters",
+              },
+            })}
+            className={styles.textarea}
+            placeholder="Enter a brief description of your post"
+            rows={3}
+          />
+          {errors.description && (
+            <span className={styles.error}>{errors.description.message}</span>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Tags</label>
+          <div className={styles.tagInput}>
+            <input
+              type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={handleAddTag}
+              className={styles.input}
+              placeholder="Enter tags and press Enter"
+            />
+          </div>
+          <div className={styles.tagList}>
+            {watch("tags")?.map((tag, index) => (
+              <span key={index} className={styles.tag}>
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(tag)}
+                  className={styles.removeTag}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className={styles.formGroup}>
