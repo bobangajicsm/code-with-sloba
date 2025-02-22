@@ -233,8 +233,8 @@ function Landing() {
             y2="711"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#0D0E10"></stop>
-            <stop offset="1" stopColor="#0D0E10" stopOpacity="0"></stop>
+            <stop stopColor="#18181b"></stop>
+            <stop offset="1" stopColor="#18181b" stopOpacity="0"></stop>
           </linearGradient>
           <linearGradient
             id="paint1_linear_1080_817"
@@ -244,9 +244,9 @@ function Landing() {
             y2="2498"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#0D0E10"></stop>
-            <stop offset="0.546557" stopColor="#0D0E10"></stop>
-            <stop offset="1" stopColor="#0D0E10" stopOpacity="0"></stop>
+            <stop stopColor="#18181b"></stop>
+            <stop offset="0.546557" stopColor="#18181b"></stop>
+            <stop offset="1" stopColor="#18181b" stopOpacity="0"></stop>
           </linearGradient>
         </defs>
       </svg>
@@ -490,8 +490,8 @@ function Landing() {
             y2="711"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#0D0E10"></stop>
-            <stop offset="1" stopColor="#0D0E10" stopOpacity="0"></stop>
+            <stop stopColor="#18181b"></stop>
+            <stop offset="1" stopColor="#18181b" stopOpacity="0"></stop>
           </linearGradient>
           <linearGradient
             id="paint1_linear_1080_817"
@@ -501,9 +501,9 @@ function Landing() {
             y2="2498"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#0D0E10"></stop>
-            <stop offset="0.546557" stopColor="#0D0E10"></stop>
-            <stop offset="1" stopColor="#0D0E10" stopOpacity="0"></stop>
+            <stop stopColor="#18181b"></stop>
+            <stop offset="0.546557" stopColor="#18181b"></stop>
+            <stop offset="1" stopColor="#18181b" stopOpacity="0"></stop>
           </linearGradient>
         </defs>
       </svg>

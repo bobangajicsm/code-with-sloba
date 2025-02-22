@@ -1,0 +1,40 @@
+.card {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition-duration: 0.3s;
+
+  &:hover {
+    border-color: #454545;
+  }
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+  pointer-events: none;
+}
+
+.reflectionEffect {
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1),
+    transparent,
+    transparent
+  );
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}

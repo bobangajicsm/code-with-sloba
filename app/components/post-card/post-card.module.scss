@@ -1,0 +1,85 @@
+.post {
+  &Wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  &ImageWrapper {
+    width: 150px;
+    height: 80px;
+  }
+
+  &Image {
+    object-fit: cover;
+    border-radius: 8px;
+    object-position: top;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  &Title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #f4f4f5;
+  }
+
+  &Description {
+    color: #a1a1aa;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &Link {
+    text-decoration: none;
+
+    color: #52525b;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  &Meta {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-size: 12px;
+    color: #a1a1aa;
+  }
+
+  &Level {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    gap: 6px;
+
+    &Easy {
+      color: #39ea4a;
+    }
+
+    &Medium {
+      color: #ffbf85;
+    }
+
+    &Hard {
+      color: #ff4d4d;
+    }
+  }
+
+  &Tags {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--secondary);
+  }
+}
+
+.largeReflectionFix {
+  inset: -100% !important;
+}

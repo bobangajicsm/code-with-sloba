@@ -1,0 +1,18 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  color: #f4f4f5;
+  text-decoration: none;
+  font-weight: 500;
+  transition: gap 0.2s;
+  font-size: 14px;
+  border-radius: 9999px;
+  line-height: 20px;
+  background-color: rgb(39 39 42 / 0);
+
+  &:hover {
+    background-color: rgb(39 39 42 / 0.7);
+  }
+}

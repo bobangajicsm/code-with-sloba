@@ -1,32 +1,49 @@
-// app/posts/page.tsx
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
-import { Clock, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  MessageSquareCode,
+  Star,
+  CircleHelp,
+  BugPlay,
+  GitPullRequestCreateArrow,
+} from "lucide-react";
+import Glassbox from "@/app/components/glassbox/glassbox";
+import LatestPosts, {
+  Post,
+} from "@/app/learn/components/latest-posts/latest-posts";
 
 interface Category {
   id: string;
   name: string;
   slug: string;
   image: string | null;
+  postCount?: number;
 }
 
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  images: string[];
-  createdAt: Date;
-  category: {
-    name: string;
-    slug: string;
-  };
+async function getCategoriesWithPostCount() {
+  const categories = await prisma.category.findMany({
+    include: {
+      _count: {
+        select: { posts: true },
+      },
+    },
+  });
+
+  return categories.map((category) => ({
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+    image: category.image,
+    postCount: category._count.posts,
+  }));
 }
 
 export default async function PostsPage() {
-  const categories = await prisma.category.findMany();
-  const latestPosts = await prisma.post.findMany({
+  const categories = await getCategoriesWithPostCount();
+  const latestPosts: Post[] = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
     take: 8,
     include: { category: true },
@@ -35,86 +52,67 @@ export default async function PostsPage() {
   return (
     <div className={styles.container}>
       <section className={styles.categoriesSection}>
-        <h1>Browse Categories</h1>
+        <h1 className={styles.title}>
+          Pick Your Tech
+          <span className={styles.premiumBadge}>
+            <Star className={styles.premiumBadgeIcon} size={12} />
+            Premium
+          </span>
+        </h1>
         <p className={styles.subtitle}>
-          Explore our collection of tutorials and guides
+          Choose a technology, language, or framework to find relevant posts.
+        </p>
+        <p className={styles.titleFacts}>
+          <span className={styles.titleFact}>
+            <CircleHelp size={20} className={styles.titleFactsIcon} /> Curated
+            questions
+          </span>
+          <span className={styles.titleFact}>
+            <BugPlay size={20} className={styles.titleFactsIcon} /> Interactive
+            learning
+          </span>
+          <span className={styles.titleFact}>
+            <GitPullRequestCreateArrow
+              size={20}
+              className={styles.titleFactsIcon}
+            />
+            Detailed topic explanation
+          </span>
         </p>
 
-        <div className={styles.categories}>
+        <div className={styles.topics}>
           {categories.map((category: Category) => (
-            <Link
-              key={category.id}
-              href={`/posts/${category.slug}`}
-              className={styles.categoryCard}
-            >
-              <div className={styles.categoryImage}>
-                {category.image ? (
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={styles.image}
-                  />
-                ) : (
-                  <div className={styles.placeholderImage}>
-                    {category.name[0].toUpperCase()}
+            <div key={category.id} className={styles.topic}>
+              <Link
+                href={`/posts/${category.slug}`}
+                className={styles.topicLink}
+              >
+                <Glassbox>
+                  <div className={styles.topicWrapper}>
+                    <div className={styles.topicLogo}>
+                      <Image
+                        width={40}
+                        height={40}
+                        src={category.image || ""}
+                        alt={`Logo angular`}
+                      />
+                    </div>
+                    <div className={styles.topicContent}>
+                      <h4 className={styles.topicTitle}>{category.name}</h4>
+                      <p className={styles.topicDescription}>
+                        <MessageSquareCode size={20} /> {category.postCount}{" "}
+                        posts
+                      </p>
+                    </div>
+                    <ArrowRight className={styles.topicArrow} size={24} />
                   </div>
-                )}
-              </div>
-              <div className={styles.categoryContent}>
-                <h3>{category.name}</h3>
-                <ArrowRight className={styles.arrow} size={20} />
-              </div>
-            </Link>
+                </Glassbox>
+              </Link>
+            </div>
           ))}
         </div>
       </section>
-
-      <section className={styles.postsSection}>
-        <div className={styles.sectionHeader}>
-          <h2>Latest Posts</h2>
-          <Link href="/posts/all" className={styles.viewAll}>
-            View All <ArrowRight size={16} />
-          </Link>
-        </div>
-
-        <div className={styles.posts}>
-          {latestPosts.map((post: Post) => (
-            <Link
-              key={post.id}
-              href={`/post/${post.slug}`}
-              className={styles.postCard}
-            >
-              <div className={styles.postImage}>
-                {post.images[0] ? (
-                  <Image
-                    src={post.images[0]}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={styles.image}
-                  />
-                ) : (
-                  <div className={styles.placeholderImage}>
-                    {post.title[0].toUpperCase()}
-                  </div>
-                )}
-              </div>
-              <div className={styles.postContent}>
-                <div className={styles.postMeta}>
-                  <span className={styles.category}>{post.category.name}</span>
-                  <span className={styles.date}>
-                    <Clock size={14} />
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-                <h3>{post.title}</h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <LatestPosts posts={latestPosts} />
     </div>
   );
 }

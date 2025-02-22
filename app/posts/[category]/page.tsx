@@ -1,10 +1,13 @@
-// app/posts/[category]/page.tsx
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import FilterBar from "./filter-bar";
 import styles from "./page.module.scss";
 import { Prisma } from "@prisma/client";
-import Image from "next/image";
+import { POST_META } from "@/app/constants";
+import buttonStyles from "@/app/components/button.module.scss";
+import { ArrowLeft } from "lucide-react";
+import PostCard from "@/app/components/post-card/post-card";
+import { Post } from "@/app/types/shared";
 
 interface CategoryPageProps {
   params: {
@@ -29,7 +32,6 @@ export default async function CategoryPage({
     return <div>Category not found</div>;
   }
 
-  // Build the where clause for posts query
   const where = {
     categoryId: categoryData.id,
     published: true,
@@ -46,8 +48,7 @@ export default async function CategoryPage({
       : {}),
   };
 
-  // Fetch posts with filters
-  const posts = await prisma.post.findMany({
+  const posts: Post[] = await prisma.post.findMany({
     where,
     orderBy: {
       createdAt: sort === "newest" ? "desc" : "asc",
@@ -65,11 +66,18 @@ export default async function CategoryPage({
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1>{categoryData.name} Posts</h1>
-        <Link href="/learn" className={styles.backLink}>
-          Back to Categories
-        </Link>
+      <div>
+        <div className={styles.header}>
+          <h1 className={styles.title}>
+            {POST_META[categoryData.name]?.title}
+          </h1>
+          <Link href="/learn" className={buttonStyles.button}>
+            <ArrowLeft size={16} /> Back to Categories
+          </Link>
+        </div>
+        <h2 className={styles.subtitle}>
+          {POST_META[categoryData.name]?.subtitle}
+        </h2>
       </div>
 
       <FilterBar
@@ -82,42 +90,7 @@ export default async function CategoryPage({
         {posts.length === 0 ? (
           <p>No posts found.</p>
         ) : (
-          posts.map((post) => (
-            <article key={post.id} className={styles.postCard}>
-              <Link href={`/post/${post.slug}`}>
-                <div className={styles.postImage}>
-                  {post.images[0] ? (
-                    <Image
-                      src={post.images[0]}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className={styles.image}
-                    />
-                  ) : (
-                    <div className={styles.placeholderImage}>
-                      {post.title[0].toUpperCase()}
-                    </div>
-                  )}
-                </div>
-                <div className={styles.postMeta}>
-                  <time>{new Date(post.createdAt).toLocaleDateString()}</time>
-                  {post.difficulty && (
-                    <span
-                      className={`${styles.difficulty} ${
-                        styles[post.difficulty]
-                      }`}
-                    >
-                      {post.difficulty}
-                    </span>
-                  )}
-                </div>
-                <p className={styles.excerpt}>
-                  {post.content.slice(0, 150)}...
-                </p>
-              </Link>
-            </article>
-          ))
+          posts.map((post) => <PostCard key={post.id} post={post} />)
         )}
       </div>
     </div>

@@ -1,15 +1,15 @@
 .container {
-  align-items: center;
-  background: #1b1e22;
-  border: 1px solid #282c32;
-  border-radius: 16px;
+  margin-top: 180px;
+  margin-bottom: 200px;
+  position: relative;
+}
+
+.wrapper {
+  padding: 40px 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin-top: 180px;
-  padding: 40px 20px;
-  position: relative;
-  margin-bottom: 200px;
+  align-items: center;
 }
 
 .button {

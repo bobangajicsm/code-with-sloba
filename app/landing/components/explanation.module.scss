@@ -1,16 +1,16 @@
 .container {
-  margin-top: 300px;
-  margin-bottom: 300px;
-  align-items: center;
-  background: #1b1e22;
-  border: 1px solid #282c32;
-  border-radius: 16px;
+  margin-top: 150px;
+  margin-bottom: 150px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 90px;
   width: 100%;
   position: relative;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 90px;
+  align-items: center;
 }
 
 .image {

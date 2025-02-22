@@ -20,10 +20,12 @@
 .logoWrapper {
   width: 80px;
   height: 80px;
-  background-color: #252728;
-  border-radius: 4px;
-  display: flex;
+
   margin: 0 40px;
+}
+
+.logoFlex {
+  display: flex;
   align-items: center;
   justify-content: center;
 }

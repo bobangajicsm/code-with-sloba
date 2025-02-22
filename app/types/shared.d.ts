@@ -48,6 +48,8 @@ export interface Post {
   category?: Category;
   quiz?: Quiz | null;
   User?: User | null;
+  description?: string;
+  tags?: string[];
 }
 
 export interface Comment {

@@ -7,6 +7,7 @@
 
 :root {
   --primary: #0d0e10;
+  --primary: #18181b;
   --secondary: #04e1fb;
   --info: #d1d5db;
 }
@@ -21,6 +22,7 @@ body {
   background-color: var(--primary);
   font-family: var(--font-inter), sans-serif;
   color: white;
+  /* background-color: #18181b;*/
 }
 
 .formkit-powered-by-convertkit {

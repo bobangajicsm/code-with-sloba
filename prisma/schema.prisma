@@ -45,6 +45,8 @@ model Post {
   User            User?            @relation(fields: [userId], references: [id])
   quizzes         PostQuiz[] // Relation to connect posts with multiple quizzes
   completedPosts  CompletedPost[] // Track completed posts
+  description     String? // New optional description field
+  tags            String[]
 }
 
 model Quiz {

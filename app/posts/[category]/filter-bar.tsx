@@ -1,14 +1,27 @@
-// app/posts/[category]/FilterBar.tsx
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { Search } from "lucide-react";
 import styles from "./filter-bar.module.scss";
+import CustomSelect from "@/app/components/select/select";
 
 interface FilterBarProps {
   currentSort: string;
   currentDifficulty?: string;
   currentSearch: string;
 }
+
+const sortOptions = [
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+];
+
+const difficultyOptions = [
+  { value: "all", label: "All Levels" },
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
+];
 
 export default function FilterBar({
   currentSort,
@@ -53,49 +66,42 @@ export default function FilterBar({
   };
 
   return (
-    <div className={styles.filterBar}>
-      <form onSubmit={handleSearch} className={styles.searchForm}>
-        <input
-          type="search"
-          name="search"
-          placeholder="Search posts..."
-          defaultValue={currentSearch}
-          className={styles.searchInput}
-        />
-        <button type="submit" className={styles.searchButton}>
-          Search
-        </button>
-      </form>
-
-      <div className={styles.filterControls}>
-        <div className={styles.filterGroup}>
-          <label htmlFor="sort">Sort:</label>
-          <select
-            id="sort"
-            value={currentSort}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-          </select>
-        </div>
-
-        <div className={styles.filterGroup}>
-          <label htmlFor="difficulty">Difficulty:</label>
-          <select
-            id="difficulty"
-            value={currentDifficulty || "all"}
-            onChange={(e) => handleDifficultyChange(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="all">All Levels</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </div>
+    <>
+      <h3 className={styles.title}>Search what you want to learn</h3>
+      <div className={styles.filterBar}>
+        <form onSubmit={handleSearch} className={styles.searchForm}>
+          <div className={styles.searchGroup}>
+            <Search className={styles.searchIcon} />
+            <input
+              type="search"
+              name="search"
+              placeholder="Type ..."
+              defaultValue={currentSearch}
+              className={styles.searchInput}
+            />
+          </div>
+          <div className={styles.filterControls}>
+            <button type="submit" className={styles.searchButton}>
+              <Search width={13} className={styles.searchButtonIcon} />
+              Search
+            </button>
+            <CustomSelect
+              options={sortOptions}
+              value={currentSort}
+              onChange={handleSortChange}
+              placeholder="Select sorting..."
+              className={styles.filterSelect}
+            />
+            <CustomSelect
+              options={difficultyOptions}
+              value={currentDifficulty || "all"}
+              onChange={handleDifficultyChange}
+              placeholder="Select difficulty..."
+              className={styles.filterSelect}
+            />
+          </div>
+        </form>
       </div>
-    </div>
+    </>
   );
 }

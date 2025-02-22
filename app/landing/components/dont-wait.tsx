@@ -4,6 +4,7 @@ import styles from "./dont-wait.module.scss";
 import Image from "next/image";
 import { useIntersectionObserver } from "@/app/landing/components/useIntersectionObserverHook";
 import { useState, useEffect } from "react";
+import Glassbox from "@/app/components/glassbox/glassbox";
 
 function DontWait() {
   const { ref, isVisible } = useIntersectionObserver();
@@ -22,21 +23,25 @@ function DontWait() {
 
   return (
     <div className={styles.container} ref={ref}>
-      <AnimatedTitle
-        title="What are you waiting for?"
-        subtitle="Streak always starts with one."
-      />
-      <a href="/ide/puzzle/onboarding" className={styles.button}>
-        <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M2.35421 1.90163C2.18757 1.80867 1.98242 1.92915 1.98242 2.11996V17.88C1.98242 18.0708 2.18757 18.1913 2.35421 18.0983L16.4804 10.2183C16.6513 10.1229 16.6513 9.87701 16.4804 9.78165L2.35421 1.90163ZM0.482422 2.11996C0.482422 0.784268 1.91848 -0.0590357 3.08495 0.591663L17.2111 8.47169C18.4077 9.1392 18.4077 10.8608 17.2111 11.5283L3.08495 19.4083C1.91847 20.059 0.482422 19.2157 0.482422 17.88V2.11996Z"
-            fill="black"
-          ></path>
-        </svg>
-        Start learning
-      </a>
+      <Glassbox>
+        <div className={styles.wrapper}>
+          <AnimatedTitle
+            title="What are you waiting for?"
+            subtitle="Streak always starts with one."
+          />
+          <a href="/ide/puzzle/onboarding" className={styles.button}>
+            <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M2.35421 1.90163C2.18757 1.80867 1.98242 1.92915 1.98242 2.11996V17.88C1.98242 18.0708 2.18757 18.1913 2.35421 18.0983L16.4804 10.2183C16.6513 10.1229 16.6513 9.87701 16.4804 9.78165L2.35421 1.90163ZM0.482422 2.11996C0.482422 0.784268 1.91848 -0.0590357 3.08495 0.591663L17.2111 8.47169C18.4077 9.1392 18.4077 10.8608 17.2111 11.5283L3.08495 19.4083C1.91847 20.059 0.482422 19.2157 0.482422 17.88V2.11996Z"
+                fill="black"
+              ></path>
+            </svg>
+            Start learning
+          </a>
+        </div>
+      </Glassbox>
       <Image
         className={`${styles.avatar} ${
           isVisible && startRotation
