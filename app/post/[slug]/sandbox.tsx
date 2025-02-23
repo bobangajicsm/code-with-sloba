@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import type { SandpackFiles } from "@codesandbox/sandpack-react";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
+import styles from "./sandbox.module.scss";
 
 interface SandboxModule {
   code: string;
@@ -82,18 +83,22 @@ const Sandbox = ({ sanboxUrl, sandboxTemplate }: ExistingSandboxProps) => {
   }
 
   return (
-    <Sandpack
-      template={(sandboxTemplate as SandboxTemplate) || "static"}
-      files={files}
-      options={{
-        showLineNumbers: true,
-        showInlineErrors: true,
-        wrapContent: true,
-        editorHeight: 600,
-        autorun: true,
-      }}
-      theme="dark"
-    />
+    <div className={styles.sandboxContainer}>
+      <h3 className={styles.caption}>CodeSandbox </h3>
+      <h2 className={styles.title}>Tweak, Debug, and Learn</h2>
+      <Sandpack
+        template={(sandboxTemplate as SandboxTemplate) || "static"}
+        files={files}
+        options={{
+          showLineNumbers: true,
+          showInlineErrors: true,
+          wrapContent: true,
+          editorHeight: 600,
+          autorun: true,
+        }}
+        theme="dark"
+      />
+    </div>
   );
 };
 

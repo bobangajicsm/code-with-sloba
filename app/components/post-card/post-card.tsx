@@ -3,8 +3,8 @@ import styles from "./post-card.module.scss";
 import Glassbox from "@/app/components/glassbox/glassbox";
 import { CircleGauge, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { Post } from "@/app/types/shared";
 import Link from "next/link";
+import { Post } from "@prisma/client";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (

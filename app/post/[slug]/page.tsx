@@ -3,12 +3,25 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
 import styles from "./page.module.scss";
+import quizStyles from "./quiz.module.scss";
+import metaStyles from "@/app/components/post-card/post-card.module.scss";
 import Quiz from "@/app/post/[slug]/quiz";
 import SlickSlider from "./slick-slider";
 import CommentsSection from "@/app/post/[slug]/comment-section";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import QuillContent from "@/app/post/[slug]/quill-content";
 import Sandbox from "@/app/post/[slug]/sandbox";
+import ArticleAside from "@/app/post/[slug]/article-aside";
+import { CircleGauge } from "lucide-react";
+import Image from "next/image";
+import SocialShare from "@/app/post/[slug]/social-share";
+
+function readingTime(text: string) {
+  const wpm = 225;
+  const words = text.trim().split(/\s+/).length;
+  const time = Math.ceil(words / wpm);
+  return time;
+}
 
 export default async function PostPage({
   params,
@@ -35,6 +48,12 @@ export default async function PostPage({
           user: {
             select: { name: true, avatarUrl: true },
           },
+        },
+      },
+      User: {
+        select: {
+          name: true,
+          avatarUrl: true,
         },
       },
     },
@@ -80,10 +99,71 @@ export default async function PostPage({
 
   return (
     <div className={styles.container}>
-      <h1>{post.title}</h1>
-      <SlickSlider post={post} />
+      <div className={styles.wrapper}>
+        <article className={styles.article}>
+          <header>
+            <h1 className={styles.title}>{post.title}</h1>
+            <h2 className={styles.description}>{post.description}</h2>
+            <div className={`${metaStyles.postMeta} ${styles.meta}`}>
+              <span
+                className={`${metaStyles.postLevel} ${
+                  post.difficulty === "medium"
+                    ? metaStyles.postLevelMedium
+                    : metaStyles.difficulty === "hard"
+                    ? metaStyles.postLevelHard
+                    : metaStyles.postLevelEasy
+                }`}
+              >
+                <CircleGauge size={20} />
+                {post.difficulty}
+              </span>
 
-      <QuillContent content={post.content} />
+              <span className={metaStyles.postTags}>
+                {post.tags?.map((tag) => (
+                  <span key={tag}>#{tag}</span>
+                ))}
+              </span>
+            </div>
+            <div className={styles.authorContainer}>
+              <div className={styles.author}>
+                <Image
+                  width={40}
+                  height={40}
+                  src={post.User?.avatarUrl || "/images/default-avatar.png"}
+                  alt={post.User?.name || "Author avatar"}
+                  className={styles.avatar}
+                />
+                <div className={styles.authorInfo}>
+                  <span className={styles.authorName}>{post.User?.name}</span>
+                  <span className={styles.postDate}>
+                    <span>{readingTime(post.content)} min read</span>
+                    <span className={styles.dot} />
+                    <span>
+                      {post.createdAt.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <SocialShare post={post} />
+            </div>
+          </header>
+          <SlickSlider post={post} />
+
+          <QuillContent content={post.content} />
+        </article>
+        <ArticleAside content={post.content} />
+      </div>
+
+      {post.sandboxUrl && (
+        <Sandbox
+          sanboxUrl={post.sandboxUrl}
+          sandboxTemplate={post.sandboxTemplate}
+        />
+      )}
 
       {post.quizzes.length > 0 && (
         <>
@@ -91,26 +171,33 @@ export default async function PostPage({
             canTakeQuiz ? (
               <Quiz questions={post.quizzes} postId={post.id} userId={userId} />
             ) : hasCompletedQuiz ? (
-              <p>
-                🎉 Congratulations! You have successfully completed this quiz.
-              </p>
+              <div className={quizStyles.quizContainer}>
+                <h3 className={quizStyles.caption}>Quiz</h3>
+                <h2 className={quizStyles.title}>Test Your Knowledge</h2>
+                <p className={quizStyles.message}>
+                  🎉 Congratulations! You have successfully completed this quiz.
+                </p>
+              </div>
             ) : (
-              <p>
-                ❌ You have already attempted this quiz. Please wait 24 hours
-                before trying again.
-              </p>
+              <div className={quizStyles.quizContainer}>
+                <h3 className={quizStyles.caption}>Quiz</h3>
+                <h2 className={quizStyles.title}>Test Your Knowledge</h2>
+                <p className={quizStyles.message}>
+                  ❌ You have already attempted this quiz. Please wait 24 hours
+                  before trying again.
+                </p>
+              </div>
             )
           ) : (
-            <p>Please log in to access the quiz.</p>
+            <div className={quizStyles.quizContainer}>
+              <h3 className={quizStyles.caption}>Quiz</h3>
+              <h2 className={quizStyles.title}>Test Your Knowledge</h2>
+              <p className={quizStyles.message}>
+                Please log in to access the quiz.
+              </p>
+            </div>
           )}
         </>
-      )}
-
-      {post.sandboxUrl && (
-        <Sandbox
-          sanboxUrl={post.sandboxUrl}
-          sandboxTemplate={post.sandboxTemplate}
-        />
       )}
 
       <CommentsSection postId={post.id} comments={post.comments} />

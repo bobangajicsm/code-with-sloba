@@ -83,7 +83,6 @@ export default function EditPost({ params }: { params: { id: string } }) {
       tags: [],
     },
   });
-  console.log(post);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -393,7 +392,14 @@ export default function EditPost({ params }: { params: { id: string } }) {
 
         {/* Existing Images */}
         <div className={styles.formGroup}>
-          <label>Existing Images</label>
+          <label>Carousel Images</label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageUpload}
+            className={styles.fileInput}
+          />
           <div className={styles.imagePreview}>
             {existingImages.map((imageUrl, index) => (
               <div key={index} className={styles.previewItem}>
@@ -413,6 +419,21 @@ export default function EditPost({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Content</label>
+          <Controller
+            name="content"
+            control={control}
+            rules={{ required: "Content is required" }}
+            render={({ field: { onChange, value = "" } }) => (
+              <QuillEditor value={value} onChange={onChange} />
+            )}
+          />
+          {errors.content && (
+            <span className={styles.error}>{errors.content.message}</span>
+          )}
         </div>
 
         <div className={styles.formGroup}>

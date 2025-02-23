@@ -55,7 +55,7 @@ const Leaderboard = () => {
             <span className={styles.rank}>#{index + 1}</span>
             <Link href={user.profileUrl || ""} target="_blank">
               <Image
-                src={user.avatarUrl || "/default-avatar.png"}
+                src={user.avatarUrl || "/images/default-avatar.png"}
                 alt={user.name}
                 width={40}
                 height={40}

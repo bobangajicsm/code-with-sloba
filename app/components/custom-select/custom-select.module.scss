@@ -7,14 +7,16 @@
   padding: 0 15px;
   font-size: 13px;
   line-height: 1;
-  height: 35px;
+  height: 32px;
   gap: 5px;
   background-color: #18181b;
   color: #a1a1aa;
   border: 1px solid #3f3f46;
+  cursor: pointer;
 
   &:hover {
     border-color: #454545;
+    color: #f4f4f5;
   }
 }
 

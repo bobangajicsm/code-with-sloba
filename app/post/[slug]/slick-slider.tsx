@@ -34,11 +34,18 @@ export default function SlickSlider({ post }: { post: Post }) {
           {post.images.map((img, index) => (
             <div key={index} className={styles.slideItem}>
               <Image
-                width={300}
-                height={375}
                 src={img}
                 alt={`Slide ${index}`}
                 priority={index === 0}
+                className={styles.image}
+                // We'll use fill={false} and make it responsive
+                width={1200}
+                height={800}
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </div>
           ))}

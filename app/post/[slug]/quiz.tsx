@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import styles from "./quiz.module.scss";
+import { Check } from "lucide-react";
 
 interface QuizProps {
   questions: {
@@ -56,7 +57,7 @@ export default function Quiz({ questions, postId, userId }: QuizProps) {
 
       const data = await res.json();
       if (data.isDisabled) {
-        setIsDisabled(true); // Disable quiz for 24h
+        setIsDisabled(true);
       }
     } catch (error) {
       console.error(error);
@@ -65,7 +66,8 @@ export default function Quiz({ questions, postId, userId }: QuizProps) {
 
   return (
     <div className={styles.quizContainer}>
-      <h3>Quiz</h3>
+      <h3 className={styles.caption}>Quiz</h3>
+      <h2 className={styles.title}>Test Your Knowledge</h2>
       {questions.map((questionWrapper, index) => {
         const question = questionWrapper.quiz;
         return (
@@ -75,31 +77,45 @@ export default function Quiz({ questions, postId, userId }: QuizProps) {
               {["A", "B", "C", "D"].map((key) => {
                 const option =
                   question[`option${key}` as keyof typeof question];
+                if (!option) return null;
+
+                const isSelected = selectedAnswers[question.id] === option;
+                const isCorrectAnswer =
+                  isSubmitted &&
+                  option ===
+                    question[question.correctAnswer as keyof typeof question];
+
                 return (
-                  option && (
-                    <label
-                      key={key}
-                      className={`${styles.option} ${
-                        isSubmitted &&
-                        option ===
-                          question[
-                            question.correctAnswer as keyof typeof question
-                          ]
-                          ? styles.correct
-                          : ""
-                      }`}
+                  <label key={key} className={styles.option}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        !isSubmitted &&
+                        !isDisabled &&
+                        handleAnswerChange(question.id, option)
+                      }
+                      disabled={isSubmitted || isDisabled}
+                      className={styles.checkbox}
+                      data-submited={isSubmitted}
+                      data-selected={isSelected}
+                      data-correct={isCorrectAnswer}
+                      aria-label={isSelected ? "Selected" : "Not selected"}
                     >
-                      <input
-                        type="radio"
-                        name={`quiz-question-${question.id}`}
-                        value={option}
-                        checked={selectedAnswers[question.id] === option}
-                        onChange={() => handleAnswerChange(question.id, option)}
-                        disabled={isSubmitted || isDisabled}
-                      />
-                      {option}
-                    </label>
-                  )
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 448 512"
+                        aria-hidden="true"
+                        className="shrink-0"
+                        style={{ width: "15px", height: "15px" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
+                      </svg>
+                    </button>
+                    {option}
+                  </label>
                 );
               })}
             </div>
@@ -115,13 +131,13 @@ export default function Quiz({ questions, postId, userId }: QuizProps) {
             isDisabled
           }
         >
-          Submit Answers
+          <Check size={16} /> Submit Answers
         </button>
       ) : (
         <p className={isCorrect ? styles.correct : styles.incorrect}>
           {isCorrect
-            ? "✅ Correct! Well done!"
-            : `❌ Incorrect. Try again in 24 hours.`}
+            ? "Correct! Well done!"
+            : "Incorrect. Try again in 24 hours."}
         </p>
       )}
     </div>

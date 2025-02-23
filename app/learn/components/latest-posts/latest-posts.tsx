@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import buttonStyles from "@/app/components/button.module.scss";
-import { Post } from "@/app/types/shared";
 import PostCard from "@/app/components/post-card/post-card";
+import { Post } from "@prisma/client";
 
 const LatestPosts = ({ posts }: { posts: Post[] }) => {
   return (

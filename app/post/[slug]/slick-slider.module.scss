@@ -1,4 +1,15 @@
 .slideContainer {
-  width: 300px;
+  width: 100%;
+  margin: 48px auto;
+}
+
+.slideItem {
+  width: 100%;
+}
+
+.image {
+  display: block;
+  max-height: 80vh;
+  object-fit: contain;
   margin: 0 auto;
 }

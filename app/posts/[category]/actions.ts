@@ -6,21 +6,25 @@ import { Prisma } from "@prisma/client";
 const POSTS_PER_PAGE = 10;
 
 export async function fetchPosts(
-  category: string,
+  category?: string,
   sort: string = "newest",
   difficulty?: string,
   search: string = "",
   skip: number = 0
 ) {
-  const categoryData = await prisma.category.findFirst({
-    where: { slug: category },
-  });
+  let categoryData = null;
 
-  if (!categoryData) return null;
+  if (category) {
+    categoryData = await prisma.category.findFirst({
+      where: { slug: category },
+    });
+
+    if (!categoryData) return null;
+  }
 
   const where: Prisma.PostWhereInput = {
-    categoryId: categoryData.id,
     published: true,
+    ...(category ? { categoryId: categoryData!.id } : {}),
     ...(difficulty
       ? { difficulty: difficulty as Prisma.EnumdifficultyNullableFilter }
       : {}),
@@ -58,7 +62,15 @@ export async function fetchPosts(
 
   return {
     posts,
-    categoryData,
+    categoryData: category
+      ? categoryData
+      : {
+          id: "all",
+          name: "all",
+          slug: "all",
+          title: "All Posts",
+          subtitle: "Browse all available posts",
+        },
     totalPosts,
   };
 }

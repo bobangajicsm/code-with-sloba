@@ -58,10 +58,8 @@
 }
 
 .searchButton {
-  background-color: var(--secondary);
   padding: 6px 8px;
   font-size: 12px;
-  color: #18181b;
   border-radius: 100px;
   line-height: 16px;
   font-weight: 500;
@@ -69,10 +67,15 @@
   height: 32px;
   align-items: center;
   cursor: pointer;
-  opacity: 1;
   transition-duration: 0.3s;
+
+  background-color: #18181b;
+  color: #a1a1aa;
+  border: 1px solid #3f3f46;
+
   &:hover {
-    opacity: 0.8;
+    border-color: #454545;
+    color: #f4f4f5;
   }
 }
 

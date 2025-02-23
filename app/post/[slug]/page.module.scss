@@ -1,11 +1,149 @@
 .container {
   max-width: 1200px;
   margin: 100px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
 
   img {
     max-width: 100%;
+  }
+}
+
+.wrapper {
+  display: flex;
+  gap: 40px;
+}
+
+.article {
+  max-width: 672px;
+  width: 100%;
+
+  p {
+    color: #d4d4d8;
+    font-size: 15px;
+    line-height: 26px;
+    margin-bottom: 12px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--secondary);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h2 {
+    color: #f4f4f5;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-top: 42px;
+  }
+
+  h3 {
+    color: #f4f4f5;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-top: 28px;
+  }
+
+  h4 {
+    color: #f4f4f5;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-top: 22px;
+  }
+
+  h5 {
+    color: #f4f4f5;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-top: 18px;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-left: 24px;
+
+    ::marker {
+      color: #4b5563;
+    }
+  }
+
+  li {
+    color: #d4d4d8;
+    font-size: 15px;
+    line-height: 26px;
+  }
+
+  .title {
+    color: #f4f4f5;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .description {
+    color: #a1a1aa;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .meta {
+    border-bottom: 1px solid #27272a;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .authorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #27272a;
+    padding-bottom: 20px;
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .authorInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .avatar {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .authorName {
+    color: #f4f4f5;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .postDate {
+    font-size: 12px;
+    color: #a1a1aa;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #a1a1aa;
   }
 }

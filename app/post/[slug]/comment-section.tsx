@@ -57,7 +57,8 @@ export default function CommentsSection({
 
   return (
     <div className={styles.commentsContainer}>
-      <h3 className={styles.title}>Comments</h3>
+      <h3 className={styles.caption}>Drop a comment!</h3>
+      <h2 className={styles.title}>Have feedback or questions?</h2>
 
       {session ? (
         <form onSubmit={handleSubmit} className={styles.commentForm}>
@@ -89,7 +90,7 @@ export default function CommentsSection({
               <Image
                 width={40}
                 height={40}
-                src={comment.user.avatarUrl || "/default-avatar.png"}
+                src={comment.user.avatarUrl || "/images/default-avatar.png"}
                 alt={comment.user.name}
                 className={styles.avatar}
               />

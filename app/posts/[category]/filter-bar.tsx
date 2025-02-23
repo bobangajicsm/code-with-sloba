@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import styles from "./filter-bar.module.scss";
-import CustomSelect from "@/app/components/select/select";
+import CustomSelect from "@/app/components/custom-select/custom-select";
 
 interface FilterBarProps {
   currentSort: string;

@@ -7,9 +7,11 @@ import { POST_META } from "@/app/constants";
 import buttonStyles from "@/app/components/button.module.scss";
 import { ArrowLeft } from "lucide-react";
 import PostCard from "@/app/components/post-card/post-card";
-import { Post } from "@/app/types/shared";
+
 import { useEffect, useState } from "react";
 import { fetchPosts } from "./actions";
+import Loader from "@/app/components/loader/loader";
+import { Post } from "@prisma/client";
 
 const POSTS_PER_PAGE = 10;
 
@@ -38,25 +40,40 @@ export default function CategoryPage({
   useEffect(() => {
     const loadInitialPosts = async () => {
       setLoading(true);
-      const result = await fetchPosts(category, sort, difficulty, search);
+      const result = await fetchPosts(
+        category === "all" ? undefined : category,
+        sort,
+        difficulty,
+        search
+      );
+
       if (result) {
         setPosts(result.posts as Post[]);
-        setCategoryData(result.categoryData);
+        // For 'all' category, we can set a default categoryData
+        if (category === "all") {
+          setCategoryData({
+            name: "all",
+            title: "All Posts",
+            subtitle: "Browse all available posts",
+          });
+        } else {
+          setCategoryData(result.categoryData);
+        }
         setHasMore(result.posts.length === POSTS_PER_PAGE);
       }
       setLoading(false);
     };
 
     loadInitialPosts();
-    setPage(0); // Reset page when filters change
+    setPage(0);
   }, [category, sort, difficulty, search]);
 
   const loadMore = async () => {
-    const nextPage = page + POSTS_PER_PAGE;
+    const nextPage = page + 1;
     setLoadingMore(true);
 
     const result = await fetchPosts(
-      category,
+      category === "all" ? undefined : category,
       sort,
       difficulty,
       search,
@@ -71,8 +88,16 @@ export default function CategoryPage({
     setLoadingMore(false);
   };
 
-  if (!categoryData) {
-    return <div>Category not found</div>;
+  if (!categoryData && !loading) {
+    return <div className={styles.container}>Category not found</div>;
+  }
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -80,14 +105,18 @@ export default function CategoryPage({
       <div>
         <div className={styles.header}>
           <h1 className={styles.title}>
-            {POST_META[categoryData.name]?.title}
+            {category === "all"
+              ? "All Posts"
+              : POST_META[categoryData.name]?.title}
           </h1>
           <Link href="/learn" className={buttonStyles.button}>
             <ArrowLeft size={16} /> Back to Categories
           </Link>
         </div>
         <h2 className={styles.subtitle}>
-          {POST_META[categoryData.name]?.subtitle}
+          {category === "all"
+            ? "Browse all available posts"
+            : POST_META[categoryData.name]?.subtitle}
         </h2>
       </div>
 

@@ -11,9 +11,8 @@ import {
   GitPullRequestCreateArrow,
 } from "lucide-react";
 import Glassbox from "@/app/components/glassbox/glassbox";
-import LatestPosts, {
-  Post,
-} from "@/app/learn/components/latest-posts/latest-posts";
+import LatestPosts from "@/app/learn/components/latest-posts/latest-posts";
+import { Post } from "@prisma/client";
 
 interface Category {
   id: string;

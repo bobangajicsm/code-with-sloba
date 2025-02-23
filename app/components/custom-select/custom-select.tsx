@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Select from "@radix-ui/react-select";
 import classnames from "classnames";
 import { CheckIcon, ChevronDown, ChevronUp } from "lucide-react";
-import styles from "./select.module.scss";
+import styles from "./custom-select.module.scss";
 
 export type SelectOption = {
   value: string;
@@ -11,12 +11,13 @@ export type SelectOption = {
 
 interface SelectProps {
   options: SelectOption[];
-  placeholder?: string;
+  placeholder?: React.ReactNode;
   label?: string;
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
   disabled?: boolean;
+  hideChevron?: boolean;
 }
 
 const CustomSelect = ({
@@ -27,6 +28,7 @@ const CustomSelect = ({
   onChange,
   className,
   disabled = false,
+  hideChevron = false,
 }: SelectProps) => {
   return (
     <Select.Root value={value} onValueChange={onChange} disabled={disabled}>
@@ -35,9 +37,11 @@ const CustomSelect = ({
         aria-label={label}
       >
         <Select.Value placeholder={placeholder} />
-        <Select.Icon className={styles.Icon}>
-          <ChevronDown size={16} />
-        </Select.Icon>
+        {!hideChevron && (
+          <Select.Icon className={styles.Icon}>
+            <ChevronDown size={16} />
+          </Select.Icon>
+        )}
       </Select.Trigger>
 
       <Select.Portal>
