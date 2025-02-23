@@ -25,17 +25,6 @@ function Navigation() {
     };
   }, [pathname, searchParams]);
 
-  const handleScroll = () => {
-    if (
-      window.location.hash === "#socials" ||
-      window.location.pathname === "/"
-    ) {
-      scrollToSocials();
-    } else {
-      router.push("/#socials");
-    }
-  };
-
   const scrollToSocials = () => {
     const elem = document.getElementById("socials");
     elem?.scrollIntoView({
@@ -45,36 +34,38 @@ function Navigation() {
 
   return (
     <nav className={styles.nav}>
-      <Link href="/">
-        <Image
-          className={styles.navImage}
-          src="/images/logo.png"
-          height={52}
-          width={150}
-          alt="Code with Sloba"
-        />
-      </Link>
-      <ul className={styles.navList}>
-        <li className={styles.navListItem}>
-          <Link className={styles.navListLink} href="/learn">
-            Learn
-          </Link>
-        </li>
-        <li className={styles.navListItem}>
-          <Link className={styles.navListLink} href="/leaderboard">
-            Leaderboard
-          </Link>
-        </li>
-        <li className={styles.navListItem}>
-          <Link className={styles.navListLink} href="/sponsorship">
-            Sponsorship
-          </Link>
-        </li>
+      <div className={styles.wrapper}>
+        <Link href="/">
+          <Image
+            className={styles.navImage}
+            src="/images/logo.png"
+            height={22}
+            width={63}
+            alt="Code with Sloba"
+          />
+        </Link>
+        <ul className={styles.navList}>
+          <li className={styles.navListItem}>
+            <Link className={styles.navListLink} href="/learn">
+              Learn
+            </Link>
+          </li>
+          <li className={styles.navListItem}>
+            <Link className={styles.navListLink} href="/leaderboard">
+              Leaderboard
+            </Link>
+          </li>
+          <li className={styles.navListItem}>
+            <Link className={styles.navListLink} href="/sponsorship">
+              Sponsorship
+            </Link>
+          </li>
 
-        <li className={styles.navListItem}>
-          <AuthButtons />
-        </li>
-      </ul>
+          <li className={styles.navListItem}>
+            <AuthButtons />
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }

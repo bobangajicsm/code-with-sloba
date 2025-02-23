@@ -1,33 +1,40 @@
 .nav {
   padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1280px;
+
   width: 100%;
-  margin: 0 auto;
+
   position: relative;
   z-index: 1;
+  border-bottom: 1px solid #27272a;
 
   &List {
     list-style: none;
   }
 
+  .wrapper {
+    max-width: 1920px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+
   &ListItem {
     display: inline-block;
     margin-left: 20px;
+    vertical-align: middle;
   }
 
   &ListLink {
     text-decoration: none;
     color: white;
-    font-size: 18px;
+    font-size: 13px;
     transition-duration: 0.3s;
     background-color: transparent;
     border: none;
     outline: none;
     cursor: pointer;
-    font-family: "Gilroy";
+    font-weight: 500;
 
     &:hover {
       color: var(--secondary);
@@ -50,7 +57,7 @@
   margin: 0 auto;
   display: flex;
   align-items: stretch;
-  padding: 24px;
+  padding: 12px;
 }
 
 .jumbotron {
@@ -322,7 +329,7 @@
     }
 
     &ListLink {
-      font-size: 16px;
+      font-size: 13px;
     }
   }
 

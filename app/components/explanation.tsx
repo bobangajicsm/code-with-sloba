@@ -1,6 +1,6 @@
 "use client";
-import AnimatedTitle from "@/app/landing/components/animated-title";
-import { useIntersectionObserver } from "@/app/landing/components/useIntersectionObserverHook";
+import AnimatedTitle from "@/app/components/animated-title";
+import { useIntersectionObserver } from "@/app/components/useIntersectionObserverHook";
 import Image from "next/image";
 import styles from "./explanation.module.scss";
 import Glassbox from "@/app/components/glassbox/glassbox";

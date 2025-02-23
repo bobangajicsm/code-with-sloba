@@ -6,6 +6,16 @@ import styles from "./page.module.scss";
 import Image from "next/image";
 import { User } from "@/app/types/user";
 import Link from "next/link";
+import {
+  Code,
+  Mail,
+  Link as LinkIcon,
+  Calendar,
+  Users,
+  Edit,
+} from "lucide-react";
+import Loader from "@/app/components/loader/loader";
+import Glassbox from "@/app/components/glassbox/glassbox";
 
 interface CategoryProgress {
   category: string;
@@ -70,98 +80,167 @@ export default function UserProfile() {
     }
   };
 
-  if (!session && !loading) return <p>Please log in to view your profile.</p>;
+  const getCategoryIcon = (category: string) => {
+    return (
+      <Image
+        width={20}
+        height={20}
+        src={`/images/${category.toLowerCase()}.png`}
+        alt={category.toLowerCase()}
+      />
+    );
+  };
+
+  if (!session && !loading)
+    return (
+      <p className={styles.noSession}>Please log in to view your profile.</p>
+    );
+
+  if (loading) {
+    return (
+      <div className={styles.profileContainer}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.profileContainer}>
-      {loading ? (
-        "Loading ..."
-      ) : (
-        <>
-          <div className={styles.profileHeader}>
-            <Link href={user?.profileUrl || ""} target="_blank">
-              <Image
-                width={80}
-                height={80}
-                src={user?.avatarUrl || "/images/default-avatar.png"}
-                alt="Avatar"
-                className={styles.avatar}
-              />
-            </Link>
-            <div className={styles.userInfo}>
-              {editing ? (
-                <>
-                  <input
-                    type="text"
-                    value={updatedName}
-                    onChange={(e) => setUpdatedName(e.target.value)}
-                    className={styles.input}
-                  />
-                  <input
-                    type="text"
-                    value={updatedProfileUrl}
-                    onChange={(e) => setUpdatedProfileUrl(e.target.value)}
-                    placeholder="Profile URL"
-                    className={styles.input}
-                  />
-                </>
-              ) : (
-                <>
-                  <div className={styles.userName}>{user?.name}</div>
-                  <div className={styles.userEmail}>{user?.email}</div>
-                  <div className={styles.createdAt}>
-                    Joined:{" "}
-                    {new Date(user?.createdAt || "").toLocaleDateString()}
-                  </div>
-                  <div className={styles.points}>Points: {user?.points}</div>
-                  <div className={styles.progressSection}>
-                    <h3>Progress per Category</h3>
-                    {progress.length === 0 ? (
-                      <p>No progress yet.</p>
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>User Profile</h1>
+        {loading ? (
+          <div className={styles.loading}>Loading...</div>
+        ) : (
+          <div className={styles.profileLayout}>
+            <Glassbox>
+              <div className={styles.userInfoBox}>
+                <div className={styles.profileHeader}>
+                  <Link
+                    href={user?.profileUrl || ""}
+                    target="_blank"
+                    className={styles.avatarLink}
+                  >
+                    <Image
+                      width={80}
+                      height={80}
+                      src={user?.avatarUrl || "/images/default-avatar.png"}
+                      alt="Avatar"
+                      className={styles.avatar}
+                    />
+                  </Link>
+                  <div className={styles.userDetails}>
+                    {editing ? (
+                      <>
+                        <input
+                          type="text"
+                          value={updatedName}
+                          onChange={(e) => setUpdatedName(e.target.value)}
+                          className={styles.input}
+                          placeholder="Name"
+                        />
+                        <input
+                          type="text"
+                          value={updatedProfileUrl}
+                          onChange={(e) => setUpdatedProfileUrl(e.target.value)}
+                          placeholder="Profile URL"
+                          className={styles.input}
+                        />
+                      </>
                     ) : (
-                      progress.map((item) => (
-                        <div
-                          key={item.category}
-                          className={styles.progressCategory}
-                        >
-                          <div className={styles.progressLabel}>
-                            <span>{item.category}</span>
-                            <span>{item.progress}%</span>
-                          </div>
-                          <div className={styles.progressBar}>
-                            <div
-                              className={styles.progressFill}
-                              style={{ width: `${item.progress}%` }}
-                            />
-                          </div>
+                      <>
+                        <div className={styles.userName}>{user?.name}</div>
+                        <div className={styles.userItem}>
+                          <Mail className={styles.icon} size={16} />
+                          <span className={styles.userText}>{user?.email}</span>
                         </div>
-                      ))
+                        <div className={styles.userItem}>
+                          <LinkIcon className={styles.icon} size={16} />
+                          <Link
+                            href={user?.profileUrl || ""}
+                            target="_blank"
+                            className={styles.link}
+                          >
+                            <span className={styles.userText}>
+                              {user?.profileUrl || "No profile URL"}
+                            </span>
+                          </Link>
+                        </div>
+                        <div className={styles.userItem}>
+                          <Calendar className={styles.icon} size={16} />
+                          <span className={styles.userText}>
+                            Joined:{" "}
+                            {new Date(
+                              user?.createdAt || ""
+                            ).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className={styles.userItem}>
+                          <Users className={styles.icon} size={16} />
+                          <span className={styles.userText}>
+                            {" "}
+                            Points: {user?.points}
+                          </span>
+                        </div>
+                      </>
                     )}
                   </div>
-                </>
+                </div>
+                <div className={styles.actions}>
+                  {editing ? (
+                    <button
+                      onClick={handleUpdateProfile}
+                      className={styles.saveButton}
+                    >
+                      <Edit className={styles.buttonIcon} size={16} /> Save
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setEditing(true)}
+                      className={styles.editButton}
+                    >
+                      <Edit className={styles.buttonIcon} size={16} /> Edit
+                      Profile
+                    </button>
+                  )}
+                </div>
+              </div>
+            </Glassbox>
+
+            {/* Right Side - Progress */}
+            <div className={styles.progressBox}>
+              <h3 className={styles.progressTitle}>Completed Questions</h3>
+              {progress.length === 0 ? (
+                <p className={styles.noProgress}>No progress yet.</p>
+              ) : (
+                progress.map((item) => (
+                  <Link
+                    key={item.category}
+                    href={`posts/${item.category.toLocaleLowerCase()}`}
+                  >
+                    <div className={styles.progressCategory}>
+                      <div className={styles.progressItem}>
+                        {getCategoryIcon(item.category)}
+                        <span className={styles.categoryName}>
+                          {item.category}
+                        </span>
+                        <span className={styles.progressValue}>
+                          {item.progress || 0}%
+                        </span>
+                      </div>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${item.progress || 0}%` }}
+                        />
+                      </div>
+                    </div>
+                  </Link>
+                ))
               )}
             </div>
           </div>
-
-          <div className={styles.actions}>
-            {editing ? (
-              <button
-                onClick={handleUpdateProfile}
-                className={styles.saveButton}
-              >
-                Save
-              </button>
-            ) : (
-              <button
-                onClick={() => setEditing(true)}
-                className={styles.editButton}
-              >
-                Edit Profile
-              </button>
-            )}
-          </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

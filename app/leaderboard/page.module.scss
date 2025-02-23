@@ -1,106 +1,184 @@
-.container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 100px auto;
-  background-color: #f4f7fc;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.title {
+  justify-content: center;
+  color: #f4f4f5;
+  font-size: 30px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #d4d4d8;
+  margin-bottom: 52px;
+  font-weight: 400;
+}
+.leaderboardContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  height: calc(100vh - 251px);
 }
 
 .title {
   font-size: 2rem;
   font-weight: 600;
-  color: #333;
+  color: #f4f4f5;
+  margin-bottom: 0.5rem;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.filters {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 30px;
-
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #ccc;
-    }
-
-    &.active {
-      background-color: #007bff;
-      color: white;
-    }
-  }
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  .user {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 12px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #f9f9f9;
-    }
-
-    .rank {
-      width: 40px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #007bff;
-    }
-
-    .avatar {
-      border-radius: 50%;
-      margin-right: 15px;
-    }
-
-    .name {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #333;
-      flex-grow: 1;
-    }
-
-    .points {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #28a745;
-    }
-  }
-}
-
-.loadMore {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 25px;
+.subtitle {
   font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
+  font-weight: 400;
+  color: #a1a1aa;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.filterButton {
+  all: unset;
+  padding: 8px 16px;
   border-radius: 6px;
+  background-color: #18181b;
+  border: 1px solid #3f3f46;
+  color: #a1a1aa;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: #0056b3;
+    border-color: #454545;
+    color: #f4f4f5;
   }
+
+  &.active {
+    background-color: #252529;
+    border-color: var(--secondary);
+    color: #f4f4f5;
+  }
+}
+
+.userList {
+  list-style: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userItem {
+  display: grid;
+  grid-template-columns: 38px 50px 60px 1fr 120px;
+  align-items: center;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.largeReflectionFix {
+  inset: -100% !important;
+}
+
+.rank {
+  color: #a1a1aa;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goldIcon {
+  color: #ffd700;
+}
+
+.silverIcon {
+  color: #c0c0c0;
+}
+
+.bronzeIcon {
+  color: #cd7f32;
+}
+
+.avatarLink {
+  display: block;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #3f3f46;
+}
+
+.userName {
+  color: #f4f4f5;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.points {
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.coinsIcon {
+  color: #ffd700; /* Gold color for coins */
+}
+
+.loadMoreButton {
+  all: unset;
+  display: block;
+  width: 200px;
+  margin: 1.5rem auto 0;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #18181b;
+  border: 1px solid #3f3f46;
+  color: #a1a1aa;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #454545;
+    color: #f4f4f5;
+    background-color: #252529;
+  }
+}
+
+.position {
+  align-items: center;
+  background: #444950;
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 32px;
+  justify-content: center;
+  min-width: 32px;
+  padding: 0;
+  position: relative;
+  width: 32px;
 }

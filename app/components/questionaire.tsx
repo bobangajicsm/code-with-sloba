@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import AnimatedTitle from "@/app/landing/components/animated-title";
+import AnimatedTitle from "@/app/components/animated-title";
 import styles from "./questionaire.module.scss";
 import Glassbox from "@/app/components/glassbox/glassbox";
 

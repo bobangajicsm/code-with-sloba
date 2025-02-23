@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import AnimatedTitle from "@/app/landing/components/animated-title";
+import AnimatedTitle from "@/app/components/animated-title";
 import styles from "./support.module.scss";
-import { useIntersectionObserver } from "@/app/landing/components/useIntersectionObserverHook";
+import { useIntersectionObserver } from "@/app/components/useIntersectionObserverHook";
 
 function Support() {
   const { ref, isVisible } = useIntersectionObserver();

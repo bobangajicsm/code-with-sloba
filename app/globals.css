@@ -22,7 +22,6 @@ body {
   background-color: var(--primary);
   font-family: var(--font-inter), sans-serif;
   color: white;
-  /* background-color: #18181b;*/
 }
 
 .formkit-powered-by-convertkit {
@@ -52,6 +51,11 @@ body {
   background: #282a36 !important;
   padding: 20px !important;
   font-size: 13px;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  font-family: ui-monospace, monospace;
 }
 
 .line-number {
@@ -60,4 +64,25 @@ body {
   margin-right: 12px;
   font-size: 13px;
   opacity: 0.5;
+  line-height: 23px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #282a36;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  border: 2px solid #282a36;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }

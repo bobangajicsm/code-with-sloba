@@ -1,5 +1,5 @@
 "use client";
-import { useIntersectionObserver } from "@/app/landing/components/useIntersectionObserverHook";
+import { useIntersectionObserver } from "@/app/components/useIntersectionObserverHook";
 import { useRef } from "react";
 import styles from "./animated-title.module.scss";
 

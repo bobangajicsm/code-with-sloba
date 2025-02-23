@@ -1,5 +1,5 @@
 "use client";
-import AnimatedTitle from "@/app/landing/components/animated-title";
+import AnimatedTitle from "@/app/components/animated-title";
 import Image from "next/image";
 import styles from "./sandbox.module.scss";
 

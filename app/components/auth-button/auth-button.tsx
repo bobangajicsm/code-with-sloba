@@ -17,38 +17,46 @@ export default function AuthButtons() {
   return (
     <div className={styles.authContainer}>
       {session ? (
-        <>
-          <button className={styles.avatarButton} onClick={toggleDropdown}>
-            <Image
-              width={24}
-              height={24}
-              src={session.user?.avatarUrl || "/images/default-avatar.png"}
-              alt={session.user?.name || "User"}
-              className={styles.avatar}
-            />
+        <div className={styles.dropdown}>
+          <button onClick={toggleDropdown} className={styles.trigger}>
+            {session.user?.avatarUrl ? (
+              <Image
+                src={session.user.avatarUrl}
+                alt="Profile"
+                width={24}
+                height={24}
+                className={styles.avatar}
+              />
+            ) : (
+              <span className={styles.initial}>
+                {session.user?.name?.[0]?.toUpperCase()}
+              </span>
+            )}
           </button>
 
           {isOpen && (
-            <div className={styles.dropdown}>
-              <div className={styles.disabledItem}>{session.user?.name}</div>
-              <Link href="/profile" className={styles.dropdownItem}>
+            <div className={styles.dropdownMenu}>
+              <div className={styles.userInfo}>
+                <span>{session.user?.name}</span>
+              </div>
+              <Link href="/profile" className={styles.menuItem}>
                 Profile
               </Link>
               <button
-                className={styles.dropdownItem}
                 onClick={() =>
                   signOut({
                     callbackUrl: "/auth/login",
                   })
                 }
+                className={styles.menuItem}
               >
                 Log Out
               </button>
             </div>
           )}
-        </>
+        </div>
       ) : (
-        <Link className={styles.navListItem} href="/auth/login">
+        <Link href="/auth/login" className={styles.signInButton}>
           Sign in
         </Link>
       )}

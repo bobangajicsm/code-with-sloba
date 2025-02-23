@@ -12,7 +12,7 @@ function Jumbotron() {
         <h2 className={styles.subtitle}>
           Daily learn new topics, practice and test your knowledge.
         </h2>
-        <a href="/ide/puzzle/onboarding" className={styles.button}>
+        <a href="/learn" className={styles.button}>
           <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
             <path
               fillRule="evenodd"

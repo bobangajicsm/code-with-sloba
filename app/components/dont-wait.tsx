@@ -1,8 +1,8 @@
 "use client";
-import AnimatedTitle from "@/app/landing/components/animated-title";
+import AnimatedTitle from "@/app/components/animated-title";
 import styles from "./dont-wait.module.scss";
 import Image from "next/image";
-import { useIntersectionObserver } from "@/app/landing/components/useIntersectionObserverHook";
+import { useIntersectionObserver } from "@/app/components/useIntersectionObserverHook";
 import { useState, useEffect } from "react";
 import Glassbox from "@/app/components/glassbox/glassbox";
 
@@ -29,7 +29,7 @@ function DontWait() {
             title="What are you waiting for?"
             subtitle="Streak always starts with one."
           />
-          <a href="/ide/puzzle/onboarding" className={styles.button}>
+          <a href="/learn" className={styles.button}>
             <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
               <path
                 fillRule="evenodd"
