@@ -12,9 +12,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import QuillContent from "@/app/post/[slug]/quill-content";
 import Sandbox from "@/app/post/[slug]/sandbox";
 import ArticleAside from "@/app/post/[slug]/article-aside";
-import { CircleGauge } from "lucide-react";
+import { ArrowLeft, CircleGauge } from "lucide-react";
 import Image from "next/image";
 import SocialShare from "@/app/post/[slug]/social-share";
+import Link from "next/link";
+import buttonStyles from "@/app/components/button.module.scss";
 
 function readingTime(text: string) {
   const wpm = 225;
@@ -54,6 +56,11 @@ export default async function PostPage({
         select: {
           name: true,
           avatarUrl: true,
+        },
+      },
+      category: {
+        select: {
+          name: true,
         },
       },
     },
@@ -97,8 +104,18 @@ export default async function PostPage({
     }
   }
 
+  console.log(post);
+
   return (
     <div className={styles.container}>
+      <div className={styles.back}>
+        <Link
+          href={`/posts/${post.category.name.toLocaleLowerCase()}`}
+          className={buttonStyles.button}
+        >
+          <ArrowLeft size={16} /> Back
+        </Link>
+      </div>
       <div className={styles.wrapper}>
         <article className={styles.article}>
           <header>

@@ -107,7 +107,7 @@ export default function CategoryPage({
           <h1 className={styles.title}>
             {category === "all"
               ? "All Posts"
-              : POST_META[categoryData.name]?.title}
+              : POST_META[categoryData.name?.toLowerCase()]?.title}
           </h1>
           <Link href="/learn" className={buttonStyles.button}>
             <ArrowLeft size={16} /> Back to Categories
@@ -116,7 +116,7 @@ export default function CategoryPage({
         <h2 className={styles.subtitle}>
           {category === "all"
             ? "Browse all available posts"
-            : POST_META[categoryData.name]?.subtitle}
+            : POST_META[categoryData.name?.toLowerCase()]?.subtitle}
         </h2>
       </div>
 
