@@ -39,7 +39,7 @@ export default function Login() {
         </button>
 
         <p className={styles.terms}>
-          By proceeding, you agree to CodeWithSloba's <br />
+          By proceeding, you agree to CodeWithSloba&apos;s <br />
           <Link href="" className={styles.link}>
             Terms of Service
           </Link>{" "}
