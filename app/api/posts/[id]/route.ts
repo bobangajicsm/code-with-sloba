@@ -160,7 +160,6 @@ export async function PATCH(
   try {
     // Read the body once and store it
     body = await req.json();
-    console.log("Request body:", body);
   } catch (error) {
     console.error("Error parsing request body:", error);
     return new Response("Invalid JSON body", { status: 400 });
