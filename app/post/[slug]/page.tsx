@@ -104,8 +104,6 @@ export default async function PostPage({
     }
   }
 
-  console.log(post);
-
   return (
     <div className={styles.container}>
       <div className={styles.back}>
