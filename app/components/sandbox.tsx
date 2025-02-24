@@ -10,13 +10,36 @@ function Sandbox() {
         title="Code playground for interactive learning"
         subtitle="You can copy code snipets, edit, debug and get your hands dirty in code"
       />
-      <Image
-        className={styles.image}
-        src="/images/sandbox.png"
-        alt="sandbox"
-        width={640}
-        height={400}
-      />
+      <div className={styles.images}>
+        <Image
+          className={styles.image}
+          src="/images/codesandbox-image-1-min.png"
+          alt="sandbox"
+          width={1300}
+          height={720}
+        />
+        <Image
+          className={styles.image2}
+          src="/images/codesandbox-image-2-min.png"
+          alt="sandbox"
+          width={500}
+          height={313}
+        />
+        <Image
+          className={styles.image3}
+          src="/images/codesandbox-image-4-min.png"
+          alt="sandbox"
+          width={400}
+          height={175}
+        />
+        <Image
+          className={styles.image4}
+          src="/images/codesandbox-image-3-min.png"
+          alt="sandbox"
+          width={381}
+          height={289}
+        />
+      </div>
     </div>
   );
 }
