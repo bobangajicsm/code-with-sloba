@@ -4,7 +4,7 @@ import styles from "./jumbotron.module.scss";
 import Image from "next/image";
 
 function Jumbotron() {
-  const imageRef = useRef(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -24,7 +24,7 @@ function Jumbotron() {
     };
 
     // Throttle scroll event for performance
-    let timeout;
+    let timeout: NodeJS.Timeout | null = null;
     const throttledScroll = () => {
       if (!timeout) {
         timeout = setTimeout(() => {
