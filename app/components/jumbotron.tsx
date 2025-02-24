@@ -1,8 +1,43 @@
 "use client";
+import { useEffect, useRef } from "react";
 import styles from "./jumbotron.module.scss";
 import Image from "next/image";
 
 function Jumbotron() {
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const maxScroll = 500; // Distance over which animation completes
+      const progress = Math.min(scrollY / maxScroll, 1); // 0 to 1
+
+      if (imageRef.current) {
+        const translateZ = -250 + 250 * progress;
+        const rotateX = 27 - 27 * progress;
+        const scale = 0.9 + 0.1 * progress;
+        imageRef.current.style.transform = `perspective(750px) translate3d(0px, 0px, ${translateZ}px) rotateX(${rotateX}deg) scale(${scale}, ${scale})`;
+      }
+      lastScrollY = scrollY;
+    };
+
+    // Throttle scroll event for performance
+    let timeout;
+    const throttledScroll = () => {
+      if (!timeout) {
+        timeout = setTimeout(() => {
+          timeout = null;
+          handleScroll();
+        }, 16); // ~60fps
+      }
+    };
+
+    window.addEventListener("scroll", throttledScroll);
+    return () => window.removeEventListener("scroll", throttledScroll); // Cleanup
+  }, []);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -56,12 +91,14 @@ function Jumbotron() {
       </div>
       <div className={styles.imgContainer}>
         <Image
+          ref={imageRef}
           className={styles.demo}
           priority
           width={750}
           height={868}
           src="/images/demo.jpg"
           alt="code with sloba"
+          sizes="(max-width: 768px) 90vw, 750px" // Responsive image sizing
         />
       </div>
     </>

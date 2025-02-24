@@ -53,3 +53,9 @@
   z-index: 0;
   bottom: -392px;
 }
+
+@media (max-width: 992px) {
+  .wrapper {
+    padding: 0 10px;
+  }
+}
