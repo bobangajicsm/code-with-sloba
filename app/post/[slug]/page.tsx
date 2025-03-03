@@ -144,12 +144,12 @@ export default async function PostPage({
                 <Image
                   width={40}
                   height={40}
-                  src={post.User?.avatarUrl || "/images/default-avatar.png"}
-                  alt={post.User?.name || "Author avatar"}
+                  src="/images/sloba.webp"
+                  alt="Sloba"
                   className={styles.avatar}
                 />
                 <div className={styles.authorInfo}>
-                  <span className={styles.authorName}>{post.User?.name}</span>
+                  <span className={styles.authorName}>Slobodan Gajic</span>
                   <span className={styles.postDate}>
                     <span>{readingTime(post.content)} min read</span>
                     <span className={styles.dot} />
