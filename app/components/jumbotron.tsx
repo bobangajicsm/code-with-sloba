@@ -30,7 +30,7 @@ function Jumbotron() {
         timeout = setTimeout(() => {
           timeout = null;
           handleScroll();
-        }, 16); // ~60fps
+        }, 16); //
       }
     };
 
