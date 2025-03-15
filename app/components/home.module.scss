@@ -1,10 +1,8 @@
 .nav {
   padding: 16px;
-
   width: 100%;
-
   position: relative;
-  z-index: 1;
+  z-index: 2;
   border-bottom: 1px solid #27272a;
 
   &List {
@@ -17,6 +15,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
+    position: relative; /* For positioning hamburger */
   }
 
   &ListItem {
@@ -38,6 +37,92 @@
 
     &:hover {
       color: var(--secondary);
+    }
+  }
+
+  /* Hamburger Button Styles */
+  .hamburger {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 10;
+  }
+
+  .hamburgerIcon {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    &::before {
+      top: -8px;
+    }
+
+    &::after {
+      bottom: -8px;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    padding: 12px;
+
+    .wrapper {
+      flex-direction: row; /* Keep logo and hamburger on same line */
+      align-items: center;
+    }
+
+    .hamburger {
+      display: block; /* Show hamburger on mobile */
+    }
+
+    &List {
+      display: none; /* Hidden by default on mobile */
+      width: 100%;
+      position: absolute;
+      top: 100%; /* Below the nav bar */
+      left: 0;
+      background: #1a1a1d; /* Match your site's background */
+      padding: 10px 0;
+      margin: 13px 0 0;
+      z-index: 5;
+      border-top: 1px solid #27272a;
+    }
+
+    &ListOpen {
+      display: block; /* Show when menu is open */
+    }
+
+    &ListItem {
+      display: block;
+      margin-left: 0;
+      margin-bottom: 10px;
+      padding: 0 16px; /* Add padding for touch area */
+    }
+
+    &ListLink {
+      font-size: 14px;
+      padding: 8px 0;
+      display: block;
+    }
+
+    .navImage {
+      height: 18px;
+      width: 50px;
     }
   }
 }

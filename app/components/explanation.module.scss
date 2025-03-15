@@ -4,6 +4,12 @@
   box-sizing: border-box;
   width: 100%;
   position: relative;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    margin-top: 80px; /* Reduced for mobile */
+    margin-bottom: 80px;
+  }
 }
 
 .wrapper {
@@ -11,12 +17,26 @@
   flex-direction: column;
   padding: 20px 0 90px;
   align-items: center;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    padding: 10px 0 50px; /* Reduced padding */
+  }
 }
 
 .image {
   margin-top: 40px;
   box-shadow: -43px 38px 20px rgba(0, 0, 0, 0.7);
   transform: skew(18deg, 8deg) rotateY(2deg);
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    margin-top: 20px; /* Reduced margin */
+    box-shadow: -20px 18px 10px rgba(0, 0, 0, 0.5); /* Smaller shadow */
+    transform: skew(10deg, 5deg) rotateY(1deg); /* Less exaggerated transform */
+    max-width: 67%;
+    height: 248px;
+  }
 }
 
 .svg {
@@ -28,6 +48,15 @@
   top: 188px;
   right: 171px;
   transform: rotate(25deg);
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    width: 50px; /* Smaller SVG */
+    height: 80px;
+    top: 100px; /* Adjusted position */
+    right: 20px; /* Closer to edge */
+    transform: rotate(15deg); /* Less rotation */
+  }
 }
 
 .animatedPath {
@@ -38,10 +67,21 @@
   stroke-dashoffset: 2464;
   animation: draw 2s linear forwards;
   animation-delay: 1s;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    stroke-width: 8; /* Thinner stroke */
+    stroke-dasharray: 1640; /* Adjusted for smaller size */
+    stroke-dashoffset: 1640;
+    animation-duration: 1.5s; /* Faster animation */
+    animation-delay: 0.5s; /* Shorter delay */
+  }
 }
 
 .show {
   opacity: 1;
+
+  /* No mobile-specific changes needed */
 }
 
 @keyframes draw {
@@ -56,4 +96,9 @@
 .checkmarkG {
   transform: translate(-554px, 32px);
   scale: 0.5;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    transform: translate(-50%, 20px) scale(0.3); /* Centered and smaller */
+  }
 }

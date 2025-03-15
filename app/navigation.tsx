@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./components/home.module.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; // Added useState
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import AuthButtons from "@/app/components/auth-button/auth-button";
 
 function Navigation() {
   const router = useRouter();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for menu toggle
 
   useEffect(() => {
     const scrollTimeout = setTimeout(() => {
@@ -32,6 +32,10 @@ function Navigation() {
     });
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Toggle menu state
+  };
+
   return (
     <nav className={styles.nav}>
       <div className={styles.wrapper}>
@@ -44,7 +48,20 @@ function Navigation() {
             alt="Code with Sloba"
           />
         </Link>
-        <ul className={styles.navList}>
+        {/* Hamburger Button for Mobile */}
+        <button
+          className={styles.hamburger}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+        >
+          <span className={styles.hamburgerIcon}></span>
+        </button>
+        {/* Navigation List */}
+        <ul
+          className={`${styles.navList} ${
+            isMenuOpen ? styles.navListOpen : ""
+          }`}
+        >
           <li className={styles.navListItem}>
             <Link className={styles.navListLink} href="/learn">
               Learn
@@ -60,7 +77,6 @@ function Navigation() {
               Sponsorship
             </Link>
           </li>
-
           <li className={styles.navListItem}>
             <AuthButtons />
           </li>

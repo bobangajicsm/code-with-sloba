@@ -100,6 +100,7 @@
     top: 92px;
   }
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -117,5 +118,83 @@
   50%,
   100% {
     transform: rotateY(15deg) rotate(-30deg);
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 100px; /* Reduce top margin */
+    margin-bottom: 120px; /* Reduce bottom margin */
+  }
+
+  .wrapper {
+    padding: 20px 15px; /* Reduce padding */
+  }
+
+  .button {
+    font-size: 18px; /* Slightly smaller font */
+    line-height: 24px;
+    padding: 12px 24px; /* Reduce padding */
+    margin-top: 40px; /* Reduce top margin */
+    max-width: 200px; /* Slightly smaller width */
+  }
+
+  .avatar {
+    width: 120px; /* Reduce size */
+    right: 20px; /* Adjust position */
+    top: -123px; /* Adjust starting position */
+  }
+
+  @keyframes slideUpAndFadeIn {
+    0%,
+    33.33% {
+      opacity: 0;
+      top: 150px; /* Adjusted for smaller screen */
+    }
+    100% {
+      opacity: 1;
+      top: 80px; /* Match .rotate */
+    }
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .container {
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+
+  .wrapper {
+    padding: 15px 10px;
+  }
+
+  .button {
+    font-size: 16px;
+    line-height: 22px;
+    padding: 10px 20px;
+    margin-top: 30px;
+    max-width: 180px;
+  }
+
+  .slideIn {
+    animation: fadeIn 1.25s ease-out forwards; /* Simplify to fade only */
+  }
+
+  @keyframes slideUpAndFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .svg,
+  .svgText {
+    display: none;
   }
 }

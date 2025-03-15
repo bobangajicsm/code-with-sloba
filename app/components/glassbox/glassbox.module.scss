@@ -12,6 +12,10 @@
   &:hover {
     border-color: #454545;
   }
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
 }
 
 .gradientOverlay {

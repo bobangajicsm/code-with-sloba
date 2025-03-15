@@ -113,3 +113,9 @@
     background-color: #252529;
   }
 }
+
+@media (max-width: 768px) {
+  .dropdownMenu {
+    right: auto;
+  }
+}

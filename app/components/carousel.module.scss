@@ -5,29 +5,53 @@
   position: relative;
   display: flex;
   margin-bottom: 20px;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    padding: 10px 0; /* Reduce vertical padding */
+    margin-bottom: 10px; /* Less space below */
+  }
 }
 
 .slideLeft {
   animation: 25s slideLeft infinite linear;
   display: flex;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    animation-duration: 15s; /* Faster animation for smaller screens */
+  }
 }
 
 .slideRight {
   animation: 25s slideRight infinite linear;
   display: flex;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    animation-duration: 15s; /* Faster animation for smaller screens */
+  }
 }
 
 .logoWrapper {
   width: 80px;
   height: 80px;
-
   margin: 0 40px;
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    width: 50px; /* Smaller logos */
+    height: 50px;
+    margin: 0 20px; /* Reduced spacing */
+  }
 }
 
 .logoFlex {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* No mobile-specific changes needed */
 }
 
 @keyframes slideLeft {

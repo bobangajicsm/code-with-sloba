@@ -44,6 +44,7 @@
   height: 150px;
   overflow: hidden;
 }
+
 .svg1 {
   position: absolute;
   opacity: 0;
@@ -123,5 +124,101 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 200px; /* Reduce bottom margin */
+  }
+
+  .textContainer {
+    max-width: 100%; /* Full width */
+    padding: 20px; /* Reduce padding */
+    margin-bottom: 50px;
+  }
+
+  .title {
+    font-size: 20px; /* Slightly smaller */
+    line-height: 30px;
+  }
+
+  .text {
+    font-size: 16px; /* Smaller text */
+    line-height: 24px;
+    margin-top: 15px;
+  }
+
+  .svg1Container {
+    display: none;
+  }
+
+  .svg1 {
+    display: none;
+  }
+
+  .svg2 {
+    display: none;
+  }
+
+  .svgText1 {
+    display: none;
+  }
+
+  .svg2Text {
+    display: none;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .container {
+    margin-bottom: 150px; /* Further reduce */
+  }
+
+  .textContainer {
+    padding: 15px;
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center; /* Center for small screens */
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center; /* Center for small screens */
+    margin-top: 10px;
+  }
+
+  .svg1Container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .svg1 {
+    width: 100px;
+    height: 100px;
+  }
+
+  .g1 {
+    scale: 1.2;
+    transform: translate(5px, -110px);
+  }
+
+  .g2 {
+    transform: translate(-120px, -130px);
+  }
+
+  .svgText1 {
+    font-size: 28px;
+  }
+
+  .svg2Text {
+    font-size: 14px;
   }
 }
