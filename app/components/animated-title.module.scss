@@ -5,34 +5,19 @@
   letter-spacing: -0.02em;
   line-height: 78px;
   margin: 0 auto 32px;
-  overflow: hidden;
   text-align: center;
   max-width: 800px;
-
-  /* Mobile optimizations */
-  @media (max-width: 768px) {
-    font-size: 36px; /* Reduced for smaller screens */
-    line-height: 44px; /* Adjusted for readability */
-    margin-bottom: 20px; /* Less vertical space */
-    max-width: 90%; /* More flexible width */
-  }
 }
 
 .word {
   opacity: 0;
   display: inline-block;
-  transform: translateY(50px);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-
-  /* Mobile adjustments */
-  @media (max-width: 768px) {
-    transform: translateY(30px); /* Reduced animation distance */
-  }
+  transform: translateY(50px) translateZ(0); /* Force GPU */
+  will-change: transform, opacity; /* Pre-optimize */
 }
 
-.visible .word {
-  opacity: 1;
-  transform: translateY(0);
+.show {
+  animation: showIn 233.333ms ease forwards;
 }
 
 .subtitle {
@@ -45,39 +30,36 @@
   text-align: center;
   position: relative;
   z-index: 1;
-
-  /* Mobile optimizations */
-  @media (max-width: 768px) {
-    font-size: 16px; /* Smaller for mobile */
-    line-height: 24px; /* Adjusted for readability */
-    max-width: 90%; /* More flexible width */
-    padding: 0 16px; /* Add padding */
-  }
 }
 
 @keyframes showIn {
   0% {
-    clip-path: inset(0px 0px 100%);
-    transform: translateY(100%);
-    visibility: visible;
+    transform: translateY(50px) translateZ(0);
     opacity: 0;
   }
   100% {
-    clip-path: inset(0px);
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
     opacity: 1;
   }
 }
 
-.show {
-  animation-name: showIn;
-  animation-duration: 233.333ms;
-  animation-timing-function: ease;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
-
-  /* Mobile adjustments */
-  @media (max-width: 768px) {
-    animation-duration: 200ms; /* Slightly faster for mobile */
+@media (max-width: 768px) {
+  .title {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 20px;
+    max-width: 90%;
+  }
+  .word {
+    transform: translateY(30px) translateZ(0);
+  }
+  .show {
+    animation-duration: 200ms;
+  }
+  .subtitle {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 90%;
+    padding: 0 16px;
   }
 }

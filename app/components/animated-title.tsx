@@ -3,63 +3,33 @@ import { useIntersectionObserver } from "@/app/components/useIntersectionObserve
 import { useRef } from "react";
 import styles from "./animated-title.module.scss";
 
-function AnimatedTitle({
-  title,
-  subtitle,
-}: {
+interface AnimatedTitleProps {
   title: string;
   subtitle: string;
-}) {
-  const { ref, isVisible } = useIntersectionObserver();
+}
+
+function AnimatedTitle({ title, subtitle }: AnimatedTitleProps) {
+  const { ref, isVisible } = useIntersectionObserver(0.1);
   const words = title.split(" ");
 
   return (
-    <>
-      <div
-        ref={ref}
-        className={`${styles.container} ${isVisible ? styles.visible : ""}`}
-      >
-        <h2 className={styles.title}>
+    <div
+      ref={ref}
+      className={`${styles.container} ${isVisible ? styles.visible : ""}`}
+    >
+      <h2 className={styles.title}>
+        {words.map((word, index) => (
           <div
+            key={index}
             className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "0ms" }}
+            style={{ animationDelay: `${index * 93.3333}ms` }}
           >
-            <span>{words[0]}&nbsp;</span>
+            <span>{word} </span>
           </div>
-          <div
-            className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "93.3333ms" }}
-          >
-            <span>{words[1]}&nbsp;</span>
-          </div>
-          <div
-            className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "186.667ms" }}
-          >
-            <span>{words[2]}&nbsp;</span>
-          </div>
-          <div
-            className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "280ms" }}
-          >
-            <span>{words[3]}&nbsp;</span>
-          </div>
-          <div
-            className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "380ms" }}
-          >
-            <span>{words[4]}&nbsp;</span>
-          </div>
-          <div
-            className={`${styles.word} ${isVisible ? styles.show : ""}`}
-            style={{ animationDelay: "480ms" }}
-          >
-            <span>{words[5]}</span>
-          </div>
-        </h2>
-        <h3 className={styles.subtitle}>{subtitle}</h3>
-      </div>
-    </>
+        ))}
+      </h2>
+      <h3 className={styles.subtitle}>{subtitle}</h3>
+    </div>
   );
 }
 
