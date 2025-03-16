@@ -102,10 +102,10 @@
 }
 
 .animatedPath {
-  stroke-dasharray: 2329;
+  stroke-dasharray: 1793.392333984375;
+  stroke-dashoffset: 1793.392333984375;
   animation: drawArrow 1.3s ease-in-out forwards;
   animation-delay: 0.5s;
-  stroke-dashoffset: -1797;
 }
 
 /* Mobile Optimizations */
@@ -184,7 +184,7 @@
 
 @keyframes drawArrow {
   from {
-    stroke-dashoffset: -1797;
+    stroke-dashoffset: 1793.392333984375;
   }
   to {
     stroke-dashoffset: 0;

@@ -11,7 +11,7 @@ function Jumbotron() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxScroll = window.innerWidth <= 768 ? 300 : 500; // Less distance on mobile
+      const maxScroll = 500; // Distance over which animation completes
       const progress = Math.min(scrollY / maxScroll, 1); // 0 to 1
 
       if (imageRef.current) {
