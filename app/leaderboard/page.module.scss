@@ -87,6 +87,7 @@
   align-items: center;
   padding: 0;
   transition: background-color 0.2s ease;
+  cursor: pointer;
 
   @media (max-width: 431px) {
     grid-template-columns: 38px 60px 1fr 67px;
@@ -117,10 +118,6 @@
 
 .bronzeIcon {
   color: #cd7f32;
-}
-
-.avatarLink {
-  display: block;
 }
 
 .avatar {

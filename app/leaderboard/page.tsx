@@ -58,6 +58,12 @@ const Leaderboard = () => {
     );
   }
 
+  const handleClick = (profileUrl?: string) => {
+    if (profileUrl) {
+      window.open(profileUrl, "_blank");
+    }
+  };
+
   return (
     <div className={styles.leaderboardContainer}>
       <h1 className={styles.title}>The Coding Elite</h1>
@@ -81,43 +87,42 @@ const Leaderboard = () => {
         </button>
       </div>
       <ul className={styles.userList}>
-        {users.map((user, index) => (
-          <Glassbox key={user.id} className={styles.largeReflectionFix}>
-            <li
-              className={`${styles.userItem} ${
-                index === 0
-                  ? styles.userItemFirst
-                  : index === 1
-                  ? styles.userItemSecond
-                  : index === 2
-                  ? styles.userItemThird
-                  : ""
-              }`}
-            >
-              <div className={styles.position}>
-                <span className={styles.rank}>{getRankIcon(index)}</span>
-              </div>
-              <Link
-                href={user.profileUrl || ""}
-                target="_blank"
-                className={styles.avatarLink}
+        {users
+          .filter((user) => user.points)
+          .map((user, index) => (
+            <Glassbox key={user.id} className={styles.largeReflectionFix}>
+              <li
+                onClick={() => handleClick(user.profileUrl)}
+                className={`${styles.userItem} ${
+                  index === 0
+                    ? styles.userItemFirst
+                    : index === 1
+                    ? styles.userItemSecond
+                    : index === 2
+                    ? styles.userItemThird
+                    : ""
+                }`}
               >
-                <Image
-                  src={user.avatarUrl || "/images/default-avatar.png"}
-                  alt={user.name}
-                  width={40}
-                  height={40}
-                  className={styles.avatar}
-                />
-              </Link>
-              <span className={styles.userName}>{user.name}</span>
-              <span className={styles.points}>
-                <Coins className={styles.coinsIcon} size={16} />
-                {user.points}
-              </span>
-            </li>
-          </Glassbox>
-        ))}
+                <div className={styles.position}>
+                  <span className={styles.rank}>{getRankIcon(index)}</span>
+                </div>
+                <div>
+                  <Image
+                    src={user.avatarUrl || "/images/default-avatar.png"}
+                    alt={user.name}
+                    width={40}
+                    height={40}
+                    className={styles.avatar}
+                  />
+                </div>
+                <span className={styles.userName}>{user.name}</span>
+                <span className={styles.points}>
+                  <Coins className={styles.coinsIcon} size={16} />
+                  {user.points}
+                </span>
+              </li>
+            </Glassbox>
+          ))}
       </ul>
       {hasMore && (
         <button onClick={loadMore} className={styles.loadMoreButton}>
