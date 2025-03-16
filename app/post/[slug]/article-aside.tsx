@@ -37,9 +37,9 @@ export default function ArticleAside({ content }: TableOfContentsProps) {
     <nav className={styles.tocContainer}>
       <h3 className={styles.tocTitle}>On this page</h3>
       <ul className={styles.tocList}>
-        {tocItems.map((item) => (
+        {tocItems.map((item, i) => (
           <li
-            key={item.id}
+            key={i}
             className={styles.tocItem}
             style={{ paddingLeft: `${(item.level - 1) * 16}px` }}
           >

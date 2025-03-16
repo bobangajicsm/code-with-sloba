@@ -6,6 +6,20 @@
   margin-bottom: 48px;
   padding-bottom: 48px;
   border-bottom: 1px solid #27272a;
+
+  @media (max-width: 1024px) {
+    gap: 0.75rem; /* Slightly reduced gap for tablets */
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack elements on mobile */
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+  }
 }
 
 .title {
@@ -13,6 +27,11 @@
   font-weight: 600;
   color: #f4f4f5;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 18px; /* Smaller title on mobile */
+    margin-bottom: 12px;
+  }
 }
 
 .searchGroup {
@@ -20,6 +39,15 @@
   color: #52525b;
   padding-right: 16px;
   flex: 1;
+
+  @media (max-width: 1024px) {
+    padding-right: 8px; /* Reduced padding for tablets */
+  }
+
+  @media (max-width: 768px) {
+    width: 100%; /* Full width on mobile */
+    padding-right: 0;
+  }
 }
 
 .searchButtonIcon {
@@ -30,6 +58,11 @@
   width: 100%;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
 .searchIcon {
@@ -39,6 +72,11 @@
   bottom: 0;
   margin: auto;
   width: 12px;
+
+  @media (max-width: 768px) {
+    left: 10px; /* Slightly adjusted for mobile */
+    width: 10px;
+  }
 }
 
 .searchInput {
@@ -55,6 +93,11 @@
     position: relative;
     right: 20px;
   }
+
+  @media (max-width: 768px) {
+    font-size: 11px; /* Smaller text on mobile */
+    padding-left: 30px; /* Adjusted for smaller icon */
+  }
 }
 
 .searchButton {
@@ -68,7 +111,6 @@
   align-items: center;
   cursor: pointer;
   transition-duration: 0.3s;
-
   background-color: #18181b;
   color: #a1a1aa;
   border: 1px solid #3f3f46;
@@ -77,10 +119,25 @@
     border-color: #454545;
     color: #f4f4f5;
   }
+
+  @media (max-width: 768px) {
+    padding: 6px 12px; /* Slightly smaller padding on mobile */
+    font-size: 11px;
+  }
 }
 
 .filterControls {
   display: flex;
   gap: 16px;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    gap: 12px; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    gap: 8px; /* Further reduced for mobile */
+    width: 100%; /* Full width on mobile */
+    flex-wrap: wrap; /* Allow wrapping if controls are numerous */
+  }
 }

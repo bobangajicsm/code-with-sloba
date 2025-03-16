@@ -3,14 +3,14 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-const POSTS_PER_PAGE = 10;
-
 export async function fetchPosts(
   category?: string,
   sort: string = "newest",
   difficulty?: string,
   search: string = "",
-  skip: number = 0
+  skip: number = 0,
+  published?: boolean,
+  take: number = 10
 ) {
   let categoryData = null;
 
@@ -23,7 +23,7 @@ export async function fetchPosts(
   }
 
   const where: Prisma.PostWhereInput = {
-    published: true,
+    published,
     ...(category ? { categoryId: categoryData!.id } : {}),
     ...(difficulty
       ? { difficulty: difficulty as Prisma.EnumdifficultyNullableFilter }
@@ -54,7 +54,7 @@ export async function fetchPosts(
         },
       },
     },
-    take: POSTS_PER_PAGE,
+    take,
     skip,
   });
 

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./components/home.module.scss";
-import { useEffect, useState } from "react"; // Added useState
+import { useEffect, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import AuthButtons from "@/app/components/auth-button/auth-button";
 
@@ -36,10 +36,15 @@ function Navigation() {
     setIsMenuOpen(!isMenuOpen); // Toggle menu state
   };
 
+  // Function to close the menu
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className={styles.nav}>
       <div className={styles.wrapper}>
-        <Link href="/">
+        <Link href="/" onClick={closeMenu}>
           <Image
             className={styles.navImage}
             src="/images/logo.png"
@@ -63,22 +68,34 @@ function Navigation() {
           }`}
         >
           <li className={styles.navListItem}>
-            <Link className={styles.navListLink} href="/learn">
+            <Link
+              className={styles.navListLink}
+              href="/learn"
+              onClick={closeMenu}
+            >
               Learn
             </Link>
           </li>
           <li className={styles.navListItem}>
-            <Link className={styles.navListLink} href="/leaderboard">
+            <Link
+              className={styles.navListLink}
+              href="/leaderboard"
+              onClick={closeMenu}
+            >
               Leaderboard
             </Link>
           </li>
           <li className={styles.navListItem}>
-            <Link className={styles.navListLink} href="/sponsorship">
+            <Link
+              className={styles.navListLink}
+              href="/sponsorship"
+              onClick={closeMenu}
+            >
               Sponsorship
             </Link>
           </li>
           <li className={styles.navListItem}>
-            <AuthButtons />
+            <AuthButtons onCloseMenu={closeMenu} />
           </li>
         </ul>
       </div>

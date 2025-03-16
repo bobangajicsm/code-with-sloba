@@ -14,7 +14,7 @@ export default function Login() {
         </p>
 
         <button
-          onClick={() => signIn("google", { callbackUrl: "/" })}
+          onClick={() => signIn("google", { callbackUrl: "/learn" })}
           className={styles.googleButton}
         >
           <svg className={styles.googleIcon} viewBox="0 0 24 24">

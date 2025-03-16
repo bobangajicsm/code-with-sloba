@@ -5,28 +5,68 @@
   img {
     max-width: 100%;
   }
+
+  @media (max-width: 1024px) {
+    margin: 80px auto; /* Slightly reduced margin for tablets */
+    padding: 0 16px; /* Added padding for better edge spacing */
+  }
+
+  @media (max-width: 768px) {
+    margin: 60px auto; /* Further reduced for mobile */
+    padding: 0 12px;
+  }
 }
 
 .back {
   margin-top: -60px;
   display: flex;
   padding-bottom: 30px;
+
+  @media (max-width: 1024px) {
+    margin-top: -48px; /* Adjusted for tablets */
+    padding-bottom: 24px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: -36px; /* Adjusted for mobile */
+    padding-bottom: 16px;
+  }
 }
 
 .wrapper {
   display: flex;
   gap: 40px;
+
+  @media (max-width: 1024px) {
+    gap: 24px; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack on mobile */
+    gap: 16px;
+  }
 }
 
 .article {
   max-width: 672px;
   width: 100%;
 
+  @media (max-width: 1024px) {
+    padding: 0 10px;
+    max-width: 100%; /* Full width on mobile */
+  }
+
   p {
     color: #d4d4d8;
     font-size: 15px;
     line-height: 26px;
     margin-bottom: 12px;
+
+    @media (max-width: 768px) {
+      font-size: 14px; /* Smaller text on mobile */
+      line-height: 24px;
+      margin-bottom: 10px;
+    }
   }
 
   a {
@@ -44,6 +84,11 @@
     font-weight: 600;
     line-height: 28px;
     margin-top: 42px;
+
+    @media (max-width: 768px) {
+      font-size: 20px; /* Smaller on mobile */
+      margin-top: 32px;
+    }
   }
 
   h3 {
@@ -52,6 +97,11 @@
     font-weight: 600;
     line-height: 28px;
     margin-top: 28px;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+      margin-top: 24px;
+    }
   }
 
   h4 {
@@ -60,6 +110,11 @@
     font-weight: 600;
     line-height: 28px;
     margin-top: 22px;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      margin-top: 20px;
+    }
   }
 
   h5 {
@@ -68,6 +123,11 @@
     font-weight: 600;
     line-height: 18px;
     margin-top: 18px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      margin-top: 16px;
+    }
   }
 
   ul {
@@ -79,12 +139,21 @@
     ::marker {
       color: #4b5563;
     }
+
+    @media (max-width: 768px) {
+      padding-left: 16px; /* Reduced padding on mobile */
+    }
   }
 
   li {
     color: #d4d4d8;
     font-size: 15px;
     line-height: 26px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      line-height: 24px;
+    }
   }
 
   .title {
@@ -92,6 +161,11 @@
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 12px;
+
+    @media (max-width: 768px) {
+      font-size: 24px; /* Smaller title on mobile */
+      margin-bottom: 10px;
+    }
   }
 
   .description {
@@ -99,12 +173,22 @@
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
   }
 
   .meta {
     border-bottom: 1px solid #27272a;
     margin-bottom: 20px;
     padding-bottom: 20px;
+
+    @media (max-width: 768px) {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+    }
   }
 
   .authorContainer {
@@ -113,12 +197,23 @@
     justify-content: space-between;
     border-bottom: 1px solid #27272a;
     padding-bottom: 20px;
+
+    @media (max-width: 768px) {
+      flex-direction: column; /* Stack on mobile */
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 16px;
+    }
   }
 
   .author {
     display: flex;
     align-items: center;
     gap: 12px;
+
+    @media (max-width: 768px) {
+      gap: 8px; /* Reduced gap on mobile */
+    }
   }
 
   .authorInfo {
@@ -136,6 +231,10 @@
     color: #f4f4f5;
     font-weight: 500;
     font-size: 14px;
+
+    @media (max-width: 768px) {
+      font-size: 13px; /* Slightly smaller on mobile */
+    }
   }
 
   .postDate {
@@ -144,6 +243,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 11px;
+      gap: 6px;
+    }
   }
 
   .dot {
@@ -151,5 +255,10 @@
     height: 4px;
     border-radius: 50%;
     background-color: #a1a1aa;
+
+    @media (max-width: 768px) {
+      width: 3px;
+      height: 3px;
+    }
   }
 }

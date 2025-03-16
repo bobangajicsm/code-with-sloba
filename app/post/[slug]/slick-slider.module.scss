@@ -1,6 +1,10 @@
 .slideContainer {
   width: 100%;
   margin: 48px auto;
+
+  @media (max-width: 1024px) {
+    overflow: hidden;
+  }
 }
 
 .slideItem {

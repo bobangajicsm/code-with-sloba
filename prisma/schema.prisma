@@ -78,6 +78,7 @@ model Comment {
   createdAt DateTime @default(now())
   postId    String
   userId    String
+  isRead    Boolean  @default(false)
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

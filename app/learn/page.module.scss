@@ -2,6 +2,14 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 46px 0;
+
+  @media (max-width: 1024px) {
+    padding: 32px 16px; /* Reduced padding for tablets */
+  }
+
+  @media (max-width: 768px) {
+    padding: 24px 12px; /* Further reduced for mobile */
+  }
 }
 
 .categoriesSection {
@@ -15,12 +23,22 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 24px; /* Smaller title on mobile */
+    gap: 12px;
+  }
 }
 
 .subtitle {
   font-size: 16px;
   color: #d4d4d8;
   margin-bottom: 32px;
+
+  @media (max-width: 768px) {
+    font-size: 14px; /* Slightly smaller on mobile */
+    margin-bottom: 24px;
+  }
 }
 
 .titleFacts {
@@ -30,6 +48,16 @@
   display: flex;
   gap: 48px;
   color: #a1a1aa;
+
+  @media (max-width: 1024px) {
+    gap: 24px; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack facts vertically on mobile */
+    gap: 16px;
+    padding-bottom: 24px;
+  }
 }
 
 .titleFact {
@@ -49,6 +77,22 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-bottom: 1px solid #27272a;
   padding-bottom: 80px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columns on tablets */
+    gap: 16px;
+    padding-bottom: 60px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    margin: 16px 0 40px 0;
+    padding: 40px;
+  }
+
+  @media (max-width: 431px) {
+    padding: 0;
+  }
 }
 
 .topic {
@@ -59,6 +103,15 @@
     display: flex;
     align-items: center;
     gap: 16px;
+
+    @media (max-width: 768px) {
+      gap: 12px; /* Smaller gap on mobile */
+      padding: 32px 38px;
+    }
+
+    @media (max-width: 431px) {
+      padding: 5px 10px;
+    }
   }
 
   &Content {
@@ -78,11 +131,20 @@
     justify-content: center;
     min-width: 60px;
     height: 60px;
+
+    @media (max-width: 768px) {
+      min-width: 48px; /* Smaller logo on mobile */
+      height: 48px;
+    }
   }
 
   &Title {
     font-size: 16px;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      font-size: 14px; /* Smaller title on mobile */
+    }
   }
 
   &Description {
@@ -91,6 +153,10 @@
     display: flex;
     align-items: center;
     gap: 6px;
+
+    @media (max-width: 768px) {
+      font-size: 11px; /* Slightly smaller on mobile */
+    }
   }
 
   &Link {
@@ -121,4 +187,10 @@
   display: flex;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: 768px) {
+    font-size: 10px; /* Smaller badge on mobile */
+    padding: 1px 6px;
+    margin-left: 12px;
+  }
 }

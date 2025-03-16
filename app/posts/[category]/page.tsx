@@ -44,7 +44,9 @@ export default function CategoryPage({
         category === "all" ? undefined : category,
         sort,
         difficulty,
-        search
+        search,
+        0,
+        true
       );
 
       if (result) {
@@ -77,7 +79,8 @@ export default function CategoryPage({
       sort,
       difficulty,
       search,
-      nextPage * POSTS_PER_PAGE
+      nextPage * POSTS_PER_PAGE,
+      true
     );
 
     if (result) {

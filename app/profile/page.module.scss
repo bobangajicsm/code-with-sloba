@@ -3,6 +3,11 @@
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 251px);
+
+  @media (max-width: 768px) {
+    align-items: flex-start; /* Adjust alignment for mobile */
+    padding: 1rem; /* Add padding for edge spacing */
+  }
 }
 
 .title {
@@ -10,31 +15,54 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: #f4f4f5;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem; /* Smaller title on mobile */
+    margin-bottom: 24px;
+  }
 }
 
 .wrapper {
   max-width: 1200px;
   width: 100%;
   margin: 2rem auto;
+
+  @media (max-width: 1024px) {
+    margin: 1.5rem auto; /* Reduced margin for tablets */
+    padding: 0 16px; /* Add padding for edge spacing */
+  }
+
+  @media (max-width: 768px) {
+    margin: 1rem auto; /* Further reduced for mobile */
+    padding: 0 12px;
+  }
 }
 
-.noSession {
-  text-align: center;
-  color: #a1a1aa;
-  font-size: 16px;
-  padding: 2rem;
-}
-
+.noSession,
 .loading {
   text-align: center;
   color: #a1a1aa;
   font-size: 16px;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 14px; /* Smaller text on mobile */
+    padding: 1.5rem;
+  }
 }
 
 .profileLayout {
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 1024px) {
+    gap: 1.5rem; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack layout on mobile */
+    gap: 1rem;
+  }
 }
 
 .userInfoBox {
@@ -42,6 +70,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  @media (max-width: 768px) {
+    max-width: 100%; /* Full width on mobile */
+  }
 }
 
 .userInfoBox,
@@ -50,6 +82,14 @@
   flex: 1;
   min-width: 0;
   transition: background-color 0.2s ease;
+
+  @media (max-width: 1024px) {
+    padding: 1.25rem; /* Slightly reduced for tablets */
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem; /* Further reduced for mobile */
+  }
 }
 
 .userText {
@@ -62,6 +102,15 @@
   align-items: center;
   margin-bottom: 1.5rem;
   flex-direction: column;
+
+  @media (max-width: 1024px) {
+    gap: 1rem; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .avatarLink {
@@ -77,6 +126,11 @@
   &:hover {
     border-color: #454545;
   }
+
+  @media (max-width: 768px) {
+    width: 80px; /* Explicit size on mobile if not set */
+    height: 80px;
+  }
 }
 
 .userDetails {
@@ -84,12 +138,20 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  @media (max-width: 768px) {
+    gap: 8px; /* Reduced gap on mobile */
+  }
 }
 
 .userName {
   font-size: 18px;
   font-weight: 600;
   color: #f4f4f5;
+
+  @media (max-width: 768px) {
+    font-size: 16px; /* Smaller text on mobile */
+  }
 }
 
 .userItem {
@@ -98,11 +160,20 @@
   gap: 8px;
   font-size: 14px;
   color: #a1a1aa;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    gap: 6px;
+  }
 }
 
 .icon {
   color: #a1a1aa;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller icon if using font-based icons */
+  }
 }
 
 .link {
@@ -133,10 +204,20 @@
     outline: none;
     border-color: var(--secondary);
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    padding: 6px 10px;
+    margin-bottom: 6px;
+  }
 }
 
 .actions {
   margin-top: 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-top: 1rem; /* Reduced for mobile */
+  }
 }
 
 .editButton,
@@ -161,6 +242,12 @@
     color: #f4f4f5;
     background-color: #252529;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    padding: 6px 12px;
+    gap: 6px;
+  }
 }
 
 .saveButton {
@@ -175,6 +262,10 @@
 
 .buttonIcon {
   color: inherit;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller icon if using font-based icons */
+  }
 }
 
 .progressTitle {
@@ -182,11 +273,20 @@
   font-weight: 500;
   color: #f4f4f5;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem; /* Smaller title on mobile */
+    margin-bottom: 0.75rem;
+  }
 }
 
 .noProgress {
   color: #a1a1aa;
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .progressCategory {
@@ -200,6 +300,16 @@
   &:hover {
     border-color: #454545;
   }
+
+  @media (max-width: 1024px) {
+    padding: 10px 14px; /* Slightly reduced for tablets */
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
 }
 
 .progressItem {
@@ -207,11 +317,19 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 4px;
+
+  @media (max-width: 768px) {
+    gap: 6px; /* Reduced gap on mobile */
+  }
 }
 
 .categoryIcon {
   color: #a1a1aa;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller icon if using font-based icons */
+  }
 }
 
 .categoryName {
@@ -222,11 +340,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .progressValue {
   font-size: 14px;
   color: #a1a1aa;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .progressBar {
@@ -235,6 +361,11 @@
   background-color: #3f3f46;
   border-radius: 3px;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: 12px; /* Smaller bar on mobile */
+    border-radius: 2px;
+  }
 }
 
 .progressFill {

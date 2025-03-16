@@ -2,6 +2,16 @@
   margin: 50px auto;
   border-top: 1px solid #27272a;
   padding-top: 50px;
+
+  @media (max-width: 1024px) {
+    margin: 40px auto; /* Reduced margin for tablets */
+    padding-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 32px auto; /* Further reduced for mobile */
+    padding-top: 32px;
+  }
 }
 
 .caption {
@@ -9,6 +19,10 @@
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 4px;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .title {
@@ -16,4 +30,13 @@
   color: #f4f4f5;
   font-weight: 600;
   margin-bottom: 50px;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 40px; /* Reduced for tablets */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px; /* Smaller title on mobile */
+    margin-bottom: 32px;
+  }
 }

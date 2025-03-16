@@ -23,6 +23,7 @@
     "@vercel/analytics": "^0.1.11",
     "bcryptjs": "^2.4.3",
     "convertkit-react": "^1.5.5",
+    "date-fns": "^4.1.0",
     "eslint": "8.35.0",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.475.0",

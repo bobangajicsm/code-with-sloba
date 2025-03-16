@@ -6,12 +6,27 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "./auth-button.module.scss";
 
-export default function AuthButtons() {
+interface AuthButtonsProps {
+  onCloseMenu?: () => void;
+}
+
+export default function AuthButtons({ onCloseMenu }: AuthButtonsProps) {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  // Function to close the dropdown
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  // Combined handler for closing both dropdown and navigation menu
+  const handleLinkClick = () => {
+    closeDropdown(); // Close the dropdown
+    if (onCloseMenu) onCloseMenu(); // Close the navigation menu if prop is provided
   };
 
   return (
@@ -39,15 +54,20 @@ export default function AuthButtons() {
               <div className={styles.userInfo}>
                 <span>{session.user?.name}</span>
               </div>
-              <Link href="/profile" className={styles.menuItem}>
+              <Link
+                href="/profile"
+                className={styles.menuItem}
+                onClick={handleLinkClick}
+              >
                 Profile
               </Link>
               <button
-                onClick={() =>
+                onClick={() => {
+                  handleLinkClick(); // Close dropdown and menu before sign out
                   signOut({
                     callbackUrl: "/auth/login",
-                  })
-                }
+                  });
+                }}
                 className={styles.menuItem}
               >
                 Log Out
@@ -56,7 +76,11 @@ export default function AuthButtons() {
           )}
         </div>
       ) : (
-        <Link href="/auth/login" className={styles.signInButton}>
+        <Link
+          href="/auth/login"
+          className={styles.signInButton}
+          onClick={handleLinkClick}
+        >
           Sign in
         </Link>
       )}

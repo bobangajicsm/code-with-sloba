@@ -3,17 +3,39 @@
     display: flex;
     gap: 24px;
     align-items: center;
+
+    @media (max-width: 1024px) {
+      gap: 16px; /* Reduced gap for tablets */
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column; /* Stack image and content on mobile */
+      align-items: flex-start;
+      gap: 12px;
+    }
   }
 
   &ImageWrapper {
     width: 150px;
     height: 80px;
+
+    @media (max-width: 1024px) {
+      width: 120px; /* Slightly smaller for tablets */
+      height: 64px;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%; /* Full width on mobile */
+      height: 120px; /* Taller to maintain visibility */
+    }
   }
 
   &Image {
     object-fit: cover;
     border-radius: 8px;
     object-position: top;
+    width: 100%; /* Ensure it fills wrapper */
+    height: 100%;
   }
 
   &Content {
@@ -27,17 +49,25 @@
     font-size: 18px;
     font-weight: 600;
     color: #f4f4f5;
+
+    @media (max-width: 768px) {
+      font-size: 16px; /* Smaller title on mobile */
+    }
   }
 
   &Description {
     color: #a1a1aa;
     font-size: 14px;
     margin-bottom: 12px;
+
+    @media (max-width: 768px) {
+      font-size: 12px; /* Smaller description on mobile */
+      margin-bottom: 8px;
+    }
   }
 
   &Link {
     text-decoration: none;
-
     color: #52525b;
 
     &:hover {
@@ -51,6 +81,16 @@
     align-items: center;
     font-size: 12px;
     color: #a1a1aa;
+
+    @media (max-width: 1024px) {
+      gap: 16px; /* Reduced gap for tablets */
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column; /* Stack meta items on mobile */
+      align-items: flex-start;
+      gap: 8px;
+    }
   }
 
   &Level {
@@ -58,6 +98,10 @@
     gap: 24px;
     align-items: center;
     gap: 6px;
+
+    @media (max-width: 1024px) {
+      gap: 4px; /* Slightly reduced gap for tablets */
+    }
 
     &Easy {
       color: #39ea4a;
@@ -77,6 +121,14 @@
     gap: 12px;
     align-items: center;
     color: var(--secondary);
+
+    @media (max-width: 1024px) {
+      gap: 8px; /* Reduced gap for tablets */
+    }
+
+    @media (max-width: 768px) {
+      gap: 6px; /* Further reduced for mobile */
+    }
   }
 }
 

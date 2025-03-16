@@ -75,14 +75,22 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media (max-width: 768px) and (min-width: 431px) {
+    padding: 45px;
+  }
 }
 
 .userItem {
   display: grid;
-  grid-template-columns: 38px 50px 60px 1fr 120px;
+  grid-template-columns: 38px 60px 1fr 120px;
   align-items: center;
   padding: 0;
   transition: background-color 0.2s ease;
+
+  @media (max-width: 431px) {
+    grid-template-columns: 38px 60px 1fr 67px;
+  }
 }
 
 .largeReflectionFix {

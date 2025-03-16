@@ -94,9 +94,9 @@ const Leaderboard = () => {
                   : ""
               }`}
             >
-              <div className={styles.position}>{index + 1}</div>
-
-              <span className={styles.rank}>{getRankIcon(index)}</span>
+              <div className={styles.position}>
+                <span className={styles.rank}>{getRankIcon(index)}</span>
+              </div>
               <Link
                 href={user.profileUrl || ""}
                 target="_blank"

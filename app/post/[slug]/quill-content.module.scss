@@ -5,6 +5,16 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 14px;
   margin: 16px 0;
+
+  @media (max-width: 1024px) {
+    margin: 12px 0; /* Slightly reduced margin for tablets */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 13px; /* Smaller font on mobile */
+    margin: 10px 0; /* Further reduced for mobile */
+    border-radius: 6px; /* Slightly smaller radius */
+  }
 }
 
 .header {
@@ -15,10 +25,24 @@
   border-bottom: 1px solid #333;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+
+  @media (max-width: 1024px) {
+    padding: 6px 12px; /* Reduced padding for tablets */
+  }
+
+  @media (max-width: 768px) {
+    padding: 4px 8px; /* Further reduced for mobile */
+    border-top-left-radius: 6px; /* Match wrapper radius */
+    border-top-right-radius: 6px;
+  }
 }
 
 .language {
   color: #888;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .copyButton {
@@ -31,18 +55,39 @@
   border: none;
   cursor: pointer;
   transition: color 0.2s;
-}
 
-.copyButton:hover {
-  color: #fff;
+  @media (max-width: 1024px) {
+    padding: 3px 6px; /* Slightly reduced for tablets */
+  }
+
+  @media (max-width: 768px) {
+    padding: 2px 4px; /* Further reduced for mobile */
+    gap: 3px;
+    font-size: 12px; /* Smaller text on mobile */
+  }
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .codeContainer {
   overflow-x: auto;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller code text on mobile */
+  }
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    display: block; /* Improve table responsiveness */
+    overflow-x: auto; /* Allow horizontal scrolling */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
 }

@@ -23,6 +23,7 @@
   /* Mobile optimizations */
   @media (max-width: 768px) {
     max-width: 100%; /* Full width on mobile */
+    padding: 0 20px;
   }
 }
 
@@ -55,7 +56,7 @@
   /* Mobile optimizations */
   @media (max-width: 768px) {
     max-width: 100%; /* Full width on mobile */
-    margin: -20px auto 0; /* Reduce negative margin */
+    margin: 0 auto 0; /* Reduce negative margin */
   }
 }
 

@@ -1,0 +1,181 @@
+// app/admin/comments/comments.module.scss
+
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.loading,
+.error,
+.noComments {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filterButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+
+  &:hover {
+    background-color: #f8f9fa;
+    color: #1e293b;
+  }
+
+  &.active {
+    background-color: #0070f3;
+    color: white;
+    border-color: #0070f3;
+  }
+}
+
+.commentsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #212529;
+}
+
+.commentCard {
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &.unread {
+    border-left: 4px solid #0070f3;
+    background-color: #f0f7ff;
+  }
+
+  &.read {
+    border-left: 4px solid #6c757d;
+    background-color: #f8f9fa;
+  }
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #0070f3;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.userName {
+  font-weight: 500;
+}
+
+.time {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.commentBody {
+  padding: 0.5rem 0;
+}
+
+.commentText {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.commentFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.postLink {
+  color: #0070f3;
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.markButton,
+.deleteButton {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.markButton {
+  background-color: #e9ecef;
+  color: #212529;
+
+  &:hover {
+    background-color: #dee2e6;
+  }
+}
+
+.deleteButton {
+  background-color: #f8d7da;
+  color: #dc3545;
+
+  &:hover {
+    background-color: #f5c2c7;
+  }
+}

@@ -4,6 +4,14 @@
   padding: 2rem;
   color: #f4f4f5;
   min-height: calc(100vh - 251px);
+
+  @media (max-width: 1024px) {
+    padding: 1.5rem; /* Reduced padding for tablets */
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem; /* Further reduced for mobile */
+  }
 }
 
 .header {
@@ -16,6 +24,10 @@
 .title {
   font-size: 24px;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 20px; /* Smaller title on mobile */
+  }
 }
 
 .subtitle {
@@ -23,15 +35,34 @@
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 48px;
-  margin-bottom: 32px;
+  margin-bottom: 32px; /* Note: This overrides the 48px above */
   padding-bottom: 48px;
   border-bottom: 1px solid #27272a;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 24px; /* Reduced for tablets */
+    padding-bottom: 32px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    margin-bottom: 16px;
+    padding-bottom: 24px;
+  }
 }
 
 .posts {
   gap: 16px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1024px) {
+    gap: 12px; /* Slightly reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    gap: 10px; /* Further reduced for mobile */
+  }
 }
 
 .loadMore {

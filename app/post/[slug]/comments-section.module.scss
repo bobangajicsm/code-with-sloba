@@ -2,6 +2,16 @@
   margin: 50px auto;
   border-top: 1px solid #27272a;
   padding-top: 50px;
+
+  @media (max-width: 1024px) {
+    margin: 40px auto; /* Reduced margin for tablets */
+    padding-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 32px auto; /* Further reduced for mobile */
+    padding-top: 32px;
+  }
 }
 
 .title {
@@ -11,6 +21,17 @@
   border-bottom: 1px solid #27272a;
   padding-bottom: 50px;
   margin-bottom: 50px;
+
+  @media (max-width: 1024px) {
+    padding-bottom: 40px; /* Reduced for tablets */
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px; /* Smaller title on mobile */
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
 }
 
 .caption {
@@ -18,11 +39,19 @@
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 4px;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+  }
 }
 
 .commentForm {
   max-width: 600px;
   margin: 0 auto 32px;
+
+  @media (max-width: 768px) {
+    margin: 0 auto 24px; /* Reduced margin on mobile */
+  }
 }
 
 .commentInput {
@@ -45,6 +74,12 @@
 
   &::placeholder {
     color: #71717a;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    padding: 0.75rem; /* Reduced padding */
+    margin-bottom: 12px;
   }
 }
 
@@ -71,6 +106,11 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    padding: 6px 12px; /* Reduced padding */
+  }
 }
 
 .loginMessage {
@@ -87,11 +127,20 @@
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    margin: 24px 0;
+  }
 }
 
 .commentList {
   max-width: 600px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    max-width: 100%; /* Full width on mobile */
+  }
 }
 
 .noComments {
@@ -99,6 +148,11 @@
   color: #a1a1aa;
   font-size: 14px;
   margin: 32px 0;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* Smaller text on mobile */
+    margin: 24px 0;
+  }
 }
 
 .comment {
@@ -110,11 +164,26 @@
   &:last-child {
     border-bottom: none;
   }
+
+  @media (max-width: 1024px) {
+    gap: 12px; /* Reduced gap for tablets */
+    padding: 20px 0;
+  }
+
+  @media (max-width: 768px) {
+    gap: 10px;
+    padding: 16px 0;
+  }
 }
 
 .avatar {
   border-radius: 50%;
   object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 32px; /* Explicit size on mobile if not set */
+    height: 32px;
+  }
 }
 
 .commentContent {
@@ -126,21 +195,43 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+
+  @media (max-width: 1024px) {
+    gap: 8px; /* Reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
 }
 
 .userName {
   color: #f4f4f5;
   font-size: 14px;
   font-weight: 500;
+
+  @media (max-width: 768px) {
+    font-size: 13px; /* Slightly smaller on mobile */
+  }
 }
 
 .timestamp {
   color: #71717a;
   font-size: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 11px; /* Smaller on mobile */
+  }
 }
 
 .commentText {
   color: #e4e4e7;
   font-size: 14px;
   line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 13px; /* Smaller text on mobile */
+    line-height: 1.5;
+  }
 }

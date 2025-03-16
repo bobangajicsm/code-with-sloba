@@ -1,0 +1,64 @@
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #1e293b;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1e293b;
+  color: white;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebarHeader {
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navItem {
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  &.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left: 3px solid #0070f3;
+  }
+}
+
+.content {
+  flex: 1;
+  background-color: #1e293b;
+  overflow-y: auto;
+}

@@ -1,5 +1,13 @@
 .container {
   margin-top: 4rem;
+
+  @media (max-width: 1024px) {
+    margin-top: 3rem; /* Slightly reduced for tablets */
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 2rem; /* Further reduced for mobile */
+  }
 }
 
 .postsHeader {
@@ -16,10 +24,24 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 18px; /* Smaller title on mobile */
+    gap: 12px;
+    margin-bottom: 0; /* Remove bottom margin since stacked */
+  }
 }
 
 .posts {
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media (max-width: 1024px) {
+    gap: 12px; /* Slightly reduced gap for tablets */
+  }
+
+  @media (max-width: 768px) {
+    gap: 10px; /* Further reduced for mobile */
+  }
 }
