@@ -53,7 +53,7 @@ const PostCard = ({ post }: { post: Post }) => {
                 </span>
               </div>
             </div>
-            <ArrowRight size={20} />
+            <ArrowRight className={styles.arrowRight} size={20} />
           </div>
         </Glassbox>
       </Link>

@@ -83,13 +83,7 @@
     color: #a1a1aa;
 
     @media (max-width: 1024px) {
-      gap: 16px; /* Reduced gap for tablets */
-    }
-
-    @media (max-width: 768px) {
-      flex-direction: column; /* Stack meta items on mobile */
-      align-items: flex-start;
-      gap: 8px;
+      gap: 16px;
     }
   }
 
@@ -134,4 +128,10 @@
 
 .largeReflectionFix {
   inset: -100% !important;
+}
+
+.arrowRight {
+  @media (max-width: 768px) {
+    display: none;
+  }
 }

@@ -315,7 +315,7 @@ export default function NewPost() {
           </div>
         </div>
 
-        <div className={styles.formGroup}>
+        <div className={`${styles.formGroup} ${styles.quillCont}`}>
           <label>Content</label>
           <Controller
             name="content"

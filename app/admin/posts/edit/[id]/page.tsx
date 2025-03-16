@@ -421,7 +421,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        <div className={styles.formGroup}>
+        <div className={`${styles.formGroup} ${styles.quillCont}`}>
           <label>Content</label>
           <Controller
             name="content"
