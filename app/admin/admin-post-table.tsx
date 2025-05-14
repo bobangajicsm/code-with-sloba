@@ -74,7 +74,7 @@ const AdminPostsTable: React.FC = () => {
   const onDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this post?")) {
       try {
-        const response = await fetch(`/api/posts/${id}`, {
+        const response = await fetch(`/api/posts?id=${id}`, {
           method: "DELETE",
         });
         if (!response.ok) throw new Error("Failed to delete post");
