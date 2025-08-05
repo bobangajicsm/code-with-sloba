@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import styles from "../../../new-post/page.module.scss";
 import { CodeEditor } from "@/app/admin/components/code-editor";
-import QuillEditor from "@/app/admin/components/quill-editor";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Difficulty, Post, Quiz as SharedQuiz } from "@/app/types/shared";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
+import QuillEditor, {
+  QuillEditorRef,
+} from "@/app/admin/components/quill-editor";
 
 interface QuizQuestion {
   id?: string; // Optional for new quizzes
@@ -58,6 +60,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [tagInput, setTagInput] = useState("");
+  const editorRef = useRef<QuillEditorRef>(null);
 
   const {
     register,
@@ -428,7 +431,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
             control={control}
             rules={{ required: "Content is required" }}
             render={({ field: { onChange, value = "" } }) => (
-              <QuillEditor value={value} onChange={onChange} />
+              <QuillEditor ref={editorRef} value={value} onChange={onChange} />
             )}
           />
           {errors.content && (

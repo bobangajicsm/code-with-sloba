@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import styles from "./page.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
-import QuillEditor from "@/app/admin/components/quill-editor";
+import QuillEditor, {
+  QuillEditorRef,
+} from "@/app/admin/components/quill-editor";
 
 interface Quiz {
   question: string;
@@ -44,7 +46,13 @@ export default function NewPost() {
   const [carouselImages, setCarouselImages] = useState<File[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
-  const [tagInput, setTagInput] = useState(""); // New state for tag input
+  const [tagInput, setTagInput] = useState("");
+  const editorRef = useRef<QuillEditorRef>(null);
+
+  useEffect(() => {
+    const editor = editorRef.current?.getEditor();
+    console.log("Editor available:", !!editor);
+  }, [editorRef.current]);
 
   const {
     register,
@@ -322,7 +330,7 @@ export default function NewPost() {
             control={control}
             rules={{ required: "Content is required" }}
             render={({ field: { onChange, value = "" } }) => (
-              <QuillEditor value={value} onChange={onChange} />
+              <QuillEditor ref={editorRef} value={value} onChange={onChange} />
             )}
           />
           {errors.content && (
