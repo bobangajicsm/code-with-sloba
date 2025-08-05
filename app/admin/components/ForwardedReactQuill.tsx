@@ -1,4 +1,5 @@
 // ForwardedReactQuill.tsx
+"use client";
 import React, { forwardRef } from "react";
 import ReactQuill from "react-quill";
 import ReactQuillProps from "react-quill";

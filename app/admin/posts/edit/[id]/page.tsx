@@ -3,15 +3,18 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import styles from "../../../new-post/page.module.scss";
-import { CodeEditor } from "@/app/admin/components/code-editor";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Difficulty, Post, Quiz as SharedQuiz } from "@/app/types/shared";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
-import QuillEditor, {
-  QuillEditorRef,
-} from "@/app/admin/components/quill-editor";
+import { QuillEditorRef } from "@/app/admin/components/quill-editor";
+import dynamic from "next/dynamic";
+
+const QuillEditor = dynamic(
+  () => import("@/app/admin/components/quill-editor"),
+  { ssr: false }
+);
 
 interface QuizQuestion {
   id?: string; // Optional for new quizzes

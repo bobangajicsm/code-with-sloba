@@ -6,16 +6,20 @@ import styles from "./page.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import SandboxTemplate from "@/app/utils/sandbox-template-enum";
-import QuillEditor, {
-  QuillEditorRef,
-} from "@/app/admin/components/quill-editor";
+import { QuillEditorRef } from "@/app/admin/components/quill-editor";
+import dynamic from "next/dynamic";
+
+const QuillEditor = dynamic(
+  () => import("@/app/admin/components/quill-editor"),
+  { ssr: false }
+);
 
 interface Quiz {
   question: string;
   optionA: string;
   optionB: string;
-  optionC?: string; // Made optional
-  optionD?: string; // Made optional
+  optionC?: string;
+  optionD?: string;
   correctAnswer: string;
 }
 
@@ -30,8 +34,8 @@ interface PostFormData {
   sandboxUrl?: string;
   sandboxTemplate?: SandboxTemplate;
   quizzes: Quiz[];
-  description: string; // New field
-  tags: string[]; // New field
+  description: string;
+  tags: string[];
 }
 
 interface Category {
@@ -90,7 +94,6 @@ export default function NewPost() {
     }
   };
 
-  // Handle tag removal
   const handleRemoveTag = (tagToRemove: string) => {
     const currentTags = getValues("tags");
     setValue(
@@ -356,7 +359,6 @@ export default function NewPost() {
 
           {fields.map((field, index) => {
             const questionPrefix = `quizzes.${index}` as const;
-            // Watch the values of optionC and optionD to determine if they should be included in correctAnswer options
             const optionC = watch(`${questionPrefix}.optionC`);
             const optionD = watch(`${questionPrefix}.optionD`);
 
@@ -449,7 +451,6 @@ export default function NewPost() {
           })}
         </div>
 
-        {/* Keep the published checkbox and submit button */}
         <div className={styles.formGroup}>
           <label className={styles.checkboxLabel}>
             <input

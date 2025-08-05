@@ -121,6 +121,11 @@ const QuillEditor = forwardRef<QuillEditorRef, Props>(
     }));
 
     const imageHandler = useCallback(() => {
+      console.log(document);
+      if (typeof window === "undefined" || document === undefined) {
+        return;
+      }
+
       const quill = quillRef.current?.getEditor();
       if (!quill) {
         alert("Editor is not ready. Please try again.");
