@@ -12,7 +12,12 @@ export async function fetchPosts(
   published?: boolean,
   take: number = 10
 ) {
-  let categoryData = null;
+  let categoryData: {
+    image: string | null;
+    id: string;
+    slug: string;
+    name: string;
+  } | null = null;
 
   if (category) {
     categoryData = await prisma.category.findFirst({
