@@ -49,11 +49,6 @@ export default function NewPost() {
   const [tagInput, setTagInput] = useState("");
   const editorRef = useRef<QuillEditorRef>(null);
 
-  useEffect(() => {
-    const editor = editorRef.current?.getEditor();
-    console.log("Editor available:", !!editor);
-  }, [editorRef.current]);
-
   const {
     register,
     handleSubmit,

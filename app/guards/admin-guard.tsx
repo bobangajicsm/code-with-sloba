@@ -18,7 +18,6 @@ export default function AdminGuard({
   useEffect(() => {
     const checkAdmin = async () => {
       if (session !== undefined && !isAdmin(session?.user?.email || "")) {
-        console.log("Redirecting to login page");
         router.push("/auth/login");
       }
     };
